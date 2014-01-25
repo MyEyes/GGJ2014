@@ -127,7 +127,7 @@
     <Compile Include="Game1.cs" />
     <Compile Include="SpineGameObject.cs" />
     <Compile Include="state\BaseGameState.cs" />
-    <Compile Include="state\TestSTate.cs" />
+    <Compile Include="state\TestState.cs" />
     <Compile Include="state\StateManager.cs" />
     <Compile Include="utilities\Assert.cs" />
     <Compile Include="utilities\Boxed.cs" />
