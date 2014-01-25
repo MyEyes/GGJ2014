@@ -151,12 +151,6 @@
     <Content Include="GameThumbnail.png" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\VestContent\VestContent.contentproj">
-      <Name>VestContent</Name>
-      <XnaReferenceType>Content</XnaReferenceType>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.0,Profile=Client">
       <Visible>False</Visible>
       <ProductName>Microsoft .NET Framework 4 Client Profile %28x86 and x64%29</ProductName>
@@ -182,6 +176,13 @@
       <ProductName>Microsoft XNA Framework Redistributable 4.0</ProductName>
       <Install>true</Install>
     </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\content\VestContent.contentproj">
+      <Project>{AB386A1B-908B-4601-88CD-B20C628016B0}</Project>
+      <Name>VestContent %28Content%29</Name>
+      <XnaReferenceType>Content</XnaReferenceType>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\XNA Game Studio\Microsoft.Xna.GameStudio.targets" />
