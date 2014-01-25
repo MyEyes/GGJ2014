@@ -46,7 +46,8 @@ namespace Vest
             var states = new Dictionary<string, BaseGameState>
             {
                 {"test", new TestState()},
-                {"jason", new JasonState()}
+                {"jason", new JasonState()},
+                {"platform", new PlatformingState()}
             };
 
             G.State = new StateManager (states);
@@ -57,7 +58,7 @@ namespace Vest
             Spine.Bone.yDown = true;
 
             State.Load ();
-            State.Set ("test");
+            State.Set ("platform");
         }
 
         protected override void UnloadContent()

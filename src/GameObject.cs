@@ -36,17 +36,17 @@ namespace Vest
         public abstract void Update (float dt);
         public abstract void Draw(OSpriteBatch batch);
 
-        public void Move(Vector2 diff)
+        public virtual void Move(Vector2 diff)
         {
             movePolygons (position + diff);
-            position += diff;
+            _position += diff;
         }
 
         public bool Collides(GameObject other)
         {
             for (int x = 0; x < collisionPolys.Length; x++)
                 for (int y = 0; y < other.collisionPolys.Length; y++)
-                    if (collisionPolys[x].Intersects(other.collisionPolys[x]))
+                    if (collisionPolys[x].Intersects(other.collisionPolys[y]))
                         return true;
             return false;
         }

@@ -121,6 +121,7 @@
     <Compile Include="graphics\OSpriteBatcher.cs" />
     <Compile Include="graphics\OSpriteBatchItem.cs" />
     <Compile Include="ManualCamera2D.cs" />
+    <Compile Include="PhysicsSpineGameObject.cs" />
     <Compile Include="PlayerController.cs" />
     <Compile Include="Polygon.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -128,6 +129,7 @@
     <Compile Include="G.cs" />
     <Compile Include="SpineGameObject.cs" />
     <Compile Include="state\BaseGameState.cs" />
+    <Compile Include="state\PlatformingState.cs" />
     <Compile Include="state\JasonState.cs" />
     <Compile Include="state\TestState.cs" />
     <Compile Include="state\StateManager.cs" />

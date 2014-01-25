@@ -164,7 +164,7 @@ namespace Vest
             {
                 Vector2 extent = new Vector2(float.MaxValue, float.MinValue);
 
-                for (int y = 0; y < satHelpers.Length; y++)
+                for (int y = 0; y < polygon.edges.Length; y++)
                 {
                     float proj = Vector2.Dot(edges[x].Normal, polygon.edges[y].Start-center);
                     if (proj < extent.X)

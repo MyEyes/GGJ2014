@@ -41,6 +41,8 @@ namespace Vest
             Vector2 moveVector = Vector2.Zero;
             if (isButtonDown (currPadState.DPad.Left)) moveVector.X = -1;
             if (isButtonDown (currPadState.DPad.Right)) moveVector.X = 1;
+            PhysicsSpineGameObject test = player as PhysicsSpineGameObject;
+            if (isButtonDown(currPadState.Buttons.A) && test!=null && test.OnGround) test.Jump();
 
             if (moveVector.X > 0)
             {
