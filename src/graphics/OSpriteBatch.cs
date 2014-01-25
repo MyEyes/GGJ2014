@@ -6,8 +6,10 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Otherworld;
 using Spine;
+using SpriteBatcher = Vest.graphics.SpriteBatcher;
+using SpriteBatchItem = Vest.graphics.SpriteBatchItem;
 
-namespace Otherworld.Graphics
+namespace Vest.graphics
 {
     public class OSpriteBatch
     {
@@ -23,7 +25,7 @@ namespace Otherworld.Graphics
 
         public OSpriteBatch (GraphicsDevice graphicsDevice)
         {
-            Assert.IsNotNull (graphicsDevice);
+            Otherworld.Assert.IsNotNull (graphicsDevice);
 
             device = graphicsDevice;
             batcher = new SpriteBatcher();
@@ -135,7 +137,7 @@ namespace Otherworld.Graphics
             SpriteEffects effect,
             float depth)
         {
-            Assert.IsNotNull (texture);
+            Otherworld.Assert.IsNotNull (texture);
 
             SpriteBatchItem item = batcher.CreateBatchItem();
 
@@ -202,7 +204,7 @@ namespace Otherworld.Graphics
             SpriteEffects effect,
             float depth)
         {
-            Assert.IsNotNull (texture);
+            Otherworld.Assert.IsNotNull (texture);
 
             SpriteBatchItem item = batcher.CreateBatchItem();
 
@@ -255,7 +257,7 @@ namespace Otherworld.Graphics
             SpriteEffects effect,
             float depth)
         {
-            Assert.IsNotNull (texture);
+            Otherworld.Assert.IsNotNull (texture);
 
             SpriteBatchItem item = batcher.CreateBatchItem();
 
@@ -300,7 +302,7 @@ namespace Otherworld.Graphics
 
         public void Draw (Texture2D texture, Vector2 position, Rectangle? sourceRectangle, Color color)
         {
-            Assert.IsNotNull (texture);
+            Otherworld.Assert.IsNotNull (texture);
 
             SpriteBatchItem item = batcher.CreateBatchItem();
 
@@ -328,7 +330,7 @@ namespace Otherworld.Graphics
 
         public void Draw (Texture2D texture, Rectangle destinationRectangle, Rectangle? sourceRectangle, Color color)
         {
-            Assert.IsNotNull (texture);
+            Otherworld.Assert.IsNotNull (texture);
 
             SpriteBatchItem item = batcher.CreateBatchItem();
 
@@ -359,7 +361,7 @@ namespace Otherworld.Graphics
             Vector2 position,
             Color color)
         {
-            Assert.IsNotNull (texture);
+            Otherworld.Assert.IsNotNull (texture);
 
             SpriteBatchItem item = batcher.CreateBatchItem();
 
@@ -383,7 +385,7 @@ namespace Otherworld.Graphics
 
         public void Draw (Texture2D texture, Rectangle rectangle, Color color)
         {
-            Assert.IsNotNull (texture);
+            Otherworld.Assert.IsNotNull (texture);
 
             SpriteBatchItem item = batcher.CreateBatchItem();
 

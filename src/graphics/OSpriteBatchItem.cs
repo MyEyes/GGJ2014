@@ -6,7 +6,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Otherworld.Utilities;
 
-namespace Otherworld.Graphics
+namespace Vest.graphics
 {
     public class SpriteBatchItem
     {

@@ -63,17 +63,18 @@ namespace Vest.State
             }
 
             KeyboardState keyboard = Keyboard.GetState();
-            if (keyboard.IsKeyDown(Keys.W))
+            GamePadState pad = GamePad.GetState (PlayerIndex.One);
+            if (keyboard.IsKeyDown(Keys.W) || pad.DPad.Up == ButtonState.Pressed)
                 masked += 0.1f;
-            if (keyboard.IsKeyDown(Keys.S))
+            if (keyboard.IsKeyDown (Keys.S) || pad.DPad.Down == ButtonState.Pressed)
                 masked -= 0.1f;
-            if (keyboard.IsKeyDown(Keys.D1))
+            if (keyboard.IsKeyDown (Keys.D1) || pad.IsButtonDown (Buttons.A))
                 distortionEffect.CurrentTechnique = distortionEffect.Techniques["Technique1"];
-            if (keyboard.IsKeyDown(Keys.D2))
+            if (keyboard.IsKeyDown(Keys.D2) || pad.IsButtonDown(Buttons.B))
                 distortionEffect.CurrentTechnique = distortionEffect.Techniques["Technique2"];
-            if (keyboard.IsKeyDown(Keys.D3))
+            if (keyboard.IsKeyDown (Keys.D3) || pad.IsButtonDown (Buttons.Y))
                 distortionEffect.CurrentTechnique = distortionEffect.Techniques["Technique3"];
-            if (keyboard.IsKeyDown(Keys.D4))
+            if (keyboard.IsKeyDown (Keys.D4) || pad.IsButtonDown (Buttons.X))
                 distortionEffect.CurrentTechnique = distortionEffect.Techniques["Technique4"];
             oldMouse = mouse;
         }

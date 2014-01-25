@@ -11,9 +11,9 @@ using System.Text;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-using Otherworld.Graphics;
 using Otherworld.Utilities;
 using Spine;
+using Vest.graphics;
 
 namespace Vest
 {
@@ -26,6 +26,7 @@ namespace Vest
         }
 
         public AnimationState AnimState { get; private set; }
+        public AnimationStateData AnimData { get; private set; }
 
         private ManualCamera2D cam;
         private Skeleton skeleton;
@@ -52,7 +53,7 @@ namespace Vest
             this.cam = cam;
         }
 
-        protected void LoadSkeleton(string skeletonPath, String decalsPath)
+        public void LoadSkeleton(string skeletonPath, String decalsPath)
         {
             SkeletonJson json = new SkeletonJson (new DecalAttachmentLoader (decalsPath));
             SkeletonData skeletonData = json.ReadSkeletonData (skeletonPath);
@@ -63,8 +64,8 @@ namespace Vest
             skeletonRenderer = new SkeletonRenderer (G.Gfx);
             skeletonRenderer.PremultipliedAlpha = true;
 
-            AnimationStateData animStateData = new AnimationStateData (skeletonData);
-            AnimState = new AnimationState (animStateData);
+            AnimData = new AnimationStateData (skeletonData);
+            AnimState = new AnimationState (AnimData);
         }
     }
 }

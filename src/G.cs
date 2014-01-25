@@ -8,12 +8,16 @@ using Microsoft.Xna.Framework.GamerServices;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
+using Vest.state;
 using Vest.State;
 
 namespace Vest
 {
     public class G : Microsoft.Xna.Framework.Game
     {
+        public const int SCREEN_WIDTH = 1280;
+        public const int SCREEN_HEIGHT = 720;
+        
         public static GraphicsDevice Gfx;
         public static StateManager State;
         public static ContentManager Content;
@@ -23,6 +27,12 @@ namespace Vest
         public G()
         {
             graphicsDeviceManager = new GraphicsDeviceManager(this);
+            graphicsDeviceManager.PreferredBackBufferWidth = SCREEN_WIDTH;
+            graphicsDeviceManager.PreferredBackBufferHeight = SCREEN_HEIGHT;
+            graphicsDeviceManager.ApplyChanges();
+
+            this.IsMouseVisible = true;
+            
             base.Content.RootDirectory = "Content";
         }
 
@@ -35,7 +45,8 @@ namespace Vest
         {
             var states = new Dictionary<string, BaseGameState>
             {
-                {"test", new TestState()}
+                {"test", new TestState()},
+                {"jason", new JasonState()}
             };
 
             G.State = new StateManager (states);

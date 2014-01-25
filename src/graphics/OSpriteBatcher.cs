@@ -37,7 +37,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
 using Otherworld.Utilities;
 
-namespace Otherworld.Graphics
+namespace Vest.graphics
 {
     // #region License
     // /*
