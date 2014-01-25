@@ -13,5 +13,6 @@ namespace Vest
         public float Radius;
         public Color Color;
         public Texture2D Mask;
+        public bool Enabled = true;
     }
 }

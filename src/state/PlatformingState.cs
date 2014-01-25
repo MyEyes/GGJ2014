@@ -64,7 +64,7 @@ namespace Vest.state
             // Move player light to the player
             playerLight.Position = player.position + new Vector2(0, -50);
             
-            level.Update();
+            level.Update (player);
             playerController.Update();
             player.Update (dt);
         }
@@ -82,6 +82,9 @@ namespace Vest.state
 
             helper.DrawPolys(player.collisionPolys, cam.Transformation, Color.Green);
             helper.DrawPolys (level.Collision, cam.Transformation, Color.Red);
+            level.Triggers.ForEach (t => {
+                helper.DrawPolys (t.collisionPolys, cam.Transformation, Color.Blue);
+            });
         }
     }
 }

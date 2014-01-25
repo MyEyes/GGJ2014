@@ -116,6 +116,7 @@
     <Compile Include="Assert.cs" />
     <Compile Include="DecalAttachmentLoader.cs" />
     <Compile Include="Edge.cs" />
+    <Compile Include="EditorViewController.cs" />
     <Compile Include="GameObject.cs" />
     <Compile Include="graphics\OSpriteBatch.cs" />
     <Compile Include="graphics\OSpriteBatcher.cs" />
@@ -128,11 +129,13 @@
     <Compile Include="PhysicsSpineGameObject.cs" />
     <Compile Include="PlayerController.cs" />
     <Compile Include="Polygon.cs" />
+    <Compile Include="PolyFactory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="G.cs" />
     <Compile Include="SpineGameObject.cs" />
     <Compile Include="state\BaseGameState.cs" />
+    <Compile Include="state\EditorState.cs" />
     <Compile Include="state\PlatformingState.cs" />
     <Compile Include="state\JasonState.cs" />
     <Compile Include="state\TestState.cs" />

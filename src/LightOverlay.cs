@@ -53,30 +53,35 @@ namespace Vest
 
         public void DrawLights()
         {
-            if (Lights.Count < 1)
+            var enabledLights = Lights
+                .Where (l => l.Enabled)
+                .ToList();
+
+            if (enabledLights.Count < 1)
                 return;
+
             G.Gfx.SetRenderTarget(_target);
             G.Gfx.Clear(AmbientColor);
             G.Gfx.BlendState = BlendState.Additive;
             G.Gfx.RasterizerState = RasterizerState.CullNone;
 
-            VertexPositionColorTexture[] vertices = new VertexPositionColorTexture[Lights.Count * 6];
-            for (int x = 0, v = 0; x < Lights.Count; x++, v += 6)
+            VertexPositionColorTexture[] vertices = new VertexPositionColorTexture[enabledLights.Count * 6];
+            for (int x = 0, v = 0; x < enabledLights.Count; x++, v += 6)
             {
-                vertices[v] = new VertexPositionColorTexture(new Vector3(Lights[x].Position.X - Lights[x].Radius, Lights[x].Position.Y - Lights[x].Radius, Lights[x].Radius), Lights[x].Color, new Vector2(0, 0));
-                vertices[v+1] = new VertexPositionColorTexture(new Vector3(Lights[x].Position.X - Lights[x].Radius, Lights[x].Position.Y + Lights[x].Radius, Lights[x].Radius), Lights[x].Color, new Vector2(0, 1));
-                vertices[v+2] = new VertexPositionColorTexture(new Vector3(Lights[x].Position.X + Lights[x].Radius, Lights[x].Position.Y + Lights[x].Radius, Lights[x].Radius), Lights[x].Color, new Vector2(1, 1));
+                vertices[v] = new VertexPositionColorTexture(new Vector3(enabledLights[x].Position.X - enabledLights[x].Radius, enabledLights[x].Position.Y - enabledLights[x].Radius, enabledLights[x].Radius), enabledLights[x].Color, new Vector2(0, 0));
+                vertices[v+1] = new VertexPositionColorTexture(new Vector3(enabledLights[x].Position.X - enabledLights[x].Radius, enabledLights[x].Position.Y + enabledLights[x].Radius, enabledLights[x].Radius), enabledLights[x].Color, new Vector2(0, 1));
+                vertices[v+2] = new VertexPositionColorTexture(new Vector3(enabledLights[x].Position.X + enabledLights[x].Radius, enabledLights[x].Position.Y + enabledLights[x].Radius, enabledLights[x].Radius), enabledLights[x].Color, new Vector2(1, 1));
 
-                vertices[v+3] = new VertexPositionColorTexture(new Vector3(Lights[x].Position.X - Lights[x].Radius, Lights[x].Position.Y - Lights[x].Radius, Lights[x].Radius), Lights[x].Color, new Vector2(0, 0));
-                vertices[v+4] = new VertexPositionColorTexture(new Vector3(Lights[x].Position.X + Lights[x].Radius, Lights[x].Position.Y + Lights[x].Radius, Lights[x].Radius), Lights[x].Color, new Vector2(1, 1));
-                vertices[v+5] = new VertexPositionColorTexture(new Vector3(Lights[x].Position.X + Lights[x].Radius, Lights[x].Position.Y - Lights[x].Radius, Lights[x].Radius), Lights[x].Color, new Vector2(1, 0));
+                vertices[v+3] = new VertexPositionColorTexture(new Vector3(enabledLights[x].Position.X - enabledLights[x].Radius, enabledLights[x].Position.Y - enabledLights[x].Radius, enabledLights[x].Radius), enabledLights[x].Color, new Vector2(0, 0));
+                vertices[v+4] = new VertexPositionColorTexture(new Vector3(enabledLights[x].Position.X + enabledLights[x].Radius, enabledLights[x].Position.Y + enabledLights[x].Radius, enabledLights[x].Radius), enabledLights[x].Color, new Vector2(1, 1));
+                vertices[v+5] = new VertexPositionColorTexture(new Vector3(enabledLights[x].Position.X + enabledLights[x].Radius, enabledLights[x].Position.Y - enabledLights[x].Radius, enabledLights[x].Radius), enabledLights[x].Color, new Vector2(1, 0));
             }
             int count=0;
             int start=0;
-            Texture2D lastTex=Lights[0].Mask;
-            for(int x=0; x<Lights.Count; x++)
+            Texture2D lastTex=enabledLights[0].Mask;
+            for(int x=0; x<enabledLights.Count; x++)
             {
-                if (lastTex != Lights[x].Mask)
+                if (lastTex != enabledLights[x].Mask)
                 {
                     _lightEffect.Parameters["Texture"].SetValue(lastTex == null ? defaultTex : lastTex);
                     _lightEffect.CurrentTechnique.Passes[0].Apply();
@@ -85,9 +90,9 @@ namespace Vest
                     count = 0;
                 }
                 count += 2;
-                if (x == Lights.Count - 1)
+                if (x == enabledLights.Count - 1)
                 {
-                    _lightEffect.Parameters["Texture"].SetValue(Lights[x].Mask == null ? defaultTex : Lights[x].Mask);
+                    _lightEffect.Parameters["Texture"].SetValue(enabledLights[x].Mask == null ? defaultTex : enabledLights[x].Mask);
                     _lightEffect.CurrentTechnique.Passes[0].Apply();
                     G.Gfx.DrawUserPrimitives<VertexPositionColorTexture>(PrimitiveType.TriangleList, vertices, start, count);
                 }

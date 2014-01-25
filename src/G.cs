@@ -10,6 +10,7 @@ using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
 using Vest.state;
 using Vest.State;
+using Vest.state.Vest.state;
 
 namespace Vest
 {
@@ -21,6 +22,7 @@ namespace Vest
         public static GraphicsDevice Gfx;
         public static StateManager State;
         public static ContentManager Content;
+        public static IntPtr Window;
 
         private GraphicsDeviceManager graphicsDeviceManager;
 
@@ -47,12 +49,14 @@ namespace Vest
             {
                 {"test", new TestState()},
                 {"jason", new JasonState()},
-                {"platform", new PlatformingState()}
+                {"platform", new PlatformingState()},
+                {"edit", new EditState()}
             };
 
             G.State = new StateManager (states);
             G.Gfx = graphicsDeviceManager.GraphicsDevice;
             G.Content = base.Content;
+            G.Window = base.Window.Handle;
 
             // Used by Spine to know that positive y goes vertically down on the screen
             Spine.Bone.yDown = true;

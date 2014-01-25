@@ -12,7 +12,7 @@ namespace Vest
 {
     public class PlayerController
     {
-        private const float MOVE_SPEED = 1;
+        private const float MOVE_SPEED = 3;
 
         private LookDir lookDir = LookDir.Right;
         private GamePadState currPadState;
