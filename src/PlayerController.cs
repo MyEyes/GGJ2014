@@ -12,7 +12,7 @@ namespace Vest
 {
     public class PlayerController
     {
-        private const float MOVE_SPEED = 2;
+        private const float MOVE_SPEED = 1;
 
         private LookDir lookDir = LookDir.Right;
         private GamePadState currPadState;
@@ -48,13 +48,13 @@ namespace Vest
             {
                 idleTimer.Stop();
                 player.Move (moveVector * MOVE_SPEED);
-                player.UpdateAnim ("run", lookDir = LookDir.Right);
+                player.UpdateAnim ("walk", lookDir = LookDir.Right);
             }
             else if (moveVector.X < 0)
             {
                 idleTimer.Stop();
                 player.Move (moveVector * MOVE_SPEED);
-                player.UpdateAnim ("run", lookDir = LookDir.Left);
+                player.UpdateAnim ("walk", lookDir = LookDir.Left);
             }
             else if (moveVector == Vector2.Zero)
             {

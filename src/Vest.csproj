@@ -120,6 +120,8 @@
     <Compile Include="graphics\OSpriteBatch.cs" />
     <Compile Include="graphics\OSpriteBatcher.cs" />
     <Compile Include="graphics\OSpriteBatchItem.cs" />
+    <Compile Include="Light.cs" />
+    <Compile Include="LightOverlay.cs" />
     <Compile Include="ManualCamera2D.cs" />
     <Compile Include="PhysicsSpineGameObject.cs" />
     <Compile Include="PlayerController.cs" />
