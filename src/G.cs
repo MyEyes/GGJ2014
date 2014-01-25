@@ -12,7 +12,7 @@ using Otherworld.State;
 
 namespace Vest
 {
-    public class Game1 : Microsoft.Xna.Framework.Game
+    public class G : Microsoft.Xna.Framework.Game
     {
         public static GraphicsDevice Gfx;
         public static StateManager State;
@@ -20,7 +20,7 @@ namespace Vest
 
         private GraphicsDeviceManager graphicsDeviceManager;
 
-        public Game1()
+        public G()
         {
             graphicsDeviceManager = new GraphicsDeviceManager(this);
             base.Content.RootDirectory = "Content";
@@ -38,9 +38,9 @@ namespace Vest
                 {"test", new TestState()}
             };
 
-            Game1.State = new StateManager (states);
-            Game1.Gfx = graphicsDeviceManager.GraphicsDevice;
-            Game1.Content = base.Content;
+            G.State = new StateManager (states);
+            G.Gfx = graphicsDeviceManager.GraphicsDevice;
+            G.Content = base.Content;
 
             // Used by Spine to know that positive y goes vertically down on the screen
             Spine.Bone.yDown = true;

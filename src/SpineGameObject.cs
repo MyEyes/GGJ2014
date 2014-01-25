@@ -60,7 +60,7 @@ namespace Vest
             skeleton = new Skeleton (skeletonData);
             skeleton.SetSlotsToSetupPose ();
 
-            skeletonRenderer = new SkeletonRenderer (Game1.Gfx);
+            skeletonRenderer = new SkeletonRenderer (G.Gfx);
             skeletonRenderer.PremultipliedAlpha = true;
 
             AnimationStateData animStateData = new AnimationStateData (skeletonData);
