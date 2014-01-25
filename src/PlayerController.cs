@@ -5,17 +5,20 @@ using System.Text;
 using System.Timers;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
+using Otherworld.Utilities;
+using Spine;
 
 namespace Vest
 {
     public class PlayerController
     {
+        private const float MOVE_SPEED = 2;
+
+        private LookDir lookDir = LookDir.Right;
         private GamePadState currPadState;
         private GamePadState prevPadState;
         private readonly SpineGameObject player;
         private readonly Timer idleTimer;
-
-        private const float MOVE_SPEED = 2;
 
         public PlayerController (SpineGameObject player)
         {
@@ -36,14 +39,25 @@ namespace Vest
             currPadState = GamePad.GetState (PlayerIndex.One);
 
             Vector2 moveVector = Vector2.Zero;
-            if (isButtonDown (currPadState.DPad.Up)) moveVector.Y = -1;
-            if (isButtonDown (currPadState.DPad.Down)) moveVector.Y = 1;
             if (isButtonDown (currPadState.DPad.Left)) moveVector.X = -1;
             if (isButtonDown (currPadState.DPad.Right)) moveVector.X = 1;
 
-            if (moveVector != Vector2.Zero)
+            if (moveVector.X > 0)
             {
+                idleTimer.Stop();
                 player.Move (moveVector * MOVE_SPEED);
+                player.UpdateAnim ("run", lookDir = LookDir.Right);
+            }
+            else if (moveVector.X < 0)
+            {
+                idleTimer.Stop();
+                player.Move (moveVector * MOVE_SPEED);
+                player.UpdateAnim ("run", lookDir = LookDir.Left);
+            }
+            else if (moveVector == Vector2.Zero)
+            {
+                idleTimer.Start();
+                player.UpdateAnim ("idle", lookDir);
             }
 
             prevPadState = currPadState;

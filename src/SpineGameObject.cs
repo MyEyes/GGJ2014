@@ -27,6 +27,7 @@ namespace Vest
 
         public AnimationState AnimState { get; private set; }
         public AnimationStateData AnimData { get; private set; }
+        public bool FlipX { set { skeleton.FlipX = value; }}
 
         private ManualCamera2D cam;
         private Skeleton skeleton;
@@ -51,6 +52,18 @@ namespace Vest
         public void Load (ManualCamera2D cam)
         {
             this.cam = cam;
+        }
+
+        public void UpdateAnim (String newAnim, LookDir dir)
+        {
+            Boolean flipAnim = dir == LookDir.Left;
+
+            if (newAnim != currentAnim || flipAnim != skeleton.FlipX)
+            {
+                AnimState.SetAnimation (0, newAnim, true);
+                skeleton.FlipX = flipAnim;
+                currentAnim = newAnim;
+            }
         }
 
         public void LoadSkeleton(string skeletonPath, String decalsPath)

@@ -58,4 +58,10 @@ namespace Vest
                 collisionPolys[x].Move (relative);
         }
     }
+
+    public enum LookDir
+    {
+        Left,
+        Right
+    }
 }
