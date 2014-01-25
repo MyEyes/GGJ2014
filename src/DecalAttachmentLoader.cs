@@ -79,7 +79,7 @@ namespace Vest
 
         private Texture2D getTexture (String name)
         {
-            return Game1.Content.Load<Texture2D> (Path.Combine (root, name));
+            return G.Content.Load<Texture2D> (Path.Combine (root, name));
         }
     }
 }
