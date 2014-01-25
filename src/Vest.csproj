@@ -90,6 +90,12 @@
     <Reference Include="mscorlib">
       <Private>False</Private>
     </Reference>
+    <Reference Include="spine-csharp_xna">
+      <HintPath>..\libs\spine-csharp_xna.dll</HintPath>
+    </Reference>
+    <Reference Include="spine-xna">
+      <HintPath>..\libs\spine-xna.dll</HintPath>
+    </Reference>
     <Reference Include="System">
       <Private>False</Private>
     </Reference>
@@ -107,9 +113,34 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assert.cs" />
+    <Compile Include="Edge.cs" />
+    <Compile Include="GameObject.cs" />
+    <Compile Include="graphics\OSpriteBatch.cs" />
+    <Compile Include="graphics\OSpriteBatcher.cs" />
+    <Compile Include="graphics\OSpriteBatchItem.cs" />
+    <Compile Include="Polygon.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Game1.cs" />
+    <Compile Include="state\BaseGameState.cs" />
+    <Compile Include="state\TestSTate.cs" />
+    <Compile Include="state\StateManager.cs" />
+    <Compile Include="utilities\Assert.cs" />
+    <Compile Include="utilities\Boxed.cs" />
+    <Compile Include="utilities\CollectionHelpers.cs" />
+    <Compile Include="utilities\EnumerableHelper.cs" />
+    <Compile Include="utilities\FileHelper.cs" />
+    <Compile Include="utilities\GeomHelper.cs" />
+    <Compile Include="utilities\MathHelpers.cs" />
+    <Compile Include="utilities\RandomHelpers.cs" />
+    <Compile Include="utilities\Range.cs" />
+    <Compile Include="utilities\SpineHelper.cs" />
+    <Compile Include="utilities\StringHelper.cs" />
+    <Compile Include="utilities\TaskHelper.cs" />
+    <Compile Include="utilities\UriHelpers.cs" />
+    <Compile Include="utilities\VarTracker.cs" />
+    <Compile Include="utilities\XnaHelpers.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Game.ico" />
