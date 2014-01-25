@@ -6,7 +6,7 @@ using Microsoft.Xna.Framework;
 
 namespace Vest
 {
-    class Polygon
+    public class Polygon
     {
         bool convex;
         Edge[] edges;
