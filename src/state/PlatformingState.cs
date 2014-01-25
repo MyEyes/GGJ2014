@@ -27,7 +27,7 @@ namespace Vest.state
         PhysicsSpineGameObject player;
         PlayerController playerController;
         
-        TestLevel level;
+        VestLevel level;
         Light playerLight;
         
         public override void Load()

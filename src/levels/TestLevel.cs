@@ -12,7 +12,7 @@ namespace Vest.levels
     {
         ManualCamera2D cam;
 
-        public void Load(ManualCamera2D cam)
+        public override void Load(ManualCamera2D cam)
         {
             this.cam = cam;
 
@@ -35,7 +35,7 @@ namespace Vest.levels
             Collision.ForEach (p => p.Move (new Vector2 (500, 500)));
         }
 
-        public void Update()
+        public override void Update()
         {
             Lights.SetCam (cam);
         }

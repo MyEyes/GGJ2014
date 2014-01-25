@@ -9,9 +9,10 @@ namespace Vest.levels
 {
     public abstract class VestLevel
     {
+        public Vector2 PlayerStartPos;
         public List<GameObject> GameObjects;
         public LightOverlay Lights;
-        public List<Polygon> Collision = new List<Polygon> ();
+        public List<Polygon> Collision = new List<Polygon>();
 
         public Light CLight(float radius, Color color, Texture2D mask, Vector2 position)
         {
@@ -25,6 +26,9 @@ namespace Vest.levels
             Lights.AddLight (light);
             return light;
         }
+
+        public abstract void Load (ManualCamera2D cam);
+        public abstract void Update();
 
         public void CreateTrigger()
         {
