@@ -129,6 +129,7 @@
     <Compile Include="utilities\Assert.cs" />
     <Compile Include="utilities\Boxed.cs" />
     <Compile Include="utilities\CollectionHelpers.cs" />
+    <Compile Include="utilities\DrawHelper.cs" />
     <Compile Include="utilities\EnumerableHelper.cs" />
     <Compile Include="utilities\FileHelper.cs" />
     <Compile Include="utilities\GeomHelper.cs" />
