@@ -11,6 +11,24 @@ namespace Vest
         Polygon[] collisionPolys;
         Vector2 position;
 
+        //Polygons are assumed to be relative to the characters origin
+        //So we move them by how much the origin of the object
+        //Is away from the worlds actual origin
+        public GameObject(Vector2 position, Polygon[] polygons)
+        {
+            collisionPolys = polygons;
+            this.position = position;
+            for (int x = 0; x < collisionPolys.Length; x++)
+                collisionPolys[x].Move(position);
+        }
+
+        public void Move(Vector2 diff)
+        {
+            position += diff;
+            for (int x = 0; x < collisionPolys.Length; x++)
+                collisionPolys[x].Move(diff);
+        }
+
         public bool Collides(GameObject other)
         {
             for (int x = 0; x < collisionPolys.Length; x++)
