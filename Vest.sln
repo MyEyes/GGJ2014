@@ -1,9 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Vest", "Vest\Vest\Vest.csproj", "{BAF47D96-9EF1-43C9-98FE-F25B9F2636A4}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Vest", "src\Vest.csproj", "{BAF47D96-9EF1-43C9-98FE-F25B9F2636A4}"
 EndProject
-Project("{96E2B04D-8817-42C6-938A-82C39BA4D311}") = "VestContent", "Vest\VestContent\VestContent.contentproj", "{AB386A1B-908B-4601-88CD-B20C628016B0}"
+Project("{96E2B04D-8817-42C6-938A-82C39BA4D311}") = "VestContent", "content\VestContent.contentproj", "{AB386A1B-908B-4601-88CD-B20C628016B0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
