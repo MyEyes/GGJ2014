@@ -29,7 +29,7 @@ namespace Vest.state
             player = new SpineGameObject (Vector2.Zero, new Polygon[0]);
             playerController = new PlayerController (player);
 
-            cam.Zoom = 1f;
+            cam.Zoom = 2f;
             cam.CenterOnPoint (player.position - new Vector2(0, 50));
         }
 

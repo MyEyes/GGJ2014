@@ -44,10 +44,17 @@ namespace Vest
 
         public bool Collides(GameObject other)
         {
+            return Collides (other.collisionPolys);
+        }
+
+        public bool Collides(IEnumerable<Polygon> polys)
+        {
+            // I need this for testing :<
             for (int x = 0; x < collisionPolys.Length; x++)
-                for (int y = 0; y < other.collisionPolys.Length; y++)
-                    if (collisionPolys[x].Intersects(other.collisionPolys[y]))
+                foreach (var poly in polys)
+                    if (collisionPolys[x].Intersects (poly))
                         return true;
+                    
             return false;
         }
 

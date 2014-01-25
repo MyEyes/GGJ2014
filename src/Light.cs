@@ -7,7 +7,7 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace Vest
 {
-    struct Light
+    public class Light
     {
         public Vector2 Position;
         public float Radius;

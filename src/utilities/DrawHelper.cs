@@ -23,6 +23,11 @@ namespace Vest.utilities
             be.Projection = Matrix.CreateTranslation(-device.Viewport.Width / 2 - 0.5f, -device.Viewport.Height / 2 - 0.5f, 0) * Matrix.CreateScale(2 / ((float)device.Viewport.Width), -2 / ((float)device.Viewport.Height), 1); ;
         }
 
+        public void DrawPolys(List<Polygon> polygons, Matrix View, Color color)
+        {
+            DrawPolys (polygons.ToArray(), View, color);
+        }
+
         public void DrawPolys(Polygon[] polygons, Matrix View, Color color)
         {
             int len = 0;

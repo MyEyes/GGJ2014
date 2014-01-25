@@ -3,23 +3,32 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework;
+using Vest.levels;
+using Vest.state;
 
 namespace Vest
 {
-    class PhysicsSpineGameObject:SpineGameObject
+    class PhysicsSpineGameObject
+        : SpineGameObject
     {
-        const float gravity = 300f;
-        const float JumpStrength = -0.6f*gravity;
-        float ySpeed = 0;
-        //TODO: Hack, should be a reference to the level instead
-        public GameObject[] collisions;
+        const float GRAVITY = 300f;
+        const float JUMP_STRENGTH = -0.6f * GRAVITY;
+
+        public bool OnGround { get; private set; }
+        
+        VestLevel level;
         Vector2 toMove = Vector2.Zero;
-        public bool _onGround = false;
+        float ySpeed = 0;
 
         public PhysicsSpineGameObject(Vector2 position, Polygon[] polys)
             : base(position, polys)
         {
 
+        }
+
+        public void SetLevel (VestLevel level)
+        {
+            this.level = level;
         }
 
         public override void Move(Vector2 diff)
@@ -29,49 +38,35 @@ namespace Vest
 
         public void Jump()
         {
-            ySpeed = JumpStrength;
+            ySpeed = JUMP_STRENGTH;
         }
 
         public override void Update(float dt)
         {
             base.Update(dt);
-
             dt /= 1000f;
+
             //Move player controlled
             base.Move(toMove);
+
             //Move gravity
-            if (Collides())
+            if (level.IsColliding (this))
             {
                 base.Move(new Vector2(0, -Math.Abs(toMove.X)));
-                if (Collides())
+                if (level.IsColliding (this))
                     base.Move(-toMove + new Vector2(0, Math.Abs(toMove.X)));
             }
-            ySpeed += gravity * dt;
-            _onGround = false;
+            ySpeed += GRAVITY * dt;
+            OnGround = false;
             base.Move(new Vector2(0, ySpeed*dt));
-            if (Collides())
+            if (level.IsColliding (this))
             {
                 base.Move(new Vector2(0, -ySpeed * dt));
                 if (ySpeed > 0)
-                    _onGround = true;
+                    OnGround = true;
                 ySpeed = 0;
             }
             toMove = Vector2.Zero;
-        }
-
-        private bool Collides()
-        {
-            for (int x = 0; x < collisions.Length; x++)
-            {
-                if (Collides(collisions[x]))
-                    return true;
-            }
-            return false;
-        }
-
-        public bool OnGround
-        {
-            get { return _onGround; }
         }
     }
 }

@@ -8,7 +8,7 @@ using Vest.graphics;
 
 namespace Vest
 {
-    class LightOverlay
+    public class LightOverlay
     {
         RenderTarget2D _target;
         public List<Light> Lights;
