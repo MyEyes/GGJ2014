@@ -40,8 +40,16 @@ namespace Vest
             idleTimer = new Timer (new Random ().Next (3000, 8000));
             idleTimer.Elapsed += (s, a) =>
             {
-                player.AnimState.AddAnimation (0, "idle2", false, 0);
-                player.AnimState.AddAnimation (0, "idle", true, 0);
+                if (State == PlayerState.CrawlIdle)
+                {
+                    player.AnimState.AddAnimation (0, "crawl_idle2", false, 0);
+                    player.AnimState.AddAnimation (0, "crawl_idle", true, 0);
+                }
+                else if (State == PlayerState.Idle)
+                {
+                    player.AnimState.AddAnimation (0, "idle2", false, 0);
+                    player.AnimState.AddAnimation (0, "idle", true, 0);
+                }
                 idleTimer.Interval = new Random ().Next (3000, 8000);
             };
 
