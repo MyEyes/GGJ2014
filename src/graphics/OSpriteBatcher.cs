@@ -200,15 +200,16 @@ namespace Vest.graphics
             // This is slow as balls, but I'm getting it done for the JAM
             for (var i = 0; i < _batchItemList.Count; i++)
             {
-                if (_batchItemList[i] is OSpriteBatchGroup)
+                var group = _batchItemList[i] as OSpriteBatchGroup;
+                if (group != null)
                 {
-                    var group = (OSpriteBatchGroup)_batchItemList[i];
                     _batchItemList.RemoveAt (i);
 
                     foreach (SpriteBatchItem item in group.GroupItems)
                     {
                         _batchItemList.Insert (i++, item);
                     }
+                    i--;
                 }
             }
         }
