@@ -57,7 +57,7 @@ namespace Vest.state
                     new Vector2(20, -140)
                 })});
 
-                currentLevel = new CombiLevel(cam, branch1Good, branch1Evil);
+                currentLevel = new CombiLevel(player, cam, branch1Good, branch1Evil);
                 player.SetLevel (currentLevel);
                 player.position = new Vector2 (1848, 400);//3922, 400);
                 playerController = new PlayerController (player);
@@ -85,7 +85,7 @@ namespace Vest.state
             {
 
                 G.Gfx.Clear (Color.Black);
-                currentLevel.Draw (batch, cam, player);
+                currentLevel.Draw (batch, cam);
             }
         }
     }

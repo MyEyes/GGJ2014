@@ -6,95 +6,74 @@ using Vest.graphics;
 using Vest.levels;
 using Vest.State;
 using Vest.utilities;
-using Microsoft.Xna.Framework.Input;
+using Microsoft.Xna.Framework;
 
 namespace Vest.state
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Timers;
-    using Microsoft.Xna.Framework;
-    using Microsoft.Xna.Framework.Graphics;
-    using Otherworld.Utilities;
-
-    namespace Vest.state
+    public class FlipGameState
+        : BaseGameState
     {
-        public class FlipGameState
-            : BaseGameState
+        OSpriteBatch batch;
+        DrawHelper helper;
+        ManualCamera2D cam;
+        Vector2 camPos;
+
+        Player player;
+        PlayerController playerController;
+
+        CombiLevel currentLevel;
+        //VestLevel currentLevel;
+
+        public FlipGameState()
+            : base(false, true)
         {
-            OSpriteBatch batch;
-            DrawHelper helper;
-            ManualCamera2D cam;
-            Vector2 camPos;
+        }
 
-            Player player;
-            PlayerController playerController;
+        public override void Load()
+        {
+            batch = new OSpriteBatch(G.Gfx);
+            helper = new DrawHelper(G.Gfx);
 
-            CombiLevel currentLevel;
-            int transitionLight = 255;
-            //VestLevel currentLevel;
+            cam = new ManualCamera2D(G.SCREEN_WIDTH, G.SCREEN_HEIGHT, G.Gfx);
 
-            public FlipGameState()
-                : base (false, true)
-            {
-            }
-
-            public override void Load()
-            {
-                batch = new OSpriteBatch (G.Gfx);
-                helper = new DrawHelper (G.Gfx);
-
-                cam = new ManualCamera2D (G.SCREEN_WIDTH, G.SCREEN_HEIGHT, G.Gfx);
-
-                currentLevel = new CombiLevel1(cam);
-
-                player = new Player (Vector2.Zero, new Polygon[] {new Polygon (new Vector2[] {
+            player = new Player(Vector2.Zero, new Polygon[] {new Polygon (new Vector2[] {
                     new Vector2(20, 0),
                     new Vector2 (-20, 0),
                     new Vector2 (-20, -140),
                     new Vector2(20, -140)
                 })});
 
-                player.SetLevel (currentLevel);
-                player.position = new Vector2(4090, 400);
-                playerController = new PlayerController (player);
+            currentLevel = new CombiLevel1(cam, player);
 
-                cam.Zoom = 1f;
-                cam.CenterOnPoint (camPos = player.position);
-            }
+            player.SetLevel(currentLevel);
+            player.position = new Vector2(4090, 400);
+            playerController = new PlayerController(player);
 
-            public override void Activate()
-            {
-            }
+            cam.Zoom = 1f;
+            cam.CenterOnPoint(camPos = player.position);
+        }
 
-            public override void Update(float dt)
-            {
-                currentLevel.Update(dt);
-                currentLevel.Update (player);
-                playerController.Update ();
-                player.Update (dt);
-                
+        public override void Activate()
+        {
+        }
 
-                KeyboardState state = Keyboard.GetState();
-                if (state.IsKeyDown(Keys.W))
-                    transitionLight++;
-                if (state.IsKeyDown(Keys.S))
-                    transitionLight--;
+        public override void Update(float dt)
+        {
+            currentLevel.Update(dt);
+            currentLevel.Update(player);
+            playerController.Update();
+            player.Update(dt);
 
-                (currentLevel as CombiLevel1).l.Color = new Color(transitionLight, transitionLight, transitionLight);
+            var targetPos = player.position - new Vector2(0, 200);
+            camPos = Vector2.Lerp(camPos, targetPos, 0.2f);
+            cam.CenterOnPoint(camPos);
+        }
 
-                var targetPos = player.position - new Vector2 (0, 200);
-                camPos = Vector2.Lerp (camPos, targetPos, 0.2f);
-                cam.CenterOnPoint (camPos);
-            }
-
-            public override void Draw()
-            {
-                G.Gfx.Clear (Color.Black);
-                currentLevel.Draw (batch, cam, player);
-            }
+        public override void Draw()
+        {
+            G.Gfx.Clear(Color.Black);
+            currentLevel.Draw(batch, cam);
         }
     }
-
 }
+

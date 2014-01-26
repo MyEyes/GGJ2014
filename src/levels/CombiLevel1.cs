@@ -10,24 +10,50 @@ namespace Vest.levels
 {
     class CombiLevel1:CombiLevel
     {
-        public Light l;
-        public CombiLevel1(ManualCamera2D cam)
-            : base (cam, new Level1Good (), new Level1Evil ())
+        public CombiLevel1(ManualCamera2D cam, Player player)
+            : base (player, cam, new Level1Good (), new Level1Evil ())
         {
-            l = new Light();
+            Light l = new Light();
             l.Radius = 200;
             l.Mask = G.Content.Load<Texture2D>("BreakMask Small 1");
             l.Color = Color.White;
             l.Enabled = true;
             l.Position = new Vector2(3320, 180);
             Blending.AddLight(l);
+
+            Light l2 = new Light();
+            l2.Radius = 130;
+            l2.Mask = G.Content.Load<Texture2D>("BreakMask Small 2");
+            l2.Color = Color.White;
+            l2.Enabled = false;
+            l2.Position = new Vector2(160, 320);
+            Blending.AddLight(l2);
+            
+            Light l3 = new Light();
+            l3.Radius = 800;
+            l3.Mask = G.Content.Load<Texture2D>("pillmask");
+            l3.Color = Color.White;
+            l3.Enabled = false;
+            l3.Position = new Vector2(560, 320);
+            Blending.AddLight(l3);
+
+            Light l4 = new Light();
+            l4.Radius = 800;
+            l4.Mask = G.Content.Load<Texture2D>("pillmask");
+            l4.Color = Color.White;
+            l4.Enabled = false;
+            l4.Position = new Vector2(2160, 320);
+            Blending.AddLight(l4);
+
             Level1Good l1g = Good as Level1Good;
+
+
             //Blending.AmbientColor = Color.White;
 
             SetTransition(TransitionType.ThresholdRead);
 
             Trigger trig = Good.CTrigger(true, true, new Polygon(new Vector2[] {new Vector2(3170, 433),new Vector2(3176, 350),new Vector2(3271, 353),new Vector2(3259, 431)}));
-            trig.Entered += delegate(GameObject obj) { SetTargetInsanity(1.1f);};// TaskHelper.SetDelay(3000, delegate { insanityChange = 0.8f / 1000f; SetTargetInsanity(-0.1f); }); TaskHelper.SetDelay(5000, delegate { l.Enabled = false; }); };
+            trig.Entered += delegate(GameObject obj) { SetTargetInsanity(1.1f); TaskHelper.SetDelay(3000, delegate { insanityChange = 0.8f / 1000f; SetTargetInsanity(-0.1f); }); TaskHelper.SetDelay(5000, delegate { l.Enabled = false; }); };
 
             trig = Good.CTrigger(true, true, new Polygon(new Vector2[] { new Vector2(1447, 437), new Vector2(1367, 435), new Vector2(1365, 343), new Vector2(1443, 346) }));
             trig.Entered += delegate(GameObject obj) { TaskHelper.SetDelay(100, delegate { l1g.light1.Enabled = false; l1g.light2.Enabled = false; }); TaskHelper.SetDelay(200, delegate { l1g.light1.Enabled = true; l1g.light2.Enabled = true; });
@@ -36,7 +62,13 @@ namespace Vest.levels
             };
 
             trig = Good.CTrigger(true, true, new Polygon(new Vector2[] { new Vector2(1053, 346), new Vector2(1122, 343), new Vector2(1123, 430), new Vector2(1064, 430) }));
-            trig.Entered += delegate(GameObject obj) { l1g.light1.Enabled = false; l1g.light2.Enabled = false; l1g.Lights.AmbientColor = new Color(50, 50, 50); TaskHelper.SetDelay(2000, delegate { l1g.Lights.AmbientColor = new Color(170, 170, 170); }); };
+            trig.Entered += delegate(GameObject obj) { l1g.light1.Enabled = false; l1g.light2.Enabled = false; };
+
+            trig = Good.CTrigger(true, true, new Polygon(new Vector2[] { new Vector2(653, 379), new Vector2(739, 381), new Vector2(738, 435), new Vector2(662, 433) }));
+            trig.Entered += delegate(GameObject obj) { SetTransition(TransitionType.RepeatRead); insanityChange = 0.4f / 1000f; SetTargetInsanity(1.1f); l2.Enabled = true; };
+
+            trig = Good.CTrigger(true, true, new Polygon(new Vector2[] { new Vector2(135, 342), new Vector2(192, 342), new Vector2(183, 433), new Vector2(142, 433) }));
+            trig.Entered += delegate(GameObject obj) { player.DisableInput++; insanity = 0; l2.Enabled = false; SetTransition(TransitionType.ThresholdRead); SetTargetInsanity(0); TaskHelper.SetDelay(2000, delegate { player.DisableInput--; SetState(LevelState.Evil); insanityChange = 0.4f / 1000f; SetTargetInsanity(1.1f); l3.Enabled = true; l4.Enabled = true; }); };
         }
     }
 }

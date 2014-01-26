@@ -16,6 +16,8 @@ float2 TextureSize=float2(1808,781);
 float2 MaskSize=float2(1280,1280);
 
 float masked;
+float period = 2*3.14;
+float speed=1;
 
 struct VertexShaderOutput
 {
@@ -139,7 +141,7 @@ float4 SmoothActivateBlendPixelShader(VertexShaderOutput input) : COLOR0
 float4 RepeatBlendReadPixelShader(VertexShaderOutput input) : COLOR0
 {
 	float4 factors = tex2D(maskTex, input.TexCoord);
-	factors.r=saturate(sin(2*time-2*3.14*factors.r));
+	factors.r=saturate(sin(speed*time-period*factors.r));
 	factors.r*=factors.g;
 	float4 color = (1-factors.r)*tex2D(darkTex, input.TexCoord) + factors.r*tex2D(lightTex, input.TexCoord);
     return color;

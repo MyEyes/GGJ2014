@@ -56,7 +56,7 @@ namespace Vest.state
                 view.SetSize (G.SCREEN_WIDTH, G.SCREEN_HEIGHT);
                 cam = new ManualCamera2D (G.SCREEN_WIDTH, G.SCREEN_HEIGHT, G.Gfx);
 
-                level = new CombiLevel1 (cam);
+                level = new CombiLevel1 (cam, null);
 
                 font = G.Content.Load<SpriteFont> ("font");
             }
@@ -98,7 +98,7 @@ namespace Vest.state
             public override void Draw()
             {
                 G.Gfx.Clear (Color.CornflowerBlue);
-                level.Draw (batch, cam, null);
+                level.Draw (batch, cam);
                 level.DrawDebug (batch, cam, helper);
 
                 if (bufferedPoly != null)

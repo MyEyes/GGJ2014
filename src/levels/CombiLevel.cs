@@ -38,9 +38,13 @@ namespace Vest.levels
         public float insanity;
         public float targetInsanity;
         public float insanityChange = 0.4f / 1000f;
+        public float repeatSpeed = 1;
+        public float repeatPeriod = 2 * 3.14f;
+        public Player player;
 
-        public CombiLevel (ManualCamera2D cam, VestLevel Good, VestLevel Bad)
+        public CombiLevel (Player player, ManualCamera2D cam, VestLevel Good, VestLevel Bad)
         {
+            this.player = player;
             this.Good = Good;
             Good.Load(cam);
             this.Bad = Bad;
@@ -120,7 +124,7 @@ namespace Vest.levels
             throw new Exception();
         }
 
-        public void Draw (OSpriteBatch batch, ManualCamera2D cam, Player player)
+        public void Draw (OSpriteBatch batch, ManualCamera2D cam)
         {
             Blending.SetCam(cam);
 
@@ -149,6 +153,8 @@ namespace Vest.levels
             BlendEffect.Parameters["strength"].SetValue(insanity);
             BlendEffect.Parameters["darkWorld"].SetValue(GoodTarget);
             BlendEffect.Parameters["mask"].SetValue(Blending.Target);
+            BlendEffect.Parameters["period"].SetValue(repeatPeriod);
+            BlendEffect.Parameters["speed"].SetValue(repeatSpeed);
 
             G.Gfx.Clear(Color.Black);
             internalBatch.Begin(SpriteSortMode.Immediate, BlendState.Opaque, null, null, null, BlendEffect, Matrix.Identity);
