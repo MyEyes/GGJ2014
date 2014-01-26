@@ -9,7 +9,8 @@ namespace Vest.levels
 {
     class CombiLevel1:CombiLevel
     {
-        public CombiLevel1(ManualCamera2D cam):base(cam, new Branch1Evil(), new Branch1())
+        public CombiLevel1(ManualCamera2D cam)
+            : base (cam, new Level1Good (), new Level1Evil ())
         {
             Light l = new Light();
             l.Radius = 400;
