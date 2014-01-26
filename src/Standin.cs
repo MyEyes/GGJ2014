@@ -30,7 +30,7 @@ namespace Vest
             Vector2 pos = position + new Vector2 (0, - texture.Height);
             SpriteEffects effects = flipX ? SpriteEffects.FlipHorizontally : SpriteEffects.None;
             
-            batch.Draw (texture, pos, null, Color.White, 0f, Vector2.Zero, 1f, effects, 0.7f);
+            batch.Draw (texture, pos, null, Color.White, 0f, Vector2.Zero, 1f, effects, 0.6f);
         }
     }
 }
