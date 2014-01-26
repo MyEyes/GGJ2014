@@ -140,13 +140,13 @@ namespace Vest
                 && !level.player.IsHiding
                 && level.State == LevelState.Evil
                 && (
-                    look == LookDir.Right && level.player.position.X > position.X ||
-                    look == LookDir.Left && level.player.position.X < position.X)
+                    look == LookDir.Right && (level.player.position.X > position.X && level.player.position.X < rightLimit) ||
+                    look == LookDir.Left && (level.player.position.X < position.X && level.player.position.X > leftLimit))
                 )
             {
                 idleTimer.Stop();
                 growlTimer.Stop();
-                //SoundHelper.PlaySound ("sounds/monster4");
+                SoundHelper.PlaySound ("sounds/monster4");
                 state = MonsterState.Chase;
             }
         }
