@@ -29,6 +29,8 @@ namespace Vest
         public bool IsInteracting;
         public bool IsJumping;
         public bool IsWalking;
+        public bool IsCrawling;
+        public bool IsStanding; 
 
         public PlayerController (Player player)
         {
@@ -48,18 +50,37 @@ namespace Vest
                 {PlayerState.None,          new Tuple<Action, Action> (null, null)},
                 {PlayerState.Idle,          new Tuple<Action, Action> (IdleStart, IdleUpdate)},
                 {PlayerState.Walk,          new Tuple<Action, Action> (WalkStart, WalkUpdate)},
-                {PlayerState.Interact,      new Tuple<Action, Action> (null, null)},
+                {PlayerState.CrawlIdle,     new Tuple<Action, Action> (CrawlIdleStart, CrawlIdleUpdate)},
+                {PlayerState.CrawlWalk,     new Tuple<Action, Action> (null, CrawlWalkUpdate)},
+                {PlayerState.Interact,      new Tuple<Action, Action> (InteractStart, null)},
                 {PlayerState.Jump,          new Tuple<Action, Action> (JumpStart, JumpUpdate)}
             };
 
             ChangeState (PlayerState.Idle);
         }
 
+        private void InteractStart()
+        {
+            var table = player.level
+                .GetObjects<Table>()
+                .OrderBy (t => Vector2.Distance (player.position, t.position))
+                .FirstOrDefault();
+
+            if (table == null)
+            {
+                ChangeState (LastState);
+                return;
+            }
+
+            player.position = table.position;
+            player.SetAnim ("hide", Look, false);
+        }
+
         private void JumpStart()
         {
             idleTimer.Stop ();
             player.Jump();
-            player.UpdateAnim ("jump", Look, false);
+            player.SetAnim ("jump", Look, false);
         }
 
         private void JumpUpdate()
@@ -73,6 +94,40 @@ namespace Vest
             player.Move (MoveDir * MOVE_SPEED);
         }
 
+        private void CrawlIdleStart()
+        {
+            idleTimer.Stop();
+            player.SetAnim ("crawl_down", Look, true);
+            player.AddAnim ("crawl_idle", Look, false);
+        }
+
+        private void CrawlIdleUpdate()
+        {
+            if (IsStanding)
+            {
+                player.SetAnim ("crawl_up", Look, true);
+                ChangeState (PlayerState.Idle);
+                return;
+            }
+            if (IsWalking)
+                ChangeState (PlayerState.CrawlWalk);
+        }
+
+        private void CrawlWalkUpdate()
+        {
+            if (IsStanding)
+            {
+                player.SetAnim ("crawl_up", Look, true);
+                ChangeState (PlayerState.Idle);
+                return;
+            }
+            if (!IsWalking)
+                ChangeState (PlayerState.CrawlIdle);
+
+            player.Move (MoveDir * MOVE_SPEED);
+            player.AddAnim ("crawl_walk", Look);
+        }
+
         private void WalkStart()
         {
             idleTimer.Stop ();
@@ -80,6 +135,11 @@ namespace Vest
         
         private void WalkUpdate()
         {
+            if (IsCrawling)
+            {
+                ChangeState (PlayerState.CrawlIdle);
+                return;
+            }
             if (!IsWalking)
             {
                 ChangeState (PlayerState.Idle);
@@ -92,21 +152,24 @@ namespace Vest
             }
 
             player.Move (MoveDir * MOVE_SPEED);
-            player.UpdateAnim ("walk", Look);
+            player.SetAnim ("walk", Look);
         }
 
         private void IdleStart()
         {
             idleTimer.Start();
             player.LookDir = Look;
-            player.UpdateAnim ("idle", player.LookDir);
-            Console.WriteLine ("Idle start");
+            player.SetAnim ("idle", player.LookDir);
         }
 
         private void IdleUpdate()
         {
-            if (IsWalking)
+            if (IsCrawling)
+                ChangeState (PlayerState.CrawlIdle);
+            else if (IsWalking)
                 ChangeState (PlayerState.Walk);
+            else if (IsJumping)
+                ChangeState (PlayerState.Jump);
         }
 
         public void Update()
@@ -114,17 +177,23 @@ namespace Vest
             Vector2 moveDir = Vector2.Zero;
             bool useInteract = false;
             bool useJump = false;
+            bool useCrawl = false;
+            bool useStand = false;
 
             currPadState = GamePad.GetState (PlayerIndex.One);
 
             if (isButtonDown (currPadState.DPad.Left))  moveDir.X = -1;
             if (isButtonDown (currPadState.DPad.Right)) moveDir.X = 1;
-            if (isButtonDown (currPadState.DPad.Up))    useInteract = true;
+            if (isButtonDown (currPadState.DPad.Down))  useCrawl = true;
+            if (isButtonDown (currPadState.DPad.Up))    useStand = true;
             if (isButtonDown (currPadState.Buttons.A))  useJump = true;
+            if (isButtonDown (currPadState.Buttons.X))  useInteract = true;
 
             IsInteracting = useInteract;
             IsJumping = useJump && player.OnGround;
             IsWalking = moveDir != Vector2.Zero;
+            IsCrawling = useCrawl;
+            IsStanding = useStand;
             MoveDir = moveDir;
 
             if (IsWalking)
@@ -155,6 +224,16 @@ namespace Vest
             player.AnimData.SetMix ("idle", "jump", 0.2f);
             player.AnimData.SetMix ("jump", "run", 0.3f);
             player.AnimData.SetMix ("jump", "idle", 0.3f);
+            
+            player.AnimData.SetMix ("idle", "crawl_down", 0.5f);
+            player.AnimData.SetMix ("idle2", "crawl_down", 0.5f);
+            player.AnimData.SetMix ("crawl_down", "crawl_idle", 0.5f);
+            player.AnimData.SetMix ("crawl_idle", "crawl_walk", 0.5f);
+            player.AnimData.SetMix ("crawl_down", "crawl_walk", 0.5f);
+            player.AnimData.SetMix ("crawl_down", "crawl_up", 0.5f);
+            player.AnimData.SetMix ("crawl_walk", "crawl_up", 0.5f);
+            player.AnimData.SetMix ("crawl_up", "idle", 0.5f);
+            player.AnimData.SetMix ("crawl_up", "idle", 0.5f);
         }
 
         protected void ChangeState(PlayerState newState)
@@ -191,6 +270,8 @@ namespace Vest
         Jump,
         Walk,
         Run,
-        Interact
+        Interact,
+        CrawlIdle,
+        CrawlWalk,
     }
 }

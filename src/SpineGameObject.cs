@@ -54,16 +54,29 @@ namespace Vest
             this.cam = cam;
         }
 
-        public void UpdateAnim (String newAnim, LookDir dir, bool loop=true)
+        public void SetAnim (String newAnim, LookDir dir, bool loop=true)
+        {
+            useAnim (newAnim, dir, loop, false);
+        }
+
+        public void AddAnim (String newAnim, LookDir dir, bool loop=true)
+        {
+            useAnim (newAnim, dir, loop, true);
+        }
+
+        private void useAnim (string newAnim, LookDir dir, bool loop, bool addNotSet)
         {
             Boolean flipAnim = dir == LookDir.Left;
 
             if (newAnim != currentAnim || flipAnim != skeleton.FlipX)
             {
-                //Console.WriteLine ("Switching to anim={0}, flipX={1}", newAnim, skeleton.FlipX);
-                AnimState.SetAnimation (0, newAnim, loop);
                 skeleton.FlipX = flipAnim;
                 currentAnim = newAnim;
+
+                if (addNotSet)
+                    AnimState.AddAnimation (0, newAnim, loop, 0);
+                else
+                    AnimState.SetAnimation (0, newAnim, loop);
             }
         }
 

@@ -6437,19 +6437,114 @@
 			}
 		},
 		"slots": {
+			"bassin": {
+				"attachment": [
+					{ "time": 0, "name": "legs/bassin" }
+				]
+			},
+			"body": {
+				"attachment": [
+					{ "time": 0, "name": "body/body" }
+				]
+			},
+			"brows": {
+				"attachment": [
+					{ "time": 0, "name": "head/brows" }
+				]
+			},
 			"eyes": {
 				"attachment": [
+					{ "time": 0, "name": "head/eyes" },
 					{ "time": 1.5, "name": "head/eyes_closed" },
 					{ "time": 1.6666, "name": "head/eyes" }
 				]
 			},
+			"foot_L": {
+				"attachment": [
+					{ "time": 0, "name": "legs/foot_L" }
+				]
+			},
+			"foot_R": {
+				"attachment": [
+					{ "time": 0, "name": "legs/foot_R" }
+				]
+			},
+			"hand_L": {
+				"attachment": [
+					{ "time": 0, "name": "arms/hand_L" }
+				]
+			},
 			"hand_R": {
 				"attachment": [
+					{ "time": 0, "name": "arms/hand_R" },
 					{ "time": 0.1666, "name": "arms/hand3_R" },
 					{ "time": 1.1666, "name": "arms/hand_R" }
 				]
+			},
+			"head": {
+				"attachment": [
+					{ "time": 0, "name": "head/head" }
+				]
+			},
+			"lowerarm_L": {
+				"attachment": [
+					{ "time": 0, "name": "arms/lowerarm_L" }
+				]
+			},
+			"lowerarm_R": {
+				"attachment": [
+					{ "time": 0, "name": "arms/lowerarm_R" }
+				]
+			},
+			"lowerleg_L": {
+				"attachment": [
+					{ "time": 0, "name": "legs/lowerleg_L" }
+				]
+			},
+			"lowerleg_R": {
+				"attachment": [
+					{ "time": 0, "name": "legs/lowerleg_R" }
+				]
+			},
+			"neck": {
+				"attachment": [
+					{ "time": 0, "name": "head/neck" }
+				]
+			},
+			"sleeve_L": {
+				"attachment": [
+					{ "time": 0, "name": "arms/sleeve_L" }
+				]
+			},
+			"sleeve_R": {
+				"attachment": [
+					{ "time": 0, "name": "arms/sleeve_R" }
+				]
+			},
+			"upperarm_L": {
+				"attachment": [
+					{ "time": 0, "name": "arms/upperarm_L" }
+				]
+			},
+			"upperarm_R": {
+				"attachment": [
+					{ "time": 0, "name": "arms/upperarm_R" }
+				]
+			},
+			"upperleg_L": {
+				"attachment": [
+					{ "time": 0, "name": "legs/upperleg_L" }
+				]
+			},
+			"upperleg_R": {
+				"attachment": [
+					{ "time": 0, "name": "legs/upperleg_L" }
+				]
 			}
-		}
+		},
+		"draworder": [
+			{ "time": 0 }
+		]
 	},
 	"idle2": {
 		"bones": {

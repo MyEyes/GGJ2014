@@ -77,7 +77,9 @@ namespace Vest.levels
 
         public bool IsColliding(GameObject o)
         {
-            return State == LevelState.Good ? Good.IsColliding(o) : Bad.IsColliding(o);
+            return State == LevelState.Good
+                ? Good.IsColliding(o)
+                : Bad.IsColliding(o);
         }
 
         public void Update(float dt)
@@ -97,6 +99,23 @@ namespace Vest.levels
                 Good.Update(player);
             else
                 Bad.Update(player);
+        }
+
+        public float T
+        {
+            get { return t; }
+            set { t = value; }
+        }
+
+        public IEnumerable<T> GetObjects<T>()
+            where T : GameObject
+        {
+            switch (State)
+            {
+                case LevelState.Good:   return Good.GetObjects<T>();
+                case LevelState.Evil:   return Bad.GetObjects<T>();
+            }
+            throw new Exception();
         }
 
         public void Draw (OSpriteBatch batch, ManualCamera2D cam, Player player)
@@ -137,13 +156,13 @@ namespace Vest.levels
 
         public void DrawDebug(OSpriteBatch batch, ManualCamera2D cam, DrawHelper helper)
         {
-            if (insanity <= 0.5)
+            if (insanity >= 0.5)
             {
                 helper.DrawPolys (Good.Collision, cam.Transformation, Color.Green);
                 Good.Triggers.ForEach (t => helper.DrawPolys (t.collisionPolys, cam.Transformation, Color.Blue));
             }
 
-            else if (insanity > 0.5)
+            else if (insanity < 0.5)
             {
                 helper.DrawPolys (Bad.Collision, cam.Transformation, Color.Red);
                 Bad.Triggers.ForEach (t => helper.DrawPolys (t.collisionPolys, cam.Transformation, Color.Blue));
