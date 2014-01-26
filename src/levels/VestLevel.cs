@@ -73,6 +73,13 @@ namespace Vest.levels
             return newTable;
         }
 
+        public Standin CStandin (Vector2 pos, String texturePath, bool flipX=false)
+        {
+            var newStandin = new Standin (pos, texturePath, flipX);
+            GameObjects.Add (newStandin);
+            return newStandin;
+        }
+
         public IEnumerable<T> GetObjects<T>()
             where T : GameObject
         {

@@ -47,17 +47,19 @@ namespace Vest.state
 
             public override void Load()
             {
-
                 batch = new OSpriteBatch (G.Gfx);
                 uiBatch = new SpriteBatch (G.Gfx);
                 helper = new DrawHelper (G.Gfx);
 
                 view = new EditorViewController (G.Window);
                 view.SetSize (G.SCREEN_WIDTH, G.SCREEN_HEIGHT);
+                view.OriginX = 2000;
+                view.OriginY = 200;
+                view.Zoom = 0.8f;
+
                 cam = new ManualCamera2D (G.SCREEN_WIDTH, G.SCREEN_HEIGHT, G.Gfx);
 
                 level = new CombiLevel1 (cam, null);
-
                 font = G.Content.Load<SpriteFont> ("font");
             }
 

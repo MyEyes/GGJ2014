@@ -40,6 +40,33 @@ namespace Vest.levels
             CTable (new Vector2 (1191, 385), true);
             CTable (new Vector2 (3067, 384), true);
 
+            // First room
+            CStandin (new Vector2 (3451, 436), "chars/altperson04");
+            CStandin (new Vector2 (3490, 436), "chars/girl_02");
+            CStandin (new Vector2 (3536, 436), "chars/altperson02", true);
+            
+            // First lounge room
+            CStandin (new Vector2 (3000, 436), "chars/altperson_sit_01");
+            CStandin (new Vector2 (3215, 436), "chars/altperson_sit_02", true);
+
+            // Dining room
+            CStandin (new Vector2 (296, 436), "chars/altperson_sit_01");
+            CStandin (new Vector2 (453, 436), "chars/altperson_sit_02", true);
+            CStandin (new Vector2 (756, 436), "chars/altperson_sit_02");
+            CStandin (new Vector2 (919, 436), "chars/altperson_sit_01", true);
+            
+            // Party table room
+            CStandin (new Vector2 (1131, 436), "chars/girl_01");
+            CStandin (new Vector2 (1283, 436), "chars/altperson03", true);
+            
+            // Dancing room
+            CStandin (new Vector2 (2380 - 100, 436), "chars/altperson01", true);
+            CStandin (new Vector2 (2321 - 100, 436), "chars/memory");
+            CStandin (new Vector2 (1846 - 65, 436), "chars/jason");
+            CStandin (new Vector2 (1906 - 80, 436), "chars/sean");
+            CStandin (new Vector2 (1971 - 90, 436), "chars/kevin");
+            CStandin (new Vector2 (2061 - 137, 436), "chars/nils");
+
             // Chandoliers
             CLight(200, Color.White, G.Content.Load<Texture2D>("branches/branch1/l_round"), new Vector2(246, 205));
             CLight(200, Color.White, G.Content.Load<Texture2D>("branches/branch1/l_round"), new Vector2(836, 196));
