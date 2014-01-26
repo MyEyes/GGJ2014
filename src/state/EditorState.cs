@@ -42,6 +42,9 @@ namespace Vest.state
             Vector2 mousePos;
             Vector2 mouseWorldPos;
 
+            Player player;
+            PlayerController pController;
+
             public List<Vector2> polyBuffer;
             public Polygon bufferedPoly;
 
@@ -58,10 +61,15 @@ namespace Vest.state
                 view.Zoom = 0.8f;
 
                 cam = new ManualCamera2D (G.SCREEN_WIDTH, G.SCREEN_HEIGHT, G.Gfx);
-                Player player = new Player(Vector2.Zero, new Polygon[0]);
+                
+                player = new Player (Vector2.Zero, new Polygon[0]);
+                player.Load (cam);
+                pController = new PlayerController (player);
 
                 level = new CombiLevel1 (cam, player);
                 font = G.Content.Load<SpriteFont> ("font");
+
+                player.SetLevel (level);
             }
 
             public override void Activate()

@@ -11,10 +11,11 @@ namespace Vest.levels
 {
     public abstract class VestLevel
     {
-        public List<GameObject> GameObjects = new List<GameObject> ();
+        public List<GameObject> GameObjects = new List<GameObject>();
         public List<Polygon> Collision = new List<Polygon>();
         public List<Trigger> Triggers = new List<Trigger>();
         public LightOverlay Lights;
+        public CombiLevel parent;
 
         public Light CLight(float radius, Color color, Texture2D mask, Vector2 position)
         {
@@ -29,7 +30,7 @@ namespace Vest.levels
             return light;
         }
 
-        public abstract void Load (Player player, ManualCamera2D cam);
+        public abstract void Load (Player player, ManualCamera2D cam, CombiLevel level);
         
         public virtual void Draw (OSpriteBatch batch)
         {
@@ -45,14 +46,23 @@ namespace Vest.levels
 
         public virtual void Update(float dt)
         {
-            for (int x = 0; x < GameObjects.Count; x++)
-            { GameObjects[x].Update(dt); }
+            foreach (var g in GameObjects)
+                g.Update (dt);
         }
 
         public virtual void Update(GameObject player)
         {
             foreach (var t in Triggers)
                 t.TryTrigger (player);
+        }
+
+        public Monster CMonster (Vector2 pos, float leftLimit, float rightLimit)
+        {
+            // Left limit, Right limit (relative)
+            Monster newMonster = new Monster (pos, leftLimit, rightLimit);
+            newMonster.SetLevel (parent);
+            GameObjects.Add (newMonster);
+            return newMonster;
         }
 
         public Trigger CTrigger (bool playerOnly, bool triggerOnce, Polygon poly)

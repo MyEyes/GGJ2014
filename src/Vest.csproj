@@ -133,6 +133,7 @@
     <Compile Include="LightComparer.cs" />
     <Compile Include="LightOverlay.cs" />
     <Compile Include="ManualCamera2D.cs" />
+    <Compile Include="Monster.cs" />
     <Compile Include="PhysicsSpineGameObject.cs" />
     <Compile Include="Player.cs" />
     <Compile Include="PlayerController.cs" />

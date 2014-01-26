@@ -15,9 +15,10 @@ namespace Vest.levels
         Texture2D evilBG1;
         Texture2D evilBG2;
 
-        public override void Load(Player player, ManualCamera2D cam)
+        public override void Load(Player player, ManualCamera2D cam, CombiLevel parent)
         {
             this.cam = cam;
+            this.parent = parent;
 
             evilBG1 = G.Content.Load<Texture2D>("branches/branch1/evilBG1");
             evilBG2 = G.Content.Load<Texture2D>("branches/branch1/evilBG2");
@@ -25,11 +26,14 @@ namespace Vest.levels
             Lights = new LightOverlay(G.Gfx);
             Lights.AmbientColor = new Color(255, 255, 255);
 
+            CTable (new Vector2 (1191, 385), false);
             CTable (new Vector2 (1710, 364), false);
             CTable (new Vector2 (105, 385), false);
             CTable (new Vector2 (3067, 384), false);
             CTable (new Vector2 (3297, 384), false);
 
+            CMonster (new Vector2 (1616, 344), 1503, 1931);
+            CMonster (new Vector2 (3508, 400), 3189, 3659);
 
             CCollision(new Vector2(1981, 450),
             new Vector2(1975, 440),
@@ -167,6 +171,7 @@ namespace Vest.levels
         public override void Update(float dt)
         {
             Lights.SetCam(cam);
+            base.Update (dt);
         }
 
         public override void Draw(OSpriteBatch batch)

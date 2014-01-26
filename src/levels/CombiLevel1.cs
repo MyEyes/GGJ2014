@@ -103,7 +103,7 @@ namespace Vest.levels
             trig = Good.CTrigger(true, true, new Polygon(new Vector2[] { new Vector2(1053, 346), new Vector2(1122, 343), new Vector2(1123, 430), new Vector2(1064, 430) }));
             trig.Entered += delegate(GameObject obj) { SavePosition(); l1g.light1.Enabled = false; l1g.light2.Enabled = false; };
             //Show up stuff around pill
-            trig = Good.CTrigger(true, true, new Polygon(new Vector2[] { new Vector2(653, 379), new Vector2(739, 381), new Vector2(738, 435), new Vector2(662, 433) }));
+            trig = Good.CTrigger (true, true, new Polygon (new Vector2[] { new Vector2 (653 + 300, 379), new Vector2 (739 + 300, 381), new Vector2 (738 + 300, 435), new Vector2 (662 + 300, 433) }));
             trig.Entered += delegate(GameObject obj) { SavePosition(); SetTransition(TransitionType.RepeatRead); insanityChange = 0.4f / 1000f; SetTargetInsanity(1.1f); l2.Enabled = true; };
             //Collect pill
             trig = Good.CTrigger(true, true, new Polygon(new Vector2[] { new Vector2(135, 342), new Vector2(192, 342), new Vector2(183, 433), new Vector2(142, 433) }));

@@ -20,9 +20,10 @@ namespace Vest.levels
         public Elevator elevator;
         public Player player;
 
-        public override void Load(Player player, ManualCamera2D cam)
+        public override void Load(Player player, ManualCamera2D cam, CombiLevel parent)
         {
             this.cam = cam;
+            this.parent = parent;
 
             normalBG1 = G.Content.Load<Texture2D>("branches/branch1/normalBG1");
             normalBG2 = G.Content.Load<Texture2D>("branches/branch1/normalBG2");
@@ -103,7 +104,7 @@ namespace Vest.levels
         public override void Update(float dt)
         {
             Lights.SetCam(cam);
-            base.Update(dt);
+            base.Update (dt);
         }
 
         public override void Draw(OSpriteBatch batch)
