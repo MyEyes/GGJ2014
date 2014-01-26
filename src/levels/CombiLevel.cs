@@ -60,23 +60,25 @@ namespace Vest.levels
                 Bad.Update(player);
         }
 
-        public void Draw(OSpriteBatch batch, ManualCamera2D cam)
+        public void Draw(OSpriteBatch batch, ManualCamera2D cam, Player player)
         {
             Good.Lights.DrawLights();
             G.Gfx.SetRenderTarget(GoodTarget);
             Good.Draw(batch);
+            player.Draw (batch);
             Good.Lights.Apply(batch);
 
             Bad.Lights.DrawLights();
             G.Gfx.SetRenderTarget(BadTarget);
             Bad.Draw(batch);
+            player.Draw (batch);
             Bad.Lights.Apply(batch);
 
             Blending.DrawLights();
             BlendEffect.Parameters["time"].SetValue(t);
             BlendEffect.Parameters["strength"].SetValue(insanity);
-            BlendEffect.Parameters["darkTex"].SetValue(BadTarget);
-            BlendEffect.Parameters["maskTex"].SetValue(Blending.Target);
+            BlendEffect.Parameters["darkWorld"].SetValue(BadTarget);
+            BlendEffect.Parameters["mask"].SetValue(Blending.Target);
 
             batch.Begin(SpriteSortMode.Immediate, BlendState.Opaque, cam.Transformation);
             BlendEffect.CurrentTechnique.Passes[0].Apply();
