@@ -36,7 +36,7 @@ namespace Vest.levels
         public float t;
         public float insanity;
         public float targetInsanity;
-        const float insanityChange = 0.4f / 1000f;
+        const float insanityChange = 0.5f / 1000f;
 
         public CombiLevel (ManualCamera2D cam, VestLevel Good, VestLevel Bad)
         {
@@ -99,13 +99,6 @@ namespace Vest.levels
                 Bad.Update(player);
         }
 
-        private void DumpTexture(Texture2D tex, string file)
-        {
-            System.IO.FileStream fs = new System.IO.FileStream(file, System.IO.FileMode.Create);
-            tex.SaveAsPng(fs, tex.Width, tex.Height);
-            fs.Close();
-        }
-
         public void Draw (OSpriteBatch batch, ManualCamera2D cam, Player player)
         {
             Blending.SetCam(cam);
@@ -131,7 +124,6 @@ namespace Vest.levels
             G.Gfx.SetRenderTarget(null);
 
             Blending.DrawLights();
-            //DumpTexture(Blending.Target, "test.png");
             BlendEffect.Parameters["time"].SetValue(t);
             BlendEffect.Parameters["strength"].SetValue(insanity);
             BlendEffect.Parameters["darkWorld"].SetValue(GoodTarget);

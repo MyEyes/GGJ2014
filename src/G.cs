@@ -64,7 +64,8 @@ namespace Vest
             Spine.Bone.yDown = true;
 
             State.Load ();
-            State.Set ("flipgame");
+            //State.Set ("edit");
+            State.Set("flipgame");
         }
 
         protected override void UnloadContent()

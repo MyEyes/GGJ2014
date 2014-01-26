@@ -25,44 +25,146 @@ namespace Vest.levels
             Lights = new LightOverlay(G.Gfx);
             Lights.AmbientColor = new Color(255, 255, 255);
 
-            CCollision (new Vector2 (49, 440), new Vector2 (4202, 440), new Vector2 (4202, 450), new Vector2 (47, 450)); // FLOOR
+            CCollision(new Vector2(1981, 450),
+            new Vector2(1975, 440),
+            new Vector2(34, 440),
+            new Vector2(34, 450)); // FLOOR LEFT
+
+            CCollision(new Vector2(2165, 459),
+            new Vector2(4085, 436),
+            new Vector2(2169, 436)); // FLOOR Right
+
             CCollision(new Vector2(33, 18), new Vector2(47, 18), new Vector2(47, 435), new Vector2(33, 437)); // WALL LEFT
             CCollision(new Vector2(4201, 104), new Vector2(4217, 104), new Vector2(4218, 446), new Vector2(4195, 445)); // WALL RIGHT
+            CCollision(new Vector2(324, 402),
+            new Vector2(454, 364),
+            new Vector2(481, 434),
+            new Vector2(339, 436)); //First stoneblock
 
-            CCollision (
-                new Vector2 (48, 438),
-                new Vector2 (326, 434),
-                new Vector2 (321, 406),
-                new Vector2 (391, 376),
-                new Vector2 (374, 343),
-                new Vector2 (494, 316),
-                new Vector2 (528, 339),
-                new Vector2 (586, 351),
-                new Vector2 (698, 373),
-                new Vector2 (704, 416),
-                new Vector2 (934, 413),
-                new Vector2 (969, 434),
-                new Vector2 (1484, 431),
-                new Vector2 (1521, 423),
-                new Vector2 (1639, 381),
-                new Vector2 (1743, 423),
-                new Vector2 (1888, 434),
-                new Vector2 (1981, 439),
-                new Vector2 (1981, 459),
-                new Vector2 (1953, 579),
-                new Vector2 (1959, 644),
-                new Vector2 (2249, 556),
-                new Vector2 (2169, 456),
-                new Vector2 (2363, 424),
-                new Vector2 (2479, 386),
-                new Vector2 (2499, 384),
-                new Vector2 (2596, 334),
-                new Vector2 (2721, 334),
-                new Vector2 (2836, 356),
-                new Vector2 (2933, 354),
-                new Vector2 (3056, 439),
-                new Vector2 (3043, 608),
-                new Vector2 (43, 778));
+            CCollision(new Vector2(381, 345),
+            new Vector2(498, 316),
+            new Vector2(527, 337),
+            new Vector2(517, 348),
+            new Vector2(394, 375)); //Second stoneblock
+
+            CCollision(new Vector2(494, 353),
+            new Vector2(508, 349),
+            new Vector2(518, 412),
+            new Vector2(495, 403)); //Third small stoneblock
+
+            CCollision(new Vector2(589, 386),
+            new Vector2(581, 377),
+            new Vector2(520, 411),
+            new Vector2(560, 408)); //Fourth small stoneblock
+
+            CCollision(new Vector2(633, 391),
+            new Vector2(618, 415),
+            new Vector2(589, 352),
+            new Vector2(606, 347)); //Fifth small stoneblock
+
+            CCollision(new Vector2(610, 395),
+            new Vector2(694, 386),
+            new Vector2(706, 420),
+            new Vector2(618, 415)); //Sixth small stoneblock
+
+            CCollision(new Vector2(644, 360),
+            new Vector2(655, 389),
+            new Vector2(665, 388),
+            new Vector2(654, 358)); //Seventh small stoneblock
+
+            CCollision(new Vector2(707, 420),
+            new Vector2(707, 436),
+            new Vector2(864, 437),
+            new Vector2(859, 419)); //Eigth small stoneblock
+
+            CCollision(new Vector2(879, 387),
+            new Vector2(893, 384),
+            new Vector2(954, 434),
+            new Vector2(892, 407)); //Ninth small stoneblock
+
+            CCollision(new Vector2(859, 419),
+            new Vector2(943, 390),
+            new Vector2(951, 401),
+            new Vector2(864, 436)); //Tenth small stoneblock
+            //ROOM 1 DONE
+
+            CCollision(new Vector2(1456, 440),
+            new Vector2(1525, 422),
+            new Vector2(1529, 440)); //Slope 1
+
+            CCollision(new Vector2(1531, 421),
+            new Vector2(1545, 407),
+            new Vector2(1641, 379),
+            new Vector2(1701, 396),
+            new Vector2(1737, 418)); //Slope 2
+
+            CCollision(new Vector2(1740, 419),
+            new Vector2(1846, 410),
+            new Vector2(1885, 440),
+            new Vector2(1743, 440)); //Slope 3
+
+            CCollision(new Vector2(2295, 436),
+            new Vector2(2416, 409),
+            new Vector2(2416, 436)); //Slope 4
+
+            CCollision(new Vector2(2416, 409),
+            new Vector2(2464, 387),
+            new Vector2(2499, 386),
+            new Vector2(2497, 406)); //Slope 5
+
+            CCollision(new Vector2(2502, 387),
+            new Vector2(2595, 336),
+            new Vector2(2635, 339),
+            new Vector2(2630, 384)); //Slope 6
+
+            CCollision(new Vector2(2636, 340),
+            new Vector2(2723, 331),
+            new Vector2(2726, 344),
+            new Vector2(2638, 350)); //Slope 7
+
+            CCollision(new Vector2(2723, 346),
+            new Vector2(2836, 352),
+            new Vector2(2835, 361),
+            new Vector2(2725, 357)); //Slope 8
+
+            CCollision(new Vector2(2834, 362),
+            new Vector2(2939, 355),
+            new Vector2(3060, 436)); //Slope 9
+
+            CCollision(new Vector2(3092, 436),
+            new Vector2(3126, 421),
+            new Vector2(3159, 421),
+            new Vector2(3212, 436)); //Slope 10
+
+            CCollision(new Vector2(3515, 436),
+            new Vector2(3542, 416),
+            new Vector2(3568, 428)); //Slope 11
+
+            CCollision(new Vector2(3568, 427),
+            new Vector2(3597, 423),
+            new Vector2(3622, 436),
+            new Vector2(3568, 432)); //Slope 12
+
+            CCollision(new Vector2(4085, 433),
+            new Vector2(4085, 420),
+            new Vector2(4120, 407),
+            new Vector2(4123, 430)); //Endblock1
+
+            CCollision(new Vector2(4123, 405),
+            new Vector2(4123, 393),
+            new Vector2(4157, 375),
+            new Vector2(4161, 399)); //Endblock2
+
+            CCollision(new Vector2(4157, 374),
+            new Vector2(4150, 343),
+            new Vector2(4172, 340),
+            new Vector2(4178, 369)); //Endblock3
+
+            CCollision(new Vector2(4173, 336),
+            new Vector2(4148, 188),
+            new Vector2(4198, 169),
+            new Vector2(4195, 334)); //Endblock4
+
         }
 
         public override void Update(GameObject player)

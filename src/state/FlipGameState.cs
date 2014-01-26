@@ -55,7 +55,7 @@ namespace Vest.state
                 })});
 
                 player.SetLevel (currentLevel);
-                player.position = new Vector2(1048, 400);
+                player.position = new Vector2(90, 400);
                 playerController = new PlayerController (player);
 
                 cam.Zoom = 1f;
