@@ -98,7 +98,7 @@ namespace Vest.levels
 
             GameObjects.Add(elevator = new Elevator(player,new Vector2(3995, -100), new Vector2(3995, 436), new Polygon[] { new Polygon(new Vector2[] { new Vector2(-50, -100), new Vector2(-50, 200), new Vector2(50, 200), new Vector2(50, -100) }) }));
             GameObjects.Add(pill = new Pill(new Vector2(160, 373)));
-            GameObjects.Add(ElevatorCue = new Cue(new Vector2(3850, 350)));
+            GameObjects.Add(ElevatorCue = new Cue(new Vector2(3985, 270)));
             GameObjects.Add(PillCue = new Cue(new Vector2(155, 352)));
         }
 

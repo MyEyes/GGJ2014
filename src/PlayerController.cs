@@ -15,7 +15,7 @@ namespace Vest
         private const float MOVE_SPEED = 3;
         private const float CROUCH_SPEED = 2;
         private const float JUMP_SPEED = 3;
-        private const float RUN_SPEED = 4;
+        private const float RUN_SPEED = 10;
         
         private readonly Player player;
         private readonly Timer idleTimer;

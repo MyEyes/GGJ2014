@@ -89,28 +89,29 @@ namespace Vest.levels
             SoundHelper.Preload("sounds/step1");
             SoundHelper.Preload("sounds/light_flick");
             SoundHelper.SetMusicChannel1("sounds/Parano_fiesta", 0.1f);
+            SoundHelper.SetMusicChannel2("sounds/crowd_chatter", 0.1f);
 
             SetTransition(TransitionType.ThresholdRead);
 
             //Armchair room transition
             Trigger trig = Good.CTrigger(true, true, new Polygon(new Vector2[] {new Vector2(3170, 433),new Vector2(3176, 350),new Vector2(3271, 353),new Vector2(3259, 431)}));
-            trig.Entered += delegate(GameObject obj) { SoundHelper.SetMusicVolume1(0.2f); SavePosition(); insanityChange = 0.25f / 1000f; SetTargetInsanity(1.1f); TaskHelper.SetDelay(5000, delegate { insanityChange = 0.8f / 1000f; SetTargetInsanity(-0.1f); }); TaskHelper.SetDelay(8000, delegate { l.Enabled = false; l8.Enabled = false; }); };
+            trig.Entered += delegate(GameObject obj) { SoundHelper.SetMusicVolume1(0.2f); SoundHelper.SetMusicVolume2(0.4f); SavePosition(); insanityChange = 0.25f / 1000f; SetTargetInsanity(1.1f); TaskHelper.SetDelay(5000, delegate { insanityChange = 0.8f / 1000f; SetTargetInsanity(-0.1f); }); TaskHelper.SetDelay(8000, delegate { l.Enabled = false; l8.Enabled = false; }); };
 
             //Lights flickering
             trig = Good.CTrigger(true, true, new Polygon(new Vector2[] { new Vector2(1447, 437), new Vector2(1367, 435), new Vector2(1365, 343), new Vector2(1443, 346) }));
             trig.Entered += delegate(GameObject obj)
             {
             SoundHelper.SetMusicVolume1(0.4f);
-            SavePosition(); TaskHelper.SetDelay(100, delegate { l1g.light1.Enabled = false; l1g.light2.Enabled = false; }); TaskHelper.SetDelay(200, delegate { l1g.light1.Enabled = true; l1g.light2.Enabled = true; SoundHelper.PlaySound("sounds/light_flick",0.2f); });
+            SavePosition(); TaskHelper.SetDelay(100, delegate { SoundHelper.SetMusicVolume2(0.3f); l1g.light1.Enabled = false; l1g.light2.Enabled = false; }); TaskHelper.SetDelay(200, delegate { l1g.light1.Enabled = true; l1g.light2.Enabled = true; SoundHelper.PlaySound("sounds/light_flick", 0.2f); });
             TaskHelper.SetDelay(330, delegate { l1g.light1.Enabled = false; l1g.light2.Enabled = false; SoundHelper.PlaySound("sounds/light_flick", 0.2f); }); TaskHelper.SetDelay(470, delegate { l1g.light1.Enabled = true; l1g.light2.Enabled = true; SoundHelper.PlaySound("sounds/light_flick", 0.2f); });
             TaskHelper.SetDelay(800, delegate { l1g.light1.Enabled = false; l1g.light2.Enabled = false; SoundHelper.PlaySound("sounds/light_flick", 0.2f); }); TaskHelper.SetDelay(950, delegate { l1g.light1.Enabled = true; l1g.light2.Enabled = true; SoundHelper.PlaySound("sounds/light_flick", 0.2f); });
             };
             //Lights turning off
             trig = Good.CTrigger(true, true, new Polygon(new Vector2[] { new Vector2(1053, 346), new Vector2(1122, 343), new Vector2(1123, 430), new Vector2(1064, 430) }));
-            trig.Entered += delegate(GameObject obj) { SoundHelper.SetMusicVolume1(0.5f); SavePosition(); l1g.light1.Enabled = false; l1g.light2.Enabled = false; SoundHelper.PlaySound("sounds/light_flick", 0.3f); };
+            trig.Entered += delegate(GameObject obj) { SoundHelper.SetMusicVolume1(0.5f); SoundHelper.SetMusicVolume2(0.2f); SavePosition(); l1g.light1.Enabled = false; l1g.light2.Enabled = false; SoundHelper.PlaySound("sounds/light_flick", 0.3f); };
             //Show up stuff around pill
             trig = Good.CTrigger (true, true, new Polygon (new Vector2[] { new Vector2 (653 + 300, 379), new Vector2 (739 + 300, 381), new Vector2 (738 + 300, 435), new Vector2 (662 + 300, 433) }));
-            trig.Entered += delegate(GameObject obj) { SavePosition(); SetTransition(TransitionType.RepeatRead); insanityChange = 0.4f / 1000f; SetTargetInsanity(1.1f); l2.Enabled = true; };
+            trig.Entered += delegate(GameObject obj) { SoundHelper.SetMusicVolume2(0.1f); SavePosition(); SetTransition(TransitionType.RepeatRead); insanityChange = 0.4f / 1000f; SetTargetInsanity(1.1f); l2.Enabled = true; };
             //Collect pill
             l1g.pill.Interact += delegate(Player obj) { SoundHelper.SetMusicVolume1(0.7f); SoundHelper.SetMusicChannel2("sounds/Parano_parano", 0.7f); SavePosition(); player.DisableInput++; insanity = 0;
             insanityChange = 0.3f / 1000f; l2.Enabled = false; SetTransition(TransitionType.ThresholdRead); SetTargetInsanity(0); player.Controller.ChangeState(PlayerState.Swallow);
@@ -124,7 +125,7 @@ namespace Vest.levels
 
             trig = Bad.CTrigger(true, false, new Polygon(new Vector2[] { new Vector2(3943, 434), new Vector2(3944, 304), new Vector2(4044, 306), new Vector2(4043, 433) }));
             trig.Entered += delegate(GameObject obj) { l1g.ElevatorCue.visible = true; };
-            trig.Entered += delegate(GameObject obj) { l1g.ElevatorCue.visible = false; };
+            trig.Exited += delegate(GameObject obj) { l1g.ElevatorCue.visible = false; };
             //Expand dark 1
             trig = Bad.CTrigger(true, true, new Polygon(new Vector2[] { new Vector2(1235, 432), new Vector2(1237, 338), new Vector2(1320, 343), new Vector2(1310, 431) }));
             trig.Entered += delegate(GameObject obj) { SavePosition(); insanity = 0.001f; l3.Enabled = false; l4.Enabled = true; l5.Enabled = true; SetTargetInsanity(1.1f); };

@@ -68,7 +68,7 @@ namespace Vest
                 effect = G.Content.Load<SoundEffect>(sound);
                 sounds.Add(sound, effect);
             }
-            effect.Play(volume, pitch, pan);
+            effect.Play(Math.Min (1, Math.Max (0, volume)), pitch, pan);
         }
     }
 }
