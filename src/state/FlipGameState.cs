@@ -16,7 +16,7 @@ namespace Vest.state
     public class FlipGameState
         : BaseGameState
     {
-        private const bool DRAW_DEBUG = false;
+        private const bool DRAW_DEBUG = true;
 
         OSpriteBatch batch;
         SpriteBatch uiBatch;
@@ -75,7 +75,7 @@ namespace Vest.state
             if (state.IsKeyDown(Keys.S))
                 transitionLight--;
 
-            if (padState.Buttons.LeftShoulder == ButtonState.Pressed)
+            if (padState.DPad.Up == ButtonState.Pressed)
             {
                 currentLevel.SetState (LevelState.Evil);
                 currentLevel.SetTargetInsanity (1.1f);
