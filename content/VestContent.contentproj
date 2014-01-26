@@ -366,6 +366,11 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
+    <Compile Include="pillMask_green.png">
+      <Name>pillMask_green</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
     <Content Include="player\vest.json">
       <Name>vest</Name>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>

@@ -64,6 +64,7 @@ namespace Vest
             Spine.Bone.yDown = true;
 
             State.Load();
+            //State.Set("edit");
             State.Set("flipgame");
         }
 
