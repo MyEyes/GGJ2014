@@ -17,7 +17,7 @@ namespace Vest.state
     public class FlipGameState
         : BaseGameState
     {
-        private const bool DRAW_DEBUG = true;
+        private const bool DRAW_DEBUG = false;
 
         OSpriteBatch batch;
         SpriteBatch uiBatch;
@@ -56,7 +56,6 @@ namespace Vest.state
             tracker = new VarTracker();
             tracker.Track ("Anim", () => player.AnimState.GetTrackPlayingString (0));
             tracker.Track ("InputAllowed", () => player.DisableInput.ToString());
-            tracker.Track ("IsCrouching", () => (Convert.ToBoolean (playerController.IsCrawling)).ToString());
             tracker.Track ("IsHiding", () => (Convert.ToBoolean (playerController.IsHiding)).ToString ());
 
             cam.Zoom = 1f;

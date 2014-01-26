@@ -5,6 +5,7 @@ using System.Text;
 using System.Timers;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Otherworld;
 using Otherworld.Utilities;
 using Vest.graphics;
 using Vest.levels;
@@ -16,13 +17,14 @@ namespace Vest
     {
         private const float PATROL_SPEED = 1f;
         private const float CHASE_SPEED = 2f;
-        private const float SEE_DISTANCE = 150;
+        private const float SEE_DISTANCE = 250;
         LookDir look = LookDir.Right;
         private float velocity = 1;
         private float leftLimit;
         private float rightLimit;
         private MonsterState state;
         private Timer idleTimer;
+        private Timer growlTimer;
 
         public Monster (Vector2 position, float leftLimit, float rightLimit)
             : base(position, Player.STAND_COLLISION)
@@ -45,17 +47,39 @@ namespace Vest
                 });
             };
 
+            growlTimer = new Timer (new Random ().Next (2000, 3000));
+            growlTimer.Elapsed += (s, a) =>
+            {
+                //level.SetState (LevelState.Evil);
+                //level.SetTargetInsanity (1f);
+
+                if (level.State == LevelState.Evil)
+                {
+                    var soundName = (new[] {"sounds/monster1", "sounds/monster2", "sounds/monster3"}).Random (new Random());
+                    float dist = Vector2.Distance (level.player.position, this.position);
+                    float vol = 1 - MathHelpers.Unlerp (dist, 100, 720);
+                    if (vol > 0)
+                    {
+                        Console.WriteLine ("Playing {0}: {1}, dist={2}", soundName, vol, dist);
+                        SoundHelper.PlaySound (soundName, vol);
+                    }
+                }
+                growlTimer.Interval = new Random().Next (2000, 3000);
+            };
+            growlTimer.Start();
+
             state = MonsterState.Patrol;
         }
 
         public override void Update (float dt)
         {
-            checkChase();
+            if (state != MonsterState.Chase)
+                checkChase();
 
-            if (state == MonsterState.Patrol)
-                walkPatrol();
             if (state == MonsterState.Chase)
-                chasePlayer();
+                chasePlayer ();
+            else if (state == MonsterState.Patrol)
+                walkPatrol();
             
             base.Update (dt);
         }
@@ -92,15 +116,18 @@ namespace Vest
             if (level.player.Collides (this))
             {
                 level.RestorePosition();
+                growlTimer.Start();
                 state = MonsterState.Patrol;
             }
-            if (look == LookDir.Right && (position.X >= rightLimit || distance >= SEE_DISTANCE))
+            if (look == LookDir.Right && (level.player.position.X >= rightLimit || distance >= SEE_DISTANCE))
             {
                 state = MonsterState.Patrol;
+                growlTimer.Start ();
             }
-            else if (look == LookDir.Left && (position.X <= leftLimit || distance >= SEE_DISTANCE))
+            else if (look == LookDir.Left && (level.player.position.X <= leftLimit || distance >= SEE_DISTANCE))
             {
-                state = MonsterState.Idle;
+                state = MonsterState.Patrol;
+                growlTimer.Start();
             }
         }
 
@@ -108,13 +135,18 @@ namespace Vest
         {
             float distance = Vector2.Distance (level.player.position, this.position);
 
-            if (level.player != null && distance <= SEE_DISTANCE && !level.player.IsHiding && level.State == LevelState.Evil &&
-                (
-                    look == LookDir.Right && level.player.position.X < rightLimit ||
-                    look == LookDir.Left && level.player.position.X < rightLimit)
+            if (level.player != null
+                && distance <= SEE_DISTANCE
+                && !level.player.IsHiding
+                && level.State == LevelState.Evil
+                && (
+                    look == LookDir.Right && level.player.position.X > position.X ||
+                    look == LookDir.Left && level.player.position.X < position.X)
                 )
             {
-                idleTimer.Stop ();
+                idleTimer.Stop();
+                growlTimer.Stop();
+                //SoundHelper.PlaySound ("sounds/monster4");
                 state = MonsterState.Chase;
             }
         }
