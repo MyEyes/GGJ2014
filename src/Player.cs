@@ -15,6 +15,7 @@ namespace Vest
 
         public int DisableInput = 0;
         public LookDir LookDir = LookDir.Right;
+        public PlayerController Controller;
 
         public Player (Vector2 position, Polygon[] polygons)
             : base(position, polygons)

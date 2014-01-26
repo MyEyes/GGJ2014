@@ -12,7 +12,7 @@ namespace Vest.levels
     {
         ManualCamera2D cam;
 
-        public override void Load (ManualCamera2D cam)
+        public override void Load (Player player, ManualCamera2D cam)
         {
             this.cam = cam;
 

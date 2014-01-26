@@ -31,7 +31,7 @@ namespace Vest
         public float Depth = 0.9f;
 
         private ManualCamera2D cam;
-        private Skeleton skeleton;
+        public Skeleton skeleton;
         private SkeletonRenderer skeletonRenderer;
         private String currentAnim;
 

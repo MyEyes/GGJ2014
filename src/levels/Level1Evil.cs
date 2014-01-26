@@ -15,7 +15,7 @@ namespace Vest.levels
         Texture2D evilBG1;
         Texture2D evilBG2;
 
-        public override void Load(ManualCamera2D cam)
+        public override void Load(Player player, ManualCamera2D cam)
         {
             this.cam = cam;
 

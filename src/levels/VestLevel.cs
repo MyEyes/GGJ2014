@@ -29,7 +29,7 @@ namespace Vest.levels
             return light;
         }
 
-        public abstract void Load (ManualCamera2D cam);
+        public abstract void Load (Player player, ManualCamera2D cam);
         
         public virtual void Draw (OSpriteBatch batch)
         {
@@ -45,10 +45,11 @@ namespace Vest.levels
 
         public virtual void Update(float dt)
         {
-
+            for (int x = 0; x < GameObjects.Count; x++)
+            { GameObjects[x].Update(dt); }
         }
 
-        public virtual void Update (GameObject player)
+        public virtual void Update(GameObject player)
         {
             foreach (var t in Triggers)
                 t.TryTrigger (player);

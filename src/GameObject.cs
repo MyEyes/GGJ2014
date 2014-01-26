@@ -44,6 +44,8 @@ namespace Vest
 
         public bool Collides(GameObject other)
         {
+            if (other == null)
+                return false;
             return Collides (other.collisionPolys);
         }
 
