@@ -15,6 +15,8 @@ namespace Vest.levels
         Texture2D normalBG1;
         Texture2D normalBG2;
         Trigger elevatorTrigger;
+        public Light light1;
+        public Light light2;
 
         public override void Load(ManualCamera2D cam)
         {
@@ -35,11 +37,11 @@ namespace Vest.levels
             CLight(200, Color.White, G.Content.Load<Texture2D>("branches/branch1/l_round"), new Vector2(836, 196));
             // Hallway Lights
             CLight (91, Color.White, G.Content.Load<Texture2D> ("branches/branch1/l_roundUp"), new Vector2 (3646, 276 - 40));
-            CLight (91, Color.White, G.Content.Load<Texture2D> ("branches/branch1/l_roundUp"), new Vector2 (3483, 276 - 40));
+            CLight(91, Color.White, G.Content.Load<Texture2D>("branches/branch1/l_roundUp"), new Vector2(3483, 276 - 40));
             CLight (91, Color.White, G.Content.Load<Texture2D> ("branches/branch1/l_roundUp"), new Vector2 (2781, 281 - 40));
             CLight (91, Color.White, G.Content.Load<Texture2D> ("branches/branch1/l_roundUp"), new Vector2 (2625, 274 - 40));
-            CLight (91, Color.White, G.Content.Load<Texture2D> ("branches/branch1/l_roundUp"), new Vector2 (1342, 277 - 40));
-            CLight (91, Color.White, G.Content.Load<Texture2D> ("branches/branch1/l_roundUp"), new Vector2 (1185, 277 - 40));
+            light1 = CLight (91, Color.White, G.Content.Load<Texture2D> ("branches/branch1/l_roundUp"), new Vector2 (1342, 277 - 40));
+            light2 = CLight(91, Color.White, G.Content.Load<Texture2D>("branches/branch1/l_roundUp"), new Vector2(1185, 277 - 40));
             // Party Lights (Down)
             CLight (200, Color.Orange, G.Content.Load<Texture2D> ("branches/branch1/l_dir"), new Vector2 (1848, 83 + 200));
             CLight (200, Color.Red, G.Content.Load<Texture2D> ("branches/branch1/l_dir"), new Vector2 (1957, 83 + 200));

@@ -117,7 +117,7 @@ float4 ActivateBlendPixelShader(VertexShaderOutput input) : COLOR0
 float4 ActivateBlendReadPixelShader(VertexShaderOutput input) : COLOR0
 {
 	float4 factors = tex2D(maskTex, input.TexCoord);
-	if(strength<=factors.r || factors.r==0)
+	if(strength<=factors.r || (factors.r==0 && factors.g==0))
 		factors.r=0;
 	else
 		factors.r=factors.g;
@@ -132,6 +132,15 @@ float4 SmoothActivateBlendPixelShader(VertexShaderOutput input) : COLOR0
 	if(strength<factors.r)
 		factors.r=0;
 	
+	float4 color = (1-factors.r)*tex2D(darkTex, input.TexCoord) + factors.r*tex2D(lightTex, input.TexCoord);
+    return color;
+}
+
+float4 RepeatBlendReadPixelShader(VertexShaderOutput input) : COLOR0
+{
+	float4 factors = tex2D(maskTex, input.TexCoord);
+	factors.r=saturate(sin(2*time-2*3.14*factors.r));
+	factors.r*=factors.g;
 	float4 color = (1-factors.r)*tex2D(darkTex, input.TexCoord) + factors.r*tex2D(lightTex, input.TexCoord);
     return color;
 }
@@ -198,5 +207,13 @@ technique ActivateReadBlend
 	pass Pass1
 	{
 		PixelShader = compile ps_2_0 ActivateBlendReadPixelShader();
+	}
+}
+
+technique RepeatReadBlend
+{
+	pass Pass1
+	{
+		PixelShader = compile ps_2_0 RepeatBlendReadPixelShader();
 	}
 }

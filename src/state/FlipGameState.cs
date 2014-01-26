@@ -6,6 +6,7 @@ using Vest.graphics;
 using Vest.levels;
 using Vest.State;
 using Vest.utilities;
+using Microsoft.Xna.Framework.Input;
 
 namespace Vest.state
 {
@@ -31,6 +32,7 @@ namespace Vest.state
             PlayerController playerController;
 
             CombiLevel currentLevel;
+            int transitionLight = 255;
             //VestLevel currentLevel;
 
             public FlipGameState()
@@ -55,7 +57,7 @@ namespace Vest.state
                 })});
 
                 player.SetLevel (currentLevel);
-                player.position = new Vector2(90, 400);
+                player.position = new Vector2(4090, 400);
                 playerController = new PlayerController (player);
 
                 cam.Zoom = 1f;
@@ -72,6 +74,15 @@ namespace Vest.state
                 currentLevel.Update (player);
                 playerController.Update ();
                 player.Update (dt);
+                
+
+                KeyboardState state = Keyboard.GetState();
+                if (state.IsKeyDown(Keys.W))
+                    transitionLight++;
+                if (state.IsKeyDown(Keys.S))
+                    transitionLight--;
+
+                (currentLevel as CombiLevel1).l.Color = new Color(transitionLight, transitionLight, transitionLight);
 
                 var targetPos = player.position - new Vector2 (0, 200);
                 camPos = Vector2.Lerp (camPos, targetPos, 0.2f);
@@ -82,7 +93,6 @@ namespace Vest.state
             {
                 G.Gfx.Clear (Color.Black);
                 currentLevel.Draw (batch, cam, player);
-                currentLevel.DrawDebug (batch, cam, helper);
             }
         }
     }

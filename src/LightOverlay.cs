@@ -19,7 +19,7 @@ namespace Vest
 
         public LightOverlay(GraphicsDevice device)
         {
-            Target = new RenderTarget2D(device, device.Viewport.Width, device.Viewport.Height, false, SurfaceFormat.Rgba1010102, DepthFormat.Depth24Stencil8);
+            Target = new RenderTarget2D(device, device.Viewport.Width, device.Viewport.Height, false, SurfaceFormat.Color, DepthFormat.Depth24Stencil8);
             Lights = new List<Light>();
             _lightEffect = G.Content.Load<Effect>("Light");
             _lightEffect.Parameters["Projection"].SetValue(Matrix.CreateTranslation(-device.Viewport.Width / 2 - 0.5f, -device.Viewport.Height / 2 - 0.5f, 0) * Matrix.CreateScale(2 / ((float)device.Viewport.Width), -2 / ((float)device.Viewport.Height), 1));
@@ -58,8 +58,9 @@ namespace Vest
 
         public void DrawLights() 
         {
-            var enabledLights = Lights;
-
+            var enabledLights = Lights
+                .Where(l => l.Enabled)
+                .ToList();
 
             G.Gfx.SetRenderTarget(Target);
             G.Gfx.Clear(AmbientColor);
