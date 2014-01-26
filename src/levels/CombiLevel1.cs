@@ -47,7 +47,7 @@ namespace Vest.levels
 
             Light l5 = new Light();
             l5.Radius = 800;
-            l5.Mask = G.Content.Load<Texture2D>("pillmask");
+            l5.Mask = G.Content.Load<Texture2D>("pillmask3");
             l5.Color = Color.White;
             l5.Enabled = false;
             l5.Position = new Vector2(2160, 320);
@@ -55,7 +55,7 @@ namespace Vest.levels
 
             Light l6 = new Light();
             l6.Radius = 800;
-            l6.Mask = G.Content.Load<Texture2D>("pillmask_green");
+            l6.Mask = G.Content.Load<Texture2D>("pillmask3_green");
             l6.Color = Color.White;
             l6.Enabled = false;
             l6.Position = new Vector2(2160, 320);
@@ -63,11 +63,19 @@ namespace Vest.levels
 
             Light l7 = new Light();
             l7.Radius = 800;
-            l7.Mask = G.Content.Load<Texture2D>("pillmask");
+            l7.Mask = G.Content.Load<Texture2D>("elevatorMask");
             l7.Color = Color.White;
             l7.Enabled = false;
-            l7.Position = new Vector2(3560, 320);
+            l7.Position = new Vector2(3660, 320);
             Blending.AddLight(l7);
+
+            Light l8 = new Light();
+            l8.Radius = 350;
+            l8.Mask = G.Content.Load<Texture2D>("BreakMask Small 4");
+            l8.Color = Color.White;
+            l8.Enabled = true;
+            l8.Position = new Vector2(3050, 360);
+            Blending.AddLight(l8);
 
             Level1Good l1g = Good as Level1Good;
 
@@ -75,8 +83,8 @@ namespace Vest.levels
 
             SetTransition(TransitionType.ThresholdRead);
 
-            Trigger trig = Good.CTrigger(true, true, new Polygon(new Vector2[] {new Vector2(3170, 433),new Vector2(3176, 350),new Vector2(3271, 353),new Vector2(3259, 431)}));
-            trig.Entered += delegate(GameObject obj) { SetTargetInsanity(1.1f); TaskHelper.SetDelay(3000, delegate { insanityChange = 0.8f / 1000f; SetTargetInsanity(-0.1f); }); TaskHelper.SetDelay(5000, delegate { l.Enabled = false; }); };
+            Trigger trig = Good.CTrigger(true, false, new Polygon(new Vector2[] {new Vector2(3170, 433),new Vector2(3176, 350),new Vector2(3271, 353),new Vector2(3259, 431)}));
+            trig.Entered += delegate(GameObject obj) { insanityChange = 0.25f / 1000f; SetTargetInsanity(1.1f); TaskHelper.SetDelay(5000, delegate { insanityChange = 0.8f / 1000f; SetTargetInsanity(-0.1f); }); TaskHelper.SetDelay(8000, delegate { l.Enabled = false; l8.Enabled = false; }); };
 
             trig = Good.CTrigger(true, true, new Polygon(new Vector2[] { new Vector2(1447, 437), new Vector2(1367, 435), new Vector2(1365, 343), new Vector2(1443, 346) }));
             trig.Entered += delegate(GameObject obj) { TaskHelper.SetDelay(100, delegate { l1g.light1.Enabled = false; l1g.light2.Enabled = false; }); TaskHelper.SetDelay(200, delegate { l1g.light1.Enabled = true; l1g.light2.Enabled = true; });

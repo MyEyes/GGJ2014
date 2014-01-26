@@ -16,6 +16,7 @@ namespace Vest
         Effect _lightEffect;
         Texture2D defaultTex;
         BlendState multiplicativeBlend;
+        BlendState drawBlend;
 
         public LightOverlay(GraphicsDevice device)
         {
@@ -31,6 +32,7 @@ namespace Vest
             multiplicativeBlend.ColorBlendFunction = BlendFunction.Add;
             multiplicativeBlend.ColorDestinationBlend = Blend.SourceColor;
             multiplicativeBlend.ColorSourceBlend = Blend.Zero;
+            drawBlend = BlendState.Additive;
         }
 
         public void SetCam(ManualCamera2D cam)
@@ -64,7 +66,7 @@ namespace Vest
 
             G.Gfx.SetRenderTarget(Target);
             G.Gfx.Clear(AmbientColor);
-            G.Gfx.BlendState = BlendState.Additive;
+            G.Gfx.BlendState = drawBlend;
             G.Gfx.RasterizerState = RasterizerState.CullNone;
 
             if (enabledLights.Count < 1)
@@ -76,7 +78,7 @@ namespace Vest
             VertexPositionColorTexture[] vertices = new VertexPositionColorTexture[enabledLights.Count * 6];
             for (int x = 0, v = 0; x < enabledLights.Count; x++, v += 6)
             {
-                vertices[v] = new VertexPositionColorTexture(new Vector3(enabledLights[x].Position.X - enabledLights[x].Radius, enabledLights[x].Position.Y - enabledLights[x].Radius, enabledLights[x].Radius), enabledLights[x].Color, new Vector2(0, 0));
+                vertices[v]  =  new VertexPositionColorTexture(new Vector3(enabledLights[x].Position.X - enabledLights[x].Radius, enabledLights[x].Position.Y - enabledLights[x].Radius, enabledLights[x].Radius), enabledLights[x].Color, new Vector2(0, 0));
                 vertices[v+1] = new VertexPositionColorTexture(new Vector3(enabledLights[x].Position.X - enabledLights[x].Radius, enabledLights[x].Position.Y + enabledLights[x].Radius, enabledLights[x].Radius), enabledLights[x].Color, new Vector2(0, 1));
                 vertices[v+2] = new VertexPositionColorTexture(new Vector3(enabledLights[x].Position.X + enabledLights[x].Radius, enabledLights[x].Position.Y + enabledLights[x].Radius, enabledLights[x].Radius), enabledLights[x].Color, new Vector2(1, 1));
 
