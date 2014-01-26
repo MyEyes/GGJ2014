@@ -20,7 +20,7 @@ namespace Vest.state
 
     namespace Vest.state
     {
-        public class GameState
+        public class FlipGameState
             : BaseGameState
         {
             OSpriteBatch batch;
@@ -31,9 +31,10 @@ namespace Vest.state
             Player player;
             PlayerController playerController;
 
-            VestLevel currentLevel;
+            CombiLevel currentLevel;
+            //VestLevel currentLevel;
 
-            public GameState()
+            public FlipGameState()
                 : base (false, true)
             {
             }
@@ -45,8 +46,13 @@ namespace Vest.state
 
                 cam = new ManualCamera2D (G.SCREEN_WIDTH, G.SCREEN_HEIGHT, G.Gfx);
 
-                currentLevel = new Branch1();
-                currentLevel.Load (cam);
+                VestLevel GoodLevel = new Branch1();
+                GoodLevel.Load (cam);
+
+                VestLevel BadLevel = new Branch1();
+                BadLevel.Load(cam);
+
+                currentLevel = new CombiLevel(GoodLevel, BadLevel);
 
                 player = new Player (Vector2.Zero, new Polygon[] {new Polygon (new Vector2[] {
                     new Vector2(20, 0),
@@ -55,8 +61,7 @@ namespace Vest.state
                     new Vector2(20, -140)
                 })});
 
-                CombiLevel cLevel = new CombiLevel(currentLevel, null);
-                player.SetLevel(cLevel);
+                player.SetLevel (currentLevel);
                 player.position = new Vector2 (3922, 400);
                 playerController = new PlayerController (player);
 
@@ -81,15 +86,8 @@ namespace Vest.state
 
             public override void Draw()
             {
-                currentLevel.Lights.DrawLights ();
-
                 G.Gfx.Clear (Color.Black);
-                batch.Begin (SpriteSortMode.Immediate, BlendState.AlphaBlend, cam.Transformation);
-                currentLevel.Draw (batch);
-                player.Draw (batch);
-                batch.End ();
-
-                //currentLevel.Lights.Apply (batch);
+                currentLevel.Draw (batch, cam);
             }
         }
     }

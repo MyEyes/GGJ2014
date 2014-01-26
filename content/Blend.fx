@@ -92,6 +92,22 @@ float4 PixelShaderFunction4(VertexShaderOutput input) : COLOR0
     return color;
 }
 
+float4 BlendPixelShader(VertexShaderOutput input) : COLOR0
+{
+	float2 Pposition=input.TexCoord*TextureSize;
+	float2 diff = Pposition-position;
+	float dist = length(diff);
+
+	//float factor = pow(saturate(dist/(1+strength)),2);
+	float factor = tex2D(maskTex, 5*input.TexCoord);
+	factor=10*factor-masked;
+	factor=0.5f*sin(0.5f*factor)+0.5f;
+	//factor=saturate(factor);
+	
+	float4 color = (1-factor)*tex2D(darkTex, input.TexCoord) + factor*tex2D(lightTex, input.TexCoord);
+    return color;
+}
+
 technique Technique1
 {
     pass Pass1
@@ -122,5 +138,13 @@ technique Technique4
 	pass Pass1
 	{
 		PixelShader = compile ps_2_0 PixelShaderFunction4();
+	}
+}
+
+technique Blend
+{
+	pass Pass1
+	{
+		PixelShader = compile ps_2_0 BlendPixelShader();
 	}
 }

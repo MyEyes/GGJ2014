@@ -123,6 +123,7 @@
     <Compile Include="graphics\OSpriteBatcher.cs" />
     <Compile Include="graphics\OSpriteBatchItem.cs" />
     <Compile Include="levels\Branch1.cs" />
+    <Compile Include="levels\CombiLevel.cs" />
     <Compile Include="levels\TestLevel.cs" />
     <Compile Include="levels\VestLevel.cs" />
     <Compile Include="Light.cs" />
@@ -138,6 +139,7 @@
     <Compile Include="G.cs" />
     <Compile Include="SpineGameObject.cs" />
     <Compile Include="state\BaseGameState.cs" />
+    <Compile Include="state\FlipGameState.cs" />
     <Compile Include="state\EditorState.cs" />
     <Compile Include="state\GameState.cs" />
     <Compile Include="state\PlatformingState.cs" />

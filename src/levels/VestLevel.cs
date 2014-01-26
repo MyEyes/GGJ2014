@@ -29,8 +29,7 @@ namespace Vest.levels
         }
 
         public abstract void Load (ManualCamera2D cam);
-        public virtual void DrawGood (OSpriteBatch batch) { }
-        public virtual void DrawEvil (OSpriteBatch batch) { }
+        public virtual void Draw (OSpriteBatch batch) { }
 
         public virtual void Update (GameObject player)
         {

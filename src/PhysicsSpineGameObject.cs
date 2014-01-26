@@ -16,7 +16,7 @@ namespace Vest
 
         public bool OnGround { get; private set; }
         
-        VestLevel level;
+        CombiLevel level;
         Vector2 toMove = Vector2.Zero;
         float ySpeed = 0;
 
@@ -26,7 +26,7 @@ namespace Vest
 
         }
 
-        public void SetLevel (VestLevel level)
+        public void SetLevel (CombiLevel level)
         {
             this.level = level;
         }

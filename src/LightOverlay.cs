@@ -10,7 +10,7 @@ namespace Vest
 {
     public class LightOverlay
     {
-        RenderTarget2D _target;
+        public RenderTarget2D Target;
         public List<Light> Lights;
         public Color AmbientColor;
         Effect _lightEffect;
@@ -19,7 +19,7 @@ namespace Vest
 
         public LightOverlay(GraphicsDevice device)
         {
-            _target = new RenderTarget2D(device, device.Viewport.Width, device.Viewport.Height, false, SurfaceFormat.Rgba1010102, DepthFormat.Depth24Stencil8);
+            Target = new RenderTarget2D(device, device.Viewport.Width, device.Viewport.Height, false, SurfaceFormat.Rgba1010102, DepthFormat.Depth24Stencil8);
             Lights = new List<Light>();
             _lightEffect = G.Content.Load<Effect>("Light");
             _lightEffect.Parameters["Projection"].SetValue(Matrix.CreateTranslation(-device.Viewport.Width / 2 - 0.5f, -device.Viewport.Height / 2 - 0.5f, 0) * Matrix.CreateScale(2 / ((float)device.Viewport.Width), -2 / ((float)device.Viewport.Height), 1));
@@ -60,7 +60,7 @@ namespace Vest
             if (enabledLights.Count < 1)
                 return;
 
-            G.Gfx.SetRenderTarget(_target);
+            G.Gfx.SetRenderTarget(Target);
             G.Gfx.Clear(AmbientColor);
             G.Gfx.BlendState = BlendState.Additive;
             G.Gfx.RasterizerState = RasterizerState.CullNone;
@@ -103,7 +103,7 @@ namespace Vest
         public void Apply(OSpriteBatch batch)
         {
             batch.Begin(SpriteSortMode.Immediate, multiplicativeBlend, Matrix.Identity);
-            batch.Draw(_target, Vector2.Zero, Color.White);
+            batch.Draw(Target, Vector2.Zero, Color.White);
             batch.End();
         }
     }

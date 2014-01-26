@@ -45,11 +45,7 @@ namespace Vest.levels
                     new Vector2 (4070, 418)
                 }));
 
-                
-
                 var elevator = new Elevator (new Vector2 (3922, 236), new Polygon[0]);
-
-
             }
 
             public override void Update(GameObject player)
@@ -57,14 +53,10 @@ namespace Vest.levels
                 base.Update (player);
             }
 
-            public override void DrawGood (OSpriteBatch batch)
+            public override void Draw (OSpriteBatch batch)
             {
                 batch.Draw (normalBG1, Vector2.Zero, Color.White);
                 batch.Draw (normalBG2, new Vector2(normalBG1.Width, 0), Color.White);
-            }
-
-            public override void DrawEvil (OSpriteBatch batch)
-            {
             }
         }
     }

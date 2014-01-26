@@ -93,7 +93,7 @@ namespace Vest.state
             {
                 G.Gfx.Clear (Color.CornflowerBlue);
                 batch.Begin (SpriteSortMode.Immediate, BlendState.AlphaBlend, cam.Transformation);
-                level.DrawGood (batch);
+                level.Draw(batch);
                 batch.End ();
 
                 helper.DrawPolys (level.Collision, cam.Transformation, Color.Red);
