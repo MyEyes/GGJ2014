@@ -47,8 +47,8 @@ namespace Vest.state
 
                 cam = new ManualCamera2D (G.SCREEN_WIDTH, G.SCREEN_HEIGHT, G.Gfx);
 
-                branch1Good = new Branch1();
-                branch1Evil = new Branch1Evil();
+                branch1Good = new Level1Good();
+                branch1Evil = new Level1Evil();
 
                 player = new Player (Vector2.Zero, new Polygon[] {new Polygon (new Vector2[] {
                     new Vector2(20, 0),

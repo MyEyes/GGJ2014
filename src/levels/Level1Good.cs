@@ -8,7 +8,7 @@ using Vest.graphics;
 
 namespace Vest.levels
 {
-    public class Branch1
+    public class Level1Good
         : VestLevel
     {
         ManualCamera2D cam;
@@ -46,8 +46,8 @@ namespace Vest.levels
             CLight (200, Color.Red, G.Content.Load<Texture2D> ("branches/branch1/l_dir"), new Vector2 (2058, 83 + 200));
             CLight (200, Color.Orange, G.Content.Load<Texture2D> ("branches/branch1/l_dir"), new Vector2 (2111, 83 + 200));
             // Party Lights (Forward)
-            CLight (50, Color.Red, G.Content.Load<Texture2D> ("branches/branch1/l_roundDown"), new Vector2 (1906, 103));
-            CLight (50, Color.Orange, G.Content.Load<Texture2D> ("branches/branch1/l_roundDown"), new Vector2 (2005 + 3, 103));
+            CLight (50, Color.Red, G.Content.Load<Texture2D> ("branches/branch1/l_roundDown"), new Vector2 (1906, 103 + 20));
+            CLight (50, Color.Orange, G.Content.Load<Texture2D> ("branches/branch1/l_roundDown"), new Vector2 (2005 + 3, 103 + 20));
             // Lamp
             CLight (90, Color.White, G.Content.Load<Texture2D> ("branches/branch1/l_roundDown"), new Vector2 (3130, 390));
             // Elevator Lights

@@ -31,7 +31,7 @@ namespace Vest.levels
 
         const float insanityChange = 1f / 1000f;
 
-        public CombiLevel(ManualCamera2D cam, VestLevel Good, VestLevel Bad)
+        public CombiLevel (ManualCamera2D cam, VestLevel Good, VestLevel Bad)
         {
             this.Good = Good;
             Good.Load(cam);
@@ -127,15 +127,16 @@ namespace Vest.levels
 
         public void DrawDebug(OSpriteBatch batch, ManualCamera2D cam, DrawHelper helper)
         {
-            helper.DrawPolys (Good.Collision, cam.Transformation, Color.Red);
-            helper.DrawPolys (Bad.Collision, cam.Transformation, Color.Red);
-
-            foreach (var t in Good.Triggers.Concat (Bad.Triggers))
+            if (insanity <= 0.5)
             {
-                helper.DrawPolys (
-                    t.collisionPolys,
-                    cam.Transformation,
-                    Color.Green);    
+                helper.DrawPolys (Good.Collision, cam.Transformation, Color.Green);
+                Good.Triggers.ForEach (t => helper.DrawPolys (t.collisionPolys, cam.Transformation, Color.Blue));
+            }
+
+            else if (insanity > 0.5)
+            {
+                helper.DrawPolys (Bad.Collision, cam.Transformation, Color.Red);
+                Bad.Triggers.ForEach (t => helper.DrawPolys (t.collisionPolys, cam.Transformation, Color.Blue));
             }
         }
     }
