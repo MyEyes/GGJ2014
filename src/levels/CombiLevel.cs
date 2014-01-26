@@ -164,13 +164,12 @@ namespace Vest.levels
 
         public void DrawDebug(OSpriteBatch batch, ManualCamera2D cam, DrawHelper helper)
         {
-            if (insanity >= 0.5)
+            if (State == LevelState.Good)
             {
                 helper.DrawPolys (Good.Collision, cam.Transformation, Color.Green);
                 Good.Triggers.ForEach (t => helper.DrawPolys (t.collisionPolys, cam.Transformation, Color.Blue));
             }
-
-            else if (insanity < 0.5)
+            else if (State == LevelState.Evil)
             {
                 helper.DrawPolys (Bad.Collision, cam.Transformation, Color.Red);
                 Bad.Triggers.ForEach (t => helper.DrawPolys (t.collisionPolys, cam.Transformation, Color.Blue));

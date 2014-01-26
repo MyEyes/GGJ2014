@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.GamerServices;
 
 namespace Vest
 {
@@ -16,6 +17,34 @@ namespace Vest
         public Player (Vector2 position, Polygon[] polygons)
             : base(position, polygons)
         {
+        }
+
+        public static Polygon[] CROUCH_COLLISION
+        {
+            get {
+                return new Polygon[] {new Polygon (new Vector2[] {
+                    new Vector2(20, 0),
+                    new Vector2 (-20, 0),
+                    new Vector2 (-20, -50),
+                    new Vector2(20, -50)
+            })};}
+        }
+
+        public static Polygon[] STAND_COLLISION
+        {
+            get {
+                return new Polygon[] {new Polygon (new Vector2[] {
+                    new Vector2 (20, 0),
+                    new Vector2 (-20, 0),
+                    new Vector2 (-20, -140),
+                    new Vector2 (20, -140)
+            })};}
+        }
+
+        public void SetCollision (Polygon[] poly)
+        {
+            poly[0].Move (position);
+            collisionPolys = poly;
         }
     }
 }

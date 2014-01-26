@@ -52,20 +52,11 @@ namespace Vest.levels
             new Vector2(518, 412),
             new Vector2(495, 403)); //Third small stoneblock
 
-            CCollision(new Vector2(589, 386),
-            new Vector2(581, 377),
-            new Vector2(520, 411),
-            new Vector2(560, 408)); //Fourth small stoneblock
+            CCollision(new Vector2(589, 386), new Vector2(581, 377), new Vector2(520, 411), new Vector2(560, 408)); //Fourth small stoneblock
 
-            CCollision(new Vector2(633, 391),
-            new Vector2(618, 415),
-            new Vector2(589, 352),
-            new Vector2(606, 347)); //Fifth small stoneblock
+            CCollision(new Vector2(633, 391), new Vector2(618, 415), new Vector2(589, 352), new Vector2(606, 347)); //Fifth small stoneblock
 
-            CCollision(new Vector2(610, 395),
-            new Vector2(694, 386),
-            new Vector2(706, 420),
-            new Vector2(618, 415)); //Sixth small stoneblock
+            CCollision(new Vector2(610, 395), new Vector2(694, 386), new Vector2(706, 420), new Vector2(618, 415)); //Sixth small stoneblock
 
             CCollision(new Vector2(644, 360),
             new Vector2(655, 389),
@@ -117,15 +108,8 @@ namespace Vest.levels
             new Vector2(2635, 339),
             new Vector2(2630, 384)); //Slope 6
 
-            CCollision(new Vector2(2636, 340),
-            new Vector2(2723, 331),
-            new Vector2(2726, 344),
-            new Vector2(2638, 350)); //Slope 7
-
-            CCollision(new Vector2(2723, 346),
-            new Vector2(2836, 352),
-            new Vector2(2835, 361),
-            new Vector2(2725, 357)); //Slope 8
+            CCollision (new Vector2 (2634, 339), new Vector2 (2834, 361), new Vector2 (2929, 394), new Vector2 (2630, 384)); // Slope 7-8
+            CCollision (new Vector2 (2497, 141), new Vector2 (2905, 143), new Vector2 (2911, 211), new Vector2 (2850, 295), new Vector2 (2598, 229), new Vector2 (2495, 159)); // Ceiling over Slope 7-8
 
             CCollision(new Vector2(2834, 362),
             new Vector2(2939, 355),
