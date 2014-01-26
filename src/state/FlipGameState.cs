@@ -4,7 +4,6 @@ using System.Linq;
 using System.Text;
 using Vest.graphics;
 using Vest.levels;
-using Vest.levels.Vest.levels;
 using Vest.State;
 using Vest.utilities;
 
@@ -46,13 +45,7 @@ namespace Vest.state
 
                 cam = new ManualCamera2D (G.SCREEN_WIDTH, G.SCREEN_HEIGHT, G.Gfx);
 
-                VestLevel GoodLevel = new Branch1();
-                GoodLevel.Load (cam);
-
-                VestLevel BadLevel = new Branch1();
-                BadLevel.Load(cam);
-
-                currentLevel = new CombiLevel(GoodLevel, BadLevel);
+                currentLevel = new CombiLevel1(cam);
 
                 player = new Player (Vector2.Zero, new Polygon[] {new Polygon (new Vector2[] {
                     new Vector2(20, 0),
@@ -62,7 +55,7 @@ namespace Vest.state
                 })});
 
                 player.SetLevel (currentLevel);
-                player.position = new Vector2 (3922, 400);
+                player.position = new Vector2(1048, 400);
                 playerController = new PlayerController (player);
 
                 cam.Zoom = 1f;
@@ -75,6 +68,7 @@ namespace Vest.state
 
             public override void Update(float dt)
             {
+                currentLevel.Update(dt);
                 currentLevel.Update (player);
                 playerController.Update ();
                 player.Update (dt);

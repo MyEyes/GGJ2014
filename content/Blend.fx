@@ -94,9 +94,12 @@ float4 PixelShaderFunction4(VertexShaderOutput input) : COLOR0
 
 float4 BlendPixelShader(VertexShaderOutput input) : COLOR0
 {
-	float factor = tex2D(maskTex, input.TexCoord);
+	//return float4(1,1,1,1);
+	float4 factors = tex2D(maskTex, input.TexCoord);
+	factors.r*=strength;
+	float modulator = sin(input.TexCoord.x*3.14f)+sin(input.TexCoord.y*2*3.14f);
 	
-	float4 color = (1-factor)*tex2D(darkTex, input.TexCoord) + factor*tex2D(lightTex, input.TexCoord);
+	float4 color = (1-factors.r)*tex2D(darkTex, input.TexCoord) + factors.r*tex2D(lightTex, input.TexCoord);
     return color;
 }
 

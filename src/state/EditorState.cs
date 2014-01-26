@@ -5,7 +5,6 @@ using System.Text;
 using Microsoft.Xna.Framework.Input;
 using Vest.graphics;
 using Vest.levels;
-using Vest.levels.Vest.levels;
 using Vest.State;
 using Vest.utilities;
 

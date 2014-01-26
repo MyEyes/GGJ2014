@@ -31,6 +31,11 @@ namespace Vest.levels
         public abstract void Load (ManualCamera2D cam);
         public virtual void Draw (OSpriteBatch batch) { }
 
+        public virtual void Update(float dt)
+        {
+
+        }
+
         public virtual void Update (GameObject player)
         {
             foreach (var t in Triggers)

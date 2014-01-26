@@ -4,7 +4,6 @@ using System.Linq;
 using System.Text;
 using Vest.graphics;
 using Vest.levels;
-using Vest.levels.Vest.levels;
 using Vest.State;
 using Vest.utilities;
 
@@ -49,9 +48,7 @@ namespace Vest.state
                 cam = new ManualCamera2D (G.SCREEN_WIDTH, G.SCREEN_HEIGHT, G.Gfx);
 
                 branch1Good = new Branch1();
-                branch1Good.Load (cam);
                 branch1Evil = new Branch1Evil();
-                branch1Evil.Load (cam);
 
                 player = new Player (Vector2.Zero, new Polygon[] {new Polygon (new Vector2[] {
                     new Vector2(20, 0),
@@ -60,7 +57,7 @@ namespace Vest.state
                     new Vector2(20, -140)
                 })});
 
-                currentLevel = new CombiLevel(branch1Good, branch1Evil);
+                currentLevel = new CombiLevel(cam, branch1Good, branch1Evil);
                 player.SetLevel (currentLevel);
                 player.position = new Vector2 (1848, 400);//3922, 400);
                 playerController = new PlayerController (player);

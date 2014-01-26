@@ -38,6 +38,11 @@ namespace Vest
             _lightEffect.Parameters["View"].SetValue(cam.Transformation);
         }
 
+        public void SetBlendMode()
+        {
+            _lightEffect.CurrentTechnique = _lightEffect.Techniques["BlendMask"];
+        }
+
         public void AddLight(Light light)
         {
             for (int x = 0; x < Lights.Count; x++)
@@ -57,13 +62,17 @@ namespace Vest
                 .Where (l => l.Enabled)
                 .ToList();
 
-            if (enabledLights.Count < 1)
-                return;
 
             G.Gfx.SetRenderTarget(Target);
             G.Gfx.Clear(AmbientColor);
             G.Gfx.BlendState = BlendState.Additive;
             G.Gfx.RasterizerState = RasterizerState.CullNone;
+
+            if (enabledLights.Count < 1)
+            {
+                G.Gfx.SetRenderTarget(null);
+                return;
+            }
 
             VertexPositionColorTexture[] vertices = new VertexPositionColorTexture[enabledLights.Count * 6];
             for (int x = 0, v = 0; x < enabledLights.Count; x++, v += 6)
@@ -88,6 +97,7 @@ namespace Vest
                     G.Gfx.DrawUserPrimitives<VertexPositionColorTexture>(PrimitiveType.TriangleList, vertices, start, count);
                     start = 6 * x;
                     count = 0;
+                    lastTex = enabledLights[x].Mask;
                 }
                 count += 2;
                 if (x == enabledLights.Count - 1)

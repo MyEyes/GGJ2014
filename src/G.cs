@@ -52,7 +52,7 @@ namespace Vest
                 {"platform", new PlatformingState()},
                 {"edit", new EditState()},
                 {"game", new GameState()},
-                {"flipgame", new GameState()}
+                {"flipgame", new FlipGameState()}
             };
 
             G.State = new StateManager (states);

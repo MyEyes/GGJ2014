@@ -125,6 +125,7 @@
     <Compile Include="levels\Branch1.cs" />
     <Compile Include="levels\Branch1Evil.cs" />
     <Compile Include="levels\CombiLevel.cs" />
+    <Compile Include="levels\CombiLevel1.cs" />
     <Compile Include="levels\TestLevel.cs" />
     <Compile Include="levels\VestLevel.cs" />
     <Compile Include="Light.cs" />

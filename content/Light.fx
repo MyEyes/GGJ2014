@@ -52,13 +52,30 @@ float4 PixelShaderFunction(VertexShaderOutput input) : COLOR0
     return (1-2*length(diff))*input.Color*mask;
 }
 
+float4 PixelShaderFunction2(VertexShaderOutput input) : COLOR0
+{
+    // TODO: add your pixel shader code here.
+
+	float4 mask = tex2D(tex_sampler, input.TexCoord);
+
+    return input.Color*mask;
+}
+
 technique Technique1
 {
     pass Pass1
     {
         // TODO: set renderstates here.
-
         VertexShader = compile vs_2_0 VertexShaderFunction();
         PixelShader = compile ps_2_0 PixelShaderFunction();
     }
+}
+
+technique BlendMask
+{
+	pass Pass1
+	{
+		VertexShader = compile vs_2_0 VertexShaderFunction();
+		PixelShader = compile ps_2_0 PixelShaderFunction2();
+	}
 }

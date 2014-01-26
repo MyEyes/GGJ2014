@@ -50,7 +50,7 @@ namespace Vest.state
             })});
 
             //Workaround before switch to combined level system
-            CombiLevel cLevel = new CombiLevel(level, null);
+            CombiLevel cLevel = new CombiLevel(cam, level, level);
             player.SetLevel (cLevel);
             playerController = new PlayerController (player);
             playerLight = level.CLight (350, Color.Gray, null, new Vector2 (400, 400));            
