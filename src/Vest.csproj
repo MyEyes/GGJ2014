@@ -141,6 +141,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="G.cs" />
+    <Compile Include="SoundHelper.cs" />
     <Compile Include="SpineGameObject.cs" />
     <Compile Include="Standin.cs" />
     <Compile Include="state\BaseGameState.cs" />

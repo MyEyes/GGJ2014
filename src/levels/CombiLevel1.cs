@@ -81,6 +81,10 @@ namespace Vest.levels
 
             //Blending.AmbientColor = Color.White;
 
+            SoundHelper.Preload("sounds/monster1");
+            SoundHelper.Preload("sounds/ding");
+            SoundHelper.Preload("sounds/elevator_openclose");
+
             SetTransition(TransitionType.ThresholdRead);
 
             //Armchair room transition
@@ -103,7 +107,7 @@ namespace Vest.levels
             trig.Entered += delegate(GameObject obj) { SavePosition(); SetTransition(TransitionType.RepeatRead); insanityChange = 0.4f / 1000f; SetTargetInsanity(1.1f); l2.Enabled = true; };
             //Collect pill
             trig = Good.CTrigger(true, true, new Polygon(new Vector2[] { new Vector2(135, 342), new Vector2(192, 342), new Vector2(183, 433), new Vector2(142, 433) }));
-            trig.Entered += delegate(GameObject obj) { SavePosition(); player.DisableInput++; insanity = 0; insanityChange = 0.3f / 1000f; l2.Enabled = false; SetTransition(TransitionType.ThresholdRead); SetTargetInsanity(0); TaskHelper.SetDelay(2000, delegate { player.DisableInput--; SetState(LevelState.Evil); insanityChange = 0.4f / 1000f; SetTargetInsanity(1.1f); l3.Enabled = true; l4.Enabled = true; }); };
+            trig.Entered += delegate(GameObject obj) { SoundHelper.PlaySound("sounds/monster1"); SavePosition(); player.DisableInput++; insanity = 0; insanityChange = 0.3f / 1000f; l2.Enabled = false; SetTransition(TransitionType.ThresholdRead); SetTargetInsanity(0); TaskHelper.SetDelay(2000, delegate { player.DisableInput--; SetState(LevelState.Evil); insanityChange = 0.4f / 1000f; SetTargetInsanity(1.1f); l3.Enabled = true; l4.Enabled = true; }); };
             //Expand dark 1
             trig = Bad.CTrigger(true, true, new Polygon(new Vector2[] { new Vector2(1235, 432), new Vector2(1237, 338), new Vector2(1320, 343), new Vector2(1310, 431) }));
             trig.Entered += delegate(GameObject obj) { SavePosition(); insanity = 0.001f; l3.Enabled = false; l4.Enabled = true; l5.Enabled = true; SetTargetInsanity(1.1f); };

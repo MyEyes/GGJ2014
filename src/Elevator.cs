@@ -37,12 +37,13 @@ namespace Vest
             player.DisableInput++;
             this.player = player;
             player.Depth = 0.35f;
-
+            TaskHelper.SetDelay(4500,
+                delegate { SoundHelper.PlaySound("sounds/ding"); });
             TaskHelper.SetDelay(5000,
-                delegate { Opening = true; });
-            TaskHelper.SetDelay(7000,
+                delegate { Opening = true; SoundHelper.PlaySound("sounds/elevator_openclose"); });
+            TaskHelper.SetDelay(6400,
                 delegate { Closing = true; Opening = false; player.Depth = 0.9f; });
-            TaskHelper.SetDelay(9000,
+            TaskHelper.SetDelay(7400,
                 delegate { Closing = false;  player.DisableInput--; });
         }
 
@@ -57,11 +58,13 @@ namespace Vest
             Enabled = false;
             TaskHelper.SetDelay(550,
                 delegate { player.Controller.ChangeState(PlayerState.Back); player.Controller.Script = false; });
+            TaskHelper.SetDelay(1250,
+                delegate { SoundHelper.PlaySound("sounds/ding"); });
             TaskHelper.SetDelay(2000,
-                delegate { Opening = true; });
-            TaskHelper.SetDelay(3500,
+                delegate { Opening = true; SoundHelper.PlaySound("sounds/elevator_openclose"); });
+            TaskHelper.SetDelay(3400,
                 delegate { player.Depth = 0.35f; Opening = false; Closing = true; });
-            TaskHelper.SetDelay(5500,
+            TaskHelper.SetDelay(5400,
                 delegate { Closing = false; player.Controller.ChangeState(PlayerState.Idle); MovingOut = true; });
         }
 

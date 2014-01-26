@@ -51,7 +51,7 @@ namespace Vest
                 {"test", new TestState()},
                 {"jason", new JasonState()},
                 {"platform", new PlatformingState()},
-                {"edit", new EditState()},
+                //{"edit", new EditState()},
                 {"flipgame", new FlipGameState()}
             };
 
