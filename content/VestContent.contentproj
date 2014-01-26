@@ -321,11 +321,6 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="breakMask1_Transition.png">
-      <Name>breakMask1_Transition</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
     <Compile Include="breakMask2_Transition.png">
       <Name>breakMask2_Transition</Name>
       <Importer>TextureImporter</Importer>
@@ -336,10 +331,25 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
+    <Compile Include="breakMask1_Transition.png">
+      <Name>breakMask1_Transition</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
     <Content Include="player\vest.json">
       <Name>vest</Name>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Compile Include="StrangeMask.png">
+      <Name>StrangeMask</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="StrangeMask2.png">
+      <Name>StrangeMask2</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="player\arms\hand2_L.png">

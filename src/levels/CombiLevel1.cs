@@ -15,14 +15,14 @@ namespace Vest.levels
             Light l = new Light();
             l.Radius = 400;
             //l.Mask = G.Content.Load<Texture2D>("branches/branch1/breakmask");
-            //l.Mask = G.Content.Load<Texture2D>("breakMask3_Transition");
-            l.Mask = G.Content.Load<Texture2D>("mask");
+            l.Mask = G.Content.Load<Texture2D>("breakMask1_Transition");
+            //l.Mask = G.Content.Load<Texture2D>("StrangeMask2");
             l.Color = Color.White;
             l.Enabled = true;
             l.Position = new Vector2(1680, 228);
             Blending.AddLight(l);
 
-            SetTransition(TransitionType.Threshold);
+            SetTransition(TransitionType.ThresholdRead);
 
             Trigger trig = Good.CTrigger(true, false, new Polygon(new Vector2[] {
                 new Vector2(1423, 183),

@@ -134,12 +134,12 @@ namespace Vest.levels
             //DumpTexture(Blending.Target, "test.png");
             BlendEffect.Parameters["time"].SetValue(t);
             BlendEffect.Parameters["strength"].SetValue(insanity);
-            BlendEffect.Parameters["darkWorld"].SetValue(BadTarget);
+            BlendEffect.Parameters["darkWorld"].SetValue(GoodTarget);
             BlendEffect.Parameters["mask"].SetValue(Blending.Target);
 
             G.Gfx.Clear(Color.Black);
             internalBatch.Begin(SpriteSortMode.Immediate, BlendState.Opaque, null, null, null, BlendEffect, Matrix.Identity);
-            internalBatch.Draw(GoodTarget, Vector2.Zero, Color.White);
+            internalBatch.Draw(BadTarget, Vector2.Zero, Color.White);
             internalBatch.End();
         }
 
