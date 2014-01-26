@@ -135,6 +135,10 @@ namespace Vest.levels
             //Spike Kill trigger
             trig = Bad.CTrigger (true, false, new Polygon (new Vector2[] { new Vector2 (1898, 710), new Vector2 (2263, 591), new Vector2 (2259, 638), new Vector2 (1914, 748) }));
             trig.Entered += delegate(GameObject obj) { RestorePosition(); };
+            
+            //After Spike Save
+            trig = Bad.CTrigger(true, true, new Polygon(new Vector2[] { new Vector2(2953, 341), new Vector2(2955, 215), new Vector2(3023, 223), new Vector2(3006, 375) }));
+            trig.Entered += delegate(GameObject obj) { SavePosition(); };
 
             Trigger elevatorTrigger = Bad.CTrigger(true, true, new Polygon(new Vector2[]
             {
