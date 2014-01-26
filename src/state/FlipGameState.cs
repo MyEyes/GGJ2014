@@ -50,12 +50,13 @@ namespace Vest.state
             player = new Player (Vector2.Zero, new Polygon[0]);
             currentLevel = new CombiLevel1(cam, player);
             player.SetLevel (currentLevel);
-            player.position = new Vector2(4000, 400);
+            player.position = new Vector2 (4000, 400);
             playerController = new PlayerController (player);
 
             tracker = new VarTracker();
             tracker.Track ("Anim", () => player.AnimState.GetTrackPlayingString (0));
             tracker.Track ("InputAllowed", () => (!Convert.ToBoolean(player.DisableInput)).ToString());
+            tracker.Track ("IsHiding", () => (Convert.ToBoolean (playerController.IsHiding)).ToString ());
 
             cam.Zoom = 1f;
             cam.CenterOnPoint (camPos = player.position);

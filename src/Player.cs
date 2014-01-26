@@ -10,6 +10,8 @@ namespace Vest
     public class Player
         : PhysicsSpineGameObject
     {
+        public const float PLAYER_HIDE_DEPTH = 0.7f;
+        public const float PLAYER_DEPTH = 0.9f;
 
         public int DisableInput = 0;
         public LookDir LookDir = LookDir.Right;

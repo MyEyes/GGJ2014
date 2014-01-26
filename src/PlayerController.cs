@@ -13,7 +13,10 @@ namespace Vest
     public class PlayerController
     {
         private const float MOVE_SPEED = 3;
-
+        private const float CROUCH_SPEED = 2;
+        private const float JUMP_SPEED = 3;
+        private const float RUN_SPEED = 4;
+        
         private readonly Player player;
         private readonly Timer idleTimer;
         
@@ -29,8 +32,10 @@ namespace Vest
         public bool IsInteracting;
         public bool IsJumping;
         public bool IsWalking;
+        public bool IsRunning;
         public bool IsCrawling;
-        public bool IsStanding; 
+        public bool IsStanding;
+        public bool IsHiding;
 
         public PlayerController (Player player)
         {
@@ -58,8 +63,9 @@ namespace Vest
                 {PlayerState.None,          new Tuple<Action, Action> (null, null)},
                 {PlayerState.Idle,          new Tuple<Action, Action> (IdleStart, IdleUpdate)},
                 {PlayerState.Walk,          new Tuple<Action, Action> (WalkStart, WalkUpdate)},
-                {PlayerState.CrawlStart,     new Tuple<Action, Action> (CrawlStart, null)},
-                {PlayerState.CrawlEnd,     new Tuple<Action, Action> (CrawlEnd, null)},
+                {PlayerState.Run,           new Tuple<Action, Action> (RunStart, RunUpdate)},
+                {PlayerState.CrawlStart,    new Tuple<Action, Action> (CrawlStart, null)},
+                {PlayerState.CrawlEnd,      new Tuple<Action, Action> (CrawlEnd, null)},
                 {PlayerState.CrawlIdle,     new Tuple<Action, Action> (CrawlIdleStart, CrawlIdleUpdate)},
                 {PlayerState.CrawlWalk,     new Tuple<Action, Action> (null, CrawlWalkUpdate)},
                 {PlayerState.Interact,      new Tuple<Action, Action> (InteractStart, null)},
@@ -68,23 +74,12 @@ namespace Vest
 
             ChangeState (PlayerState.Idle);
             player.SetCollision (Player.STAND_COLLISION);
+            player.Depth = Player.PLAYER_DEPTH;
         }
 
         private void InteractStart()
         {
-            var table = player.level
-                .GetObjects<Table>()
-                .OrderBy (t => Vector2.Distance (player.position, t.position))
-                .FirstOrDefault();
-
-            if (table == null)
-            {
-                ChangeState (LastState);
-                return;
-            }
-
-            player.position = table.position;
-            player.SetAnim ("hide", Look, false);
+            
         }
 
         private void JumpStart()
@@ -102,13 +97,14 @@ namespace Vest
                 return;
             }
             
-            player.Move (MoveDir * MOVE_SPEED);
+            player.Move (MoveDir * JUMP_SPEED);
         }
 
         private void CrawlStart()
         {
             idleTimer.Stop();
             player.SetAnim ("crawl_down", Look, false);
+            player.Depth = Player.PLAYER_HIDE_DEPTH;
 
             player.DisableInput++;
             TaskHelper.SetDelay (300, () => {
@@ -139,6 +135,7 @@ namespace Vest
 
             idleTimer.Stop();
             player.SetAnim ("crawl_up", Look, false);
+            player.Depth = Player.PLAYER_DEPTH;
 
             player.DisableInput++;
             TaskHelper.SetDelay (300, () =>
@@ -152,6 +149,7 @@ namespace Vest
         private void CrawlIdleStart()
         {
             idleTimer.Start();
+            UpdateIsHiding();
             player.SetCollision (Player.CROUCH_COLLISION);
         }
 
@@ -181,9 +179,42 @@ namespace Vest
             if (!IsWalking)
                 ChangeState (PlayerState.CrawlIdle);
 
-            player.Move (MoveDir * MOVE_SPEED);
+            player.Move (MoveDir * CROUCH_SPEED);
             player.SetAnim ("crawl_walk", Look);
             player.SetCollision (Player.CROUCH_COLLISION);
+            UpdateIsHiding();
+        }
+
+        private void RunStart()
+        {
+            idleTimer.Stop ();
+        }
+
+        private void RunUpdate()
+        {
+            if (IsCrawling)
+            {
+                ChangeState (PlayerState.CrawlStart);
+                return;
+            }
+            if (IsWalking)
+            {
+                ChangeState (PlayerState.Walk);
+                return;
+            }
+            if (!IsRunning)
+            {
+                ChangeState (PlayerState.Idle);
+                return;
+            }
+            if (IsJumping)
+            {
+                ChangeState (PlayerState.Jump);
+                return;
+            }
+
+            player.Move (MoveDir * RUN_SPEED);
+            player.SetAnim ("run", Look);
         }
 
         private void WalkStart()
@@ -196,6 +227,11 @@ namespace Vest
             if (IsCrawling)
             {
                 ChangeState (PlayerState.CrawlStart);
+                return;
+            }
+            if (IsRunning)
+            {
+                ChangeState (PlayerState.Run);
                 return;
             }
             if (!IsWalking)
@@ -226,6 +262,8 @@ namespace Vest
                 ChangeState (PlayerState.CrawlStart);
             else if (IsWalking)
                 ChangeState (PlayerState.Walk);
+            else if (IsRunning)
+                ChangeState (PlayerState.Run);
             else if (IsJumping)
                 ChangeState (PlayerState.Jump);
         }
@@ -237,6 +275,7 @@ namespace Vest
             bool useJump = false;
             bool useCrawl = false;
             bool useStand = false;
+            bool useRun = false;
 
             currPadState = GamePad.GetState(PlayerIndex.One);
 
@@ -249,11 +288,13 @@ namespace Vest
                 if (isButtonDown(currPadState.DPad.Up)) useStand = true;
                 if (isButtonDown(currPadState.Buttons.A)) useJump = true;
                 if (isButtonDown(currPadState.Buttons.X)) useInteract = true;
+                if (isButtonDown (currPadState.Buttons.Y)) useRun = true;
             }
 
             IsInteracting = useInteract;
             IsJumping = useJump && player.OnGround;
-            IsWalking = moveDir != Vector2.Zero;
+            IsWalking = moveDir != Vector2.Zero && !useRun;
+            IsRunning = moveDir != Vector2.Zero && useRun;
             IsCrawling = useCrawl;
             IsStanding = useStand;
             MoveDir = moveDir;
@@ -275,6 +316,18 @@ namespace Vest
                 stateFuncs.Item2 ();
         }
 
+        private void UpdateIsHiding()
+        {
+            var table = player.level
+                .GetObjects<Table>()
+                .OrderBy (t => Vector2.Distance (player.position, t.position))
+                .FirstOrDefault ();
+
+            IsHiding = table != null
+                ? table.IsCovering (player)
+                : false;
+        }
+
         private void LoadPlayerAnim()
         {
             player.LoadSkeleton ("content/player/vest.json", "player/");
@@ -284,6 +337,8 @@ namespace Vest
             player.AnimData.SetMix ("run", "idle", 0.3f);
             player.AnimData.SetMix ("run", "idle2", 0.3f);
             player.AnimData.SetMix ("run", "jump", 0.2f);
+            player.AnimData.SetMix ("run", "walk", 0.2f);
+            player.AnimData.SetMix ("walk", "run", 0.2f);
             player.AnimData.SetMix ("idle", "jump", 0.2f);
             player.AnimData.SetMix ("jump", "run", 0.3f);
             player.AnimData.SetMix ("jump", "idle", 0.3f);

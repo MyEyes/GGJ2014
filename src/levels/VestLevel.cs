@@ -5,6 +5,7 @@ using System.Text;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Vest.graphics;
+using Vest.utilities;
 
 namespace Vest.levels
 {
@@ -29,7 +30,18 @@ namespace Vest.levels
         }
 
         public abstract void Load (ManualCamera2D cam);
-        public virtual void Draw (OSpriteBatch batch) { }
+        
+        public virtual void Draw (OSpriteBatch batch)
+        {
+            foreach (var g in GameObjects)
+                g.Draw (batch);
+        }
+
+        public virtual void DrawDebug (OSpriteBatch batch, ManualCamera2D cam, DrawHelper helper)
+        {
+            foreach (var g in GameObjects)
+                helper.DrawPolys (g.collisionPolys, cam.Transformation, Color.White);
+        }
 
         public virtual void Update(float dt)
         {
@@ -52,6 +64,13 @@ namespace Vest.levels
         public void CCollision(params Vector2[] args)
         {
             Collision.Add (new Polygon (args));
+        }
+
+        public Table CTable (Vector2 pos, bool isGood)
+        {
+            var newTable = new Table (pos, new Polygon[0], isGood);
+            GameObjects.Add (newTable);
+            return newTable;
         }
 
         public IEnumerable<T> GetObjects<T>()

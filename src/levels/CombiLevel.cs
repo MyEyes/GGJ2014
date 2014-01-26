@@ -62,6 +62,9 @@ namespace Vest.levels
             SetTransition(TransitionType.Smooth);
             internalBatch = new SpriteBatch(G.Gfx);
             Blending.SetBlendMode();
+
+            //TODO: REMOVE
+            //Blending.AmbientColor = Color.White;
         }
 
         public void SetTransition(TransitionType t)
@@ -184,11 +187,13 @@ namespace Vest.levels
             {
                 helper.DrawPolys (Good.Collision, cam.Transformation, Color.Green);
                 Good.Triggers.ForEach (t => helper.DrawPolys (t.collisionPolys, cam.Transformation, Color.Blue));
+                Good.DrawDebug (batch, cam, helper);
             }
             else if (State == LevelState.Evil)
             {
                 helper.DrawPolys (Bad.Collision, cam.Transformation, Color.Red);
                 Bad.Triggers.ForEach (t => helper.DrawPolys (t.collisionPolys, cam.Transformation, Color.Blue));
+                Bad.DrawDebug (batch, cam, helper);
             }
         }
     }

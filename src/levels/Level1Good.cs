@@ -17,6 +17,7 @@ namespace Vest.levels
         Trigger elevatorTrigger;
         public Light light1;
         public Light light2;
+        public Table table;
 
         public override void Load(ManualCamera2D cam)
         {
@@ -30,7 +31,14 @@ namespace Vest.levels
 
             CCollision(new Vector2(49, 440), new Vector2(4202, 440), new Vector2(4202, 450), new Vector2(47, 450)); // FLOOR
             CCollision(new Vector2(33, 18), new Vector2(47, 18), new Vector2(47, 435), new Vector2(33, 437)); // WALL LEFT
-            CCollision(new Vector2(4201, 104), new Vector2(4217, 104), new Vector2(4218, 446), new Vector2(4195, 445)); // WALL RIGHT
+            CCollision(new Vector2(4201, 104), new Vector2(4217, 104), new Vector2(4218, 446), new Vector2(4195, 445)); // WALL RIGHT 
+
+            CTable (new Vector2 (101, 384), true);
+            CTable (new Vector2 (336, 384), true);
+            CTable (new Vector2 (567, 385), true);
+            CTable (new Vector2 (798, 385), true);
+            CTable (new Vector2 (1191, 385), true);
+            CTable (new Vector2 (3067, 384), true);
 
             // Chandoliers
             CLight(200, Color.White, G.Content.Load<Texture2D>("branches/branch1/l_round"), new Vector2(246, 205));
@@ -64,7 +72,6 @@ namespace Vest.levels
                 new Vector2 (4070, 418)
             }));
 
-
             var elevator = new Elevator(new Vector2(3922, 236), new Polygon[0]);
         }
 
@@ -80,8 +87,10 @@ namespace Vest.levels
 
         public override void Draw(OSpriteBatch batch)
         {
-            batch.Draw(normalBG1, Vector2.Zero, Color.White);
-            batch.Draw(normalBG2, new Vector2(normalBG1.Width, 0), Color.White);
+            batch.Draw(normalBG1, Vector2.Zero, null, Color.White, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0.5f);
+            batch.Draw(normalBG2, new Vector2(normalBG1.Width, 0), null, Color.White, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0.5f);
+
+            base.Draw (batch);
         }
     }
 }

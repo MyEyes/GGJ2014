@@ -128,7 +128,7 @@ namespace Vest.state
 
             private void FlushPolyBuffer()
             {
-                if (polyBuffer == null || bufferedPoly == null)
+                if (polyBuffer == null)
                     return;
 
                 Console.WriteLine ("\n============");
@@ -136,7 +136,7 @@ namespace Vest.state
                 Console.WriteLine ("CCollision (" + String.Join (",", polyBuffer.Select (v => String.Format ("new Vector2({0:0}, {1:0})", v.X, v.Y))) + ");");
                 Console.WriteLine ("\n============");
 
-                if (!bufferedPoly.IsConvex)
+                if (bufferedPoly != null && !bufferedPoly.IsConvex)
                     Console.WriteLine ("WARNING: NOT CONVEX");
 
                 bufferedPoly = null;

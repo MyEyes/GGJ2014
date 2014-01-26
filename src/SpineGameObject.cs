@@ -28,6 +28,7 @@ namespace Vest
         public AnimationState AnimState { get; private set; }
         public AnimationStateData AnimData { get; private set; }
         public bool FlipX { set { skeleton.FlipX = value; }}
+        public float Depth = 0.9f;
 
         private ManualCamera2D cam;
         private Skeleton skeleton;
@@ -46,7 +47,7 @@ namespace Vest
 
         public override void Draw (OSpriteBatch batch)
         {
-            batch.Draw (skeleton, 1);
+            batch.Draw (skeleton, Depth);
         }
 
         public void Load (ManualCamera2D cam)

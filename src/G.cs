@@ -31,6 +31,7 @@ namespace Vest
             graphicsDeviceManager = new GraphicsDeviceManager(this);
             graphicsDeviceManager.PreferredBackBufferWidth = SCREEN_WIDTH;
             graphicsDeviceManager.PreferredBackBufferHeight = SCREEN_HEIGHT;
+            graphicsDeviceManager.IsFullScreen = false;
             graphicsDeviceManager.ApplyChanges();
 
             this.IsMouseVisible = true;
@@ -74,6 +75,9 @@ namespace Vest
 
         protected override void Update(GameTime gameTime)
         {
+            if (GamePad.GetState (PlayerIndex.One).IsButtonDown (Buttons.Back))
+                Environment.Exit(1);
+
             State.Update ((float)gameTime.ElapsedGameTime.TotalMilliseconds);
         }
 

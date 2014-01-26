@@ -25,6 +25,12 @@ namespace Vest.levels
             Lights = new LightOverlay(G.Gfx);
             Lights.AmbientColor = new Color(255, 255, 255);
 
+            CTable (new Vector2 (1710, 364), false);
+            CTable (new Vector2 (105, 385), false);
+            CTable (new Vector2 (3067, 384), false);
+            CTable (new Vector2 (3297, 384), false);
+
+
             CCollision(new Vector2(1981, 450),
             new Vector2(1975, 440),
             new Vector2(34, 440),
@@ -115,10 +121,12 @@ namespace Vest.levels
             new Vector2(2939, 355),
             new Vector2(3060, 436)); //Slope 9
 
-            CCollision(new Vector2(3092, 436),
+            // STUPID TABLE SLOAP
+            /*CCollision(new Vector2(3092, 436),
             new Vector2(3126, 421),
             new Vector2(3159, 421),
             new Vector2(3212, 436)); //Slope 10
+            */
 
             CCollision(new Vector2(3515, 436),
             new Vector2(3542, 416),
@@ -165,6 +173,8 @@ namespace Vest.levels
         {
             batch.Draw(evilBG1, Vector2.Zero, Color.White);
             batch.Draw(evilBG2, new Vector2(evilBG1.Width, 0), Color.White);
+
+            base.Draw (batch);
         }
     }
 }
