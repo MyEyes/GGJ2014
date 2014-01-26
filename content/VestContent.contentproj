@@ -645,14 +645,34 @@
       <Importer>Mp3Importer</Importer>
       <Processor>SoundEffectProcessor</Processor>
     </Compile>
-    <Compile Include="sounds\Parano_fiesta.wav">
+    <Compile Include="sounds\Parano_fiesta.mp3">
       <Name>Parano_fiesta</Name>
-      <Importer>WavImporter</Importer>
+      <Importer>Mp3Importer</Importer>
       <Processor>SoundEffectProcessor</Processor>
     </Compile>
-    <Compile Include="sounds\Parano_parano.wav">
+    <Compile Include="sounds\Parano_parano.mp3">
       <Name>Parano_parano</Name>
-      <Importer>WavImporter</Importer>
+      <Importer>Mp3Importer</Importer>
+      <Processor>SoundEffectProcessor</Processor>
+    </Compile>
+    <Compile Include="sounds\drone02.mp3">
+      <Name>drone02</Name>
+      <Importer>Mp3Importer</Importer>
+      <Processor>SongProcessor</Processor>
+    </Compile>
+    <Compile Include="sounds\drone03.mp3">
+      <Name>drone03</Name>
+      <Importer>Mp3Importer</Importer>
+      <Processor>SongProcessor</Processor>
+    </Compile>
+    <Compile Include="sounds\drone04.mp3">
+      <Name>drone04</Name>
+      <Importer>Mp3Importer</Importer>
+      <Processor>SongProcessor</Processor>
+    </Compile>
+    <Compile Include="sounds\light_flick.mp3">
+      <Name>light_flick</Name>
+      <Importer>Mp3Importer</Importer>
       <Processor>SoundEffectProcessor</Processor>
     </Compile>
   </ItemGroup>

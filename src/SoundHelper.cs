@@ -33,6 +33,7 @@ namespace Vest
             if (music1 != null)
                 music1.Dispose();
             music1 = effect.CreateInstance();
+            music1.IsLooped = true;
             music1.Volume = volume;
             music1.Play();
         }
@@ -44,6 +45,7 @@ namespace Vest
             if (music2 != null)
                 music2.Dispose();
             music2 = effect.CreateInstance();
+            music2.IsLooped = true;
             music2.Volume = volume;
             music2.Play();
         }

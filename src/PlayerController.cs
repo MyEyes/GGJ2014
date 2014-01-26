@@ -79,6 +79,9 @@ namespace Vest
             ChangeState (PlayerState.Idle);
             player.SetCollision (Player.STAND_COLLISION);
             player.Depth = Player.PLAYER_DEPTH;
+
+            player.AnimState.Event += (s, e) => { if (e.Event.Data.Name == "step1")SoundHelper.PlaySound("sounds/step1",0.1f); };
+            player.AnimState.Event += (s, e) => { if (e.Event.Data.Name == "step2")SoundHelper.PlaySound("sounds/step2",0.1f); };
         }
 
         private void InteractStart()

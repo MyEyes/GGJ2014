@@ -149,6 +149,12 @@
 		}
 	}
 },
+"events": {
+	"crouchdown": {},
+	"crouchup": {},
+	"step1": {},
+	"step2": {}
+},
 "animations": {
 	"back": {
 		"bones": {
@@ -2011,7 +2017,10 @@
 					{ "time": 0.5, "name": "legs/upperleg_L" }
 				]
 			}
-		}
+		},
+		"events": [
+			{ "time": 0.3666, "name": "crouchdown" }
+		]
 	},
 	"crawl_idle": {
 		"bones": {
@@ -4710,7 +4719,10 @@
 					{ "time": 0.5, "name": "legs/upperleg_L" }
 				]
 			}
-		}
+		},
+		"events": [
+			{ "time": 0.3666, "name": "crouchup" }
+		]
 	},
 	"crawl_walk": {
 		"bones": {
@@ -9055,7 +9067,11 @@
 					{ "time": 0.8, "name": "legs/upperleg_L" }
 				]
 			}
-		}
+		},
+		"events": [
+			{ "time": 0.2, "name": "step1" },
+			{ "time": 0.6, "name": "step2" }
+		]
 	},
 	"walk": {
 		"bones": {
@@ -10154,7 +10170,11 @@
 					{ "time": 1.0666, "name": "legs/upperleg_L" }
 				]
 			}
-		}
+		},
+		"events": [
+			{ "time": 0.2666, "name": "step1" },
+			{ "time": 0.8, "name": "step2" }
+		]
 	}
 }
 }
