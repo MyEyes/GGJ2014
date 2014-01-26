@@ -106,7 +106,6 @@ namespace Vest
 
         private void checkChase()
         {
-            return;
             float distance = Vector2.Distance (level.player.position, this.position);
 
             if (level.player != null && distance <= SEE_DISTANCE && !level.player.IsHiding && level.State == LevelState.Evil &&
