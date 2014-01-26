@@ -64,6 +64,12 @@ namespace Vest
 
         private void JumpUpdate()
         {
+            if (player.OnGround)
+            {
+                ChangeState (LastState);
+                return;
+            }
+            
             player.Move (MoveDir * MOVE_SPEED);
         }
 
@@ -75,7 +81,15 @@ namespace Vest
         private void WalkUpdate()
         {
             if (!IsWalking)
+            {
                 ChangeState (PlayerState.Idle);
+                return;
+            }
+            if (IsJumping)
+            {
+                ChangeState (PlayerState.Jump);
+                return;
+            }
 
             player.Move (MoveDir * MOVE_SPEED);
             player.UpdateAnim ("walk", Look);
@@ -86,6 +100,7 @@ namespace Vest
             idleTimer.Start();
             player.LookDir = Look;
             player.UpdateAnim ("idle", player.LookDir);
+            Console.WriteLine ("Idle start");
         }
 
         private void IdleUpdate()

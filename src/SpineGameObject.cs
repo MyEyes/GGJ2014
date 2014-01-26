@@ -60,7 +60,7 @@ namespace Vest
 
             if (newAnim != currentAnim || flipAnim != skeleton.FlipX)
             {
-                Console.WriteLine ("Switching to anim={0}, flipX={1}", newAnim, skeleton.FlipX);
+                //Console.WriteLine ("Switching to anim={0}, flipX={1}", newAnim, skeleton.FlipX);
                 AnimState.SetAnimation (0, newAnim, loop);
                 skeleton.FlipX = flipAnim;
                 currentAnim = newAnim;

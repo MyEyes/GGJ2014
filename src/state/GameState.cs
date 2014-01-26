@@ -57,7 +57,7 @@ namespace Vest.state
 
                 CombiLevel cLevel = new CombiLevel(currentLevel, null);
                 player.SetLevel(cLevel);
-                player.position = new Vector2 (3922, 400);
+                player.position = new Vector2 (1848, 400);//3922, 400);
                 playerController = new PlayerController (player);
 
                 cam.Zoom = 1f;
@@ -81,7 +81,7 @@ namespace Vest.state
 
             public override void Draw()
             {
-                currentLevel.Lights.DrawLights ();
+                currentLevel.Lights.DrawLights();
 
                 G.Gfx.Clear (Color.Black);
                 batch.Begin (SpriteSortMode.Immediate, BlendState.AlphaBlend, cam.Transformation);
@@ -89,7 +89,7 @@ namespace Vest.state
                 player.Draw (batch);
                 batch.End ();
 
-                //currentLevel.Lights.Apply (batch);
+                currentLevel.Lights.Apply (batch);
             }
         }
     }

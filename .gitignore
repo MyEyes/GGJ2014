@@ -13,6 +13,7 @@ TestResults
 *.user
 *.sln.docstates
 *.cachefile
+Thumbs.db
 
 # Build results
 [Dd]ebug/
