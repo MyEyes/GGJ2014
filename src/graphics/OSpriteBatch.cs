@@ -63,6 +63,9 @@ namespace Vest.graphics
 
         public void Draw (Skeleton skeleton, float depth)
         {
+            OSpriteBatchGroup group = batcher.CreateBatchGroup();
+            group.Depth = depth;
+
             List<Slot> drawOrder = skeleton.DrawOrder;
             float x = skeleton.X, y = skeleton.Y;
             float skeletonR = skeleton.R, skeletonG = skeleton.G, skeletonB = skeleton.B, skeletonA = skeleton.A;
@@ -79,7 +82,7 @@ namespace Vest.graphics
                         device.BlendState = blend;
                     }
 
-                    SpriteBatchItem item = batcher.CreateBatchItem();
+                    SpriteBatchItem item = group.CreateBatchItem();
                     AtlasRegion region = (AtlasRegion)regionAttachment.RendererObject;
 
                     item.Depth = depth;

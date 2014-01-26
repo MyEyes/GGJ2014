@@ -33,6 +33,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
 using Otherworld.Utilities;
@@ -104,7 +105,7 @@ namespace Vest.graphics
         /// <summary>
         /// The list of batch items to process.
         /// </summary>
-        private readonly List<SpriteBatchItem> _batchItemList;
+        private readonly List<BatchableItem> _batchItemList;
 
         /// <summary>
         /// The available SpriteBatchItem queue so that we reuse these objects when we can.
@@ -120,7 +121,7 @@ namespace Vest.graphics
 
         public SpriteBatcher()
         {
-            _batchItemList = new List<SpriteBatchItem> (InitialBatchSize);
+            _batchItemList = new List<BatchableItem> (InitialBatchSize);
             _freeBatchItemQueue = new Queue<SpriteBatchItem> (InitialBatchSize);
 
             EnsureArrayCapacity (InitialBatchSize);
@@ -140,6 +141,13 @@ namespace Vest.graphics
                 item = new SpriteBatchItem ();
             _batchItemList.Add (item);
             return item;
+        }
+
+        public OSpriteBatchGroup CreateBatchGroup()
+        {
+            var group = new OSpriteBatchGroup (_freeBatchItemQueue);
+            _batchItemList.Add (group);
+            return group;
         }
 
         /// <summary>
@@ -187,6 +195,24 @@ namespace Vest.graphics
             _vertexArray = new VertexPositionColorTexture[4 * numBatchItems];
         }
 
+        public void ExpandBatchItemList()
+        {
+            // This is slow as balls, but I'm getting it done for the JAM
+            for (var i = 0; i < _batchItemList.Count; i++)
+            {
+                if (_batchItemList[i] is OSpriteBatchGroup)
+                {
+                    var group = (OSpriteBatchGroup)_batchItemList[i];
+                    _batchItemList.RemoveAt (i);
+
+                    foreach (SpriteBatchItem item in group.GroupItems)
+                    {
+                        _batchItemList.Insert (i++, item);
+                    }
+                }
+            }
+        }
+
         public void DrawBatch (SpriteSortMode sortMode, GraphicsDevice device)
         {
             // nothing to do
@@ -206,6 +232,12 @@ namespace Vest.graphics
                     _batchItemList.Sort (CompareReverseDepth );
                     break;
             }
+
+            // Currently we're storing Batchables which could
+            // be both BatchItems and BatchGroups. Now that
+            // we're sorted (The group is sorted as a whole),
+            // we expand the batch groups which flatterns the tree
+            ExpandBatchItemList();
 
             // Determine how many iterations through the drawing code we need to make
             int batchIndex = 0;
@@ -227,7 +259,9 @@ namespace Vest.graphics
                 // Draw the batches
                 for (int i = 0; i < numBatchesToProcess; i++, batchIndex++)
                 {
-                    SpriteBatchItem item = _batchItemList[batchIndex];
+                    // Only SpriteBatchItem's now, since we've expanded the list
+                    SpriteBatchItem item = (SpriteBatchItem)_batchItemList[batchIndex];
+                    
                     // if the texture changed, we need to flush and bind the new texture
                     var shouldFlush = !ReferenceEquals (item.Texture, tex);
                     if (shouldFlush)
@@ -280,7 +314,7 @@ namespace Vest.graphics
                  VertexPositionColorTexture.VertexDeclaration);
         }
 
-        int CompareTexture(SpriteBatchItem a, SpriteBatchItem b)
+        int CompareTexture(BatchableItem a, BatchableItem b)
         {
             int hashA = a.Texture.GetHashCode();
             int hashB = b.Texture.GetHashCode();
@@ -293,14 +327,20 @@ namespace Vest.graphics
             return 0;
         }
 
-        int CompareDepth(SpriteBatchItem a, SpriteBatchItem b)
+        int CompareDepth(BatchableItem a, BatchableItem b)
         {
             return a.Depth.CompareTo (b.Depth);
         }
 
-        int CompareReverseDepth(SpriteBatchItem a, SpriteBatchItem b)
+        int CompareReverseDepth(BatchableItem a, BatchableItem b)
         {
             return b.Depth.CompareTo (a.Depth);
         }
+    }
+
+    public interface BatchableItem
+    {
+        float Depth { get; }
+        Texture2D Texture { get; }
     }
 }

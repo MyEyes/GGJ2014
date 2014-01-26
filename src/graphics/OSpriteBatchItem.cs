@@ -9,9 +9,10 @@ using Otherworld.Utilities;
 namespace Vest.graphics
 {
     public class SpriteBatchItem
+        : BatchableItem
     {
-        public Texture2D Texture;
-        public float Depth;
+        public Texture2D Texture { get; set; }
+        public float Depth { get; set; }
 
         public VertexPositionColorTexture vertexTL;
         public VertexPositionColorTexture vertexTR;
