@@ -8,7 +8,7 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace Vest.utilities
 {
-    class DrawHelper
+    public class DrawHelper
     {
         BasicEffect be;
         GraphicsDevice device;

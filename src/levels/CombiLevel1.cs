@@ -12,17 +12,25 @@ namespace Vest.levels
         public CombiLevel1(ManualCamera2D cam):base(cam, new Branch1Evil(), new Branch1())
         {
             Light l = new Light();
-            l.Radius = 100;
+            l.Radius = 400;
             //l.Mask = G.Content.Load<Texture2D>("branches/branch1/breakmask");
-            l.Mask = G.Content.Load<Texture2D>("default");
+            //l.Mask = G.Content.Load<Texture2D>("breakMask3_Transition");
+            l.Mask = G.Content.Load<Texture2D>("mask");
             l.Color = Color.White;
             l.Enabled = true;
-            l.Position = new Vector2(2080, 428);
+            l.Position = new Vector2(1680, 228);
             Blending.AddLight(l);
 
-            SetTransition(TransitionType.ThresholdRead);
+            SetTransition(TransitionType.Threshold);
 
-            Trigger trig = Good.CTrigger(true, false, new Polygon(new Vector2[] { new Vector2(1898, 83), new Vector2(1848, 83), new Vector2(1848, 383), new Vector2(1898, 383) }));
+            Trigger trig = Good.CTrigger(true, false, new Polygon(new Vector2[] {
+                new Vector2(1423, 183),
+                new Vector2(1536, 41),
+                new Vector2(2480, 47),
+                new Vector2(2559, 308),
+                new Vector2(2565, 441),
+                new Vector2(1416, 440)
+            }));
             trig.Entered += delegate(GameObject obj) { SetTargetInsanity(1); };
             trig.Exited += delegate(GameObject obj) { SetTargetInsanity(0); };
         }

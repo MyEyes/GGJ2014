@@ -25,7 +25,7 @@ namespace Vest.levels
             Lights = new LightOverlay(G.Gfx);
             Lights.AmbientColor = new Color(255, 255, 255);
 
-            CCollision(new Vector2(49, 422), new Vector2(4202, 423), new Vector2(4202, 434), new Vector2(47, 437)); // FLOOR
+            CCollision (new Vector2 (49, 440), new Vector2 (4202, 440), new Vector2 (4202, 450), new Vector2 (47, 450)); // FLOOR
             CCollision(new Vector2(33, 18), new Vector2(47, 18), new Vector2(47, 435), new Vector2(33, 437)); // WALL LEFT
             CCollision(new Vector2(4201, 104), new Vector2(4217, 104), new Vector2(4218, 446), new Vector2(4195, 445)); // WALL RIGHT
         }

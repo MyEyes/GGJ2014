@@ -31,7 +31,7 @@ namespace Vest.state
             EditorViewController view;
             ManualCamera2D cam;
 
-            VestLevel level;
+            CombiLevel level;
             OSpriteBatch batch;
             SpriteBatch uiBatch;
             DrawHelper helper;
@@ -47,7 +47,6 @@ namespace Vest.state
 
             public override void Load()
             {
-                VestLevel LEVEL_TO_EDIT = new Branch1();
 
                 batch = new OSpriteBatch (G.Gfx);
                 uiBatch = new SpriteBatch (G.Gfx);
@@ -57,8 +56,7 @@ namespace Vest.state
                 view.SetSize (G.SCREEN_WIDTH, G.SCREEN_HEIGHT);
                 cam = new ManualCamera2D (G.SCREEN_WIDTH, G.SCREEN_HEIGHT, G.Gfx);
 
-                level = LEVEL_TO_EDIT;
-                level.Load (cam);
+                level = new CombiLevel1 (cam);
 
                 font = G.Content.Load<SpriteFont> ("font");
             }
@@ -69,6 +67,8 @@ namespace Vest.state
 
             public override void Update(float dt)
             {
+                level.Update (dt);
+
                 currMouse = Mouse.GetState();
 
                 view.Update();
@@ -85,26 +85,27 @@ namespace Vest.state
                 if (prevMouse.MiddleButton == ButtonState.Released && currMouse.MiddleButton == ButtonState.Pressed)
                     FlushPolyBuffer();
 
+                var padState = GamePad.GetState(PlayerIndex.One);
+                if (padState.DPad.Up == ButtonState.Pressed)
+                    level.targetInsanity = 1;
+
+                if (padState.DPad.Down == ButtonState.Pressed)
+                    level.targetInsanity = 0;
+
                 prevMouse = currMouse;
             }
 
             public override void Draw()
             {
                 G.Gfx.Clear (Color.CornflowerBlue);
-                batch.Begin (SpriteSortMode.Immediate, BlendState.AlphaBlend, cam.Transformation);
-                level.Draw(batch);
-                batch.End ();
-
-                helper.DrawPolys (level.Collision, cam.Transformation, Color.Red);
-                level.Triggers.ForEach (t => {
-                    helper.DrawPolys (t.collisionPolys, cam.Transformation, Color.Green);
-                });
+                level.Draw (batch, cam, null);
+                level.DrawDebug (batch, cam, helper);
 
                 if (bufferedPoly != null)
                     helper.DrawPolys (new [] {bufferedPoly}, cam.Transformation, Color.Green);
                 
                 uiBatch.Begin();
-                uiBatch.DrawString (font, String.Format ("{0}, {1}", mouseWorldPos.X, mouseWorldPos.Y), Vector2.Zero, Color.Yellow);
+                uiBatch.DrawString (font, String.Format ("{0:0}, {1:0}", mouseWorldPos.X, mouseWorldPos.Y), Vector2.Zero, Color.Yellow);
                 uiBatch.End();
             }
 
