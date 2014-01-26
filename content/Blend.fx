@@ -94,15 +94,7 @@ float4 PixelShaderFunction4(VertexShaderOutput input) : COLOR0
 
 float4 BlendPixelShader(VertexShaderOutput input) : COLOR0
 {
-	float2 Pposition=input.TexCoord*TextureSize;
-	float2 diff = Pposition-position;
-	float dist = length(diff);
-
-	//float factor = pow(saturate(dist/(1+strength)),2);
-	float factor = tex2D(maskTex, 5*input.TexCoord);
-	factor=10*factor-masked;
-	factor=0.5f*sin(0.5f*factor)+0.5f;
-	//factor=saturate(factor);
+	float factor = tex2D(maskTex, input.TexCoord);
 	
 	float4 color = (1-factor)*tex2D(darkTex, input.TexCoord) + factor*tex2D(lightTex, input.TexCoord);
     return color;

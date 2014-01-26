@@ -35,6 +35,7 @@ namespace Vest.levels
             BadTarget = new RenderTarget2D(G.Gfx, G.Gfx.Viewport.Width, G.Gfx.Viewport.Height, false, SurfaceFormat.Rgba1010102, DepthFormat.Depth16);
             Blending = new LightOverlay(G.Gfx);
             BlendEffect = G.Content.Load<Effect>("Blend");
+            BlendEffect.CurrentTechnique = BlendEffect.Techniques["Blend"];
         }
 
         public void SetState(LevelState state)
@@ -75,8 +76,8 @@ namespace Vest.levels
             Blending.DrawLights();
             BlendEffect.Parameters["time"].SetValue(t);
             BlendEffect.Parameters["strength"].SetValue(insanity);
-            BlendEffect.Parameters["darkTex"].SetValue(BadTarget);
-            BlendEffect.Parameters["maskTex"].SetValue(Blending.Target);
+            BlendEffect.Parameters["darkWorld"].SetValue(BadTarget);
+            BlendEffect.Parameters["mask"].SetValue(Blending.Target);
 
             batch.Begin(SpriteSortMode.Immediate, BlendState.Opaque, cam.Transformation);
             BlendEffect.CurrentTechnique.Passes[0].Apply();
