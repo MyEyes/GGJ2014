@@ -149,6 +149,7 @@
     <Compile Include="state\JasonState.cs" />
     <Compile Include="state\TestState.cs" />
     <Compile Include="state\StateManager.cs" />
+    <Compile Include="Table.cs" />
     <Compile Include="Trigger.cs" />
     <Compile Include="utilities\Assert.cs" />
     <Compile Include="utilities\Boxed.cs" />

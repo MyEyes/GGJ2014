@@ -82,6 +82,7 @@ namespace Vest.state
             {
                 G.Gfx.Clear (Color.Black);
                 currentLevel.Draw (batch, cam, player);
+                currentLevel.DrawDebug (batch, cam, helper);
             }
         }
     }

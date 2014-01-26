@@ -126,17 +126,12 @@ namespace Vest.state
                     return;
 
                 Console.WriteLine ("\n============");
-                
-                for (var i = 0; i < polyBuffer.Count; i++)
-                {
-                    var vert = polyBuffer[i];
-                    Console.Write("new Vector2({0:0}, {1:0})", vert.X, vert.Y);
-                    
-                    if (i < polyBuffer.Count-1)
-                        Console.WriteLine (",");
-                }
-
+                //Console.WriteLine (String.Join (",\n", polyBuffer.Select (v => String.Format ("new Vector2({0:0}, {1:0})", v.X, v.Y))));
+                Console.WriteLine ("CCollision (" + String.Join (",", polyBuffer.Select (v => String.Format ("new Vector2({0:0}, {1:0})", v.X, v.Y))) + ");");
                 Console.WriteLine ("\n============");
+
+                if (!bufferedPoly.IsConvex)
+                    Console.WriteLine ("WARNING: NOT CONVEX");
 
                 bufferedPoly = null;
                 polyBuffer = null;

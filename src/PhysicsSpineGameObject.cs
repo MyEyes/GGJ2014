@@ -15,8 +15,8 @@ namespace Vest
         const float JUMP_STRENGTH = -0.6f * GRAVITY;
 
         public bool OnGround { get; private set; }
-        
-        CombiLevel level;
+        public CombiLevel level { get; private set; }
+    
         Vector2 toMove = Vector2.Zero;
         float ySpeed = 0;
 

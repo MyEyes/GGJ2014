@@ -10,7 +10,7 @@ namespace Vest.levels
 {
     public abstract class VestLevel
     {
-        public List<GameObject> GameObjects;
+        public List<GameObject> GameObjects = new List<GameObject> ();
         public List<Polygon> Collision = new List<Polygon>();
         public List<Trigger> Triggers = new List<Trigger>();
         public LightOverlay Lights;
@@ -52,6 +52,14 @@ namespace Vest.levels
         public void CCollision(params Vector2[] args)
         {
             Collision.Add (new Polygon (args));
+        }
+
+        public IEnumerable<T> GetObjects<T>()
+            where T : GameObject
+        {
+            return GameObjects
+                .Where (o => o is T)
+                .Cast<T>();
         }
 
         public bool IsColliding(GameObject o)
