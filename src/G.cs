@@ -63,8 +63,7 @@ namespace Vest
             // Used by Spine to know that positive y goes vertically down on the screen
             Spine.Bone.yDown = true;
 
-            State.Load ();
-            //State.Set ("edit");
+            State.Load();
             State.Set("flipgame");
         }
 
