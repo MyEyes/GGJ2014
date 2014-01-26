@@ -26,28 +26,28 @@ namespace Vest.levels
             Lights = new LightOverlay(G.Gfx);
             Lights.AmbientColor = new Color(175, 175, 175);
 
-            CCollision(new Vector2(49, 422), new Vector2(4202, 423), new Vector2(4202, 434), new Vector2(47, 437)); // FLOOR
+            CCollision(new Vector2(49, 440), new Vector2(4202, 440), new Vector2(4202, 450), new Vector2(47, 450)); // FLOOR
             CCollision(new Vector2(33, 18), new Vector2(47, 18), new Vector2(47, 435), new Vector2(33, 437)); // WALL LEFT
             CCollision(new Vector2(4201, 104), new Vector2(4217, 104), new Vector2(4218, 446), new Vector2(4195, 445)); // WALL RIGHT
 
             // Chandoliers
-            CLight(350, Color.White, G.Content.Load<Texture2D>("branches/branch1/l_round"), new Vector2(246, 205));
-            CLight(350, Color.White, G.Content.Load<Texture2D>("branches/branch1/l_round"), new Vector2(836, 196));
+            CLight(200, Color.White, G.Content.Load<Texture2D>("branches/branch1/l_round"), new Vector2(246, 205));
+            CLight(200, Color.White, G.Content.Load<Texture2D>("branches/branch1/l_round"), new Vector2(836, 196));
             // Hallway Lights
-            CLight(200, Color.White, G.Content.Load<Texture2D>("branches/branch1/l_roundUp"), new Vector2(3646, 276 - 60));
-            CLight(200, Color.White, G.Content.Load<Texture2D>("branches/branch1/l_roundUp"), new Vector2(3483, 276 - 60));
-            CLight(200, Color.White, G.Content.Load<Texture2D>("branches/branch1/l_roundUp"), new Vector2(2781, 281 - 60));
-            CLight(200, Color.White, G.Content.Load<Texture2D>("branches/branch1/l_roundUp"), new Vector2(2625, 274 - 60));
-            CLight(200, Color.White, G.Content.Load<Texture2D>("branches/branch1/l_roundUp"), new Vector2(1342, 277 - 60));
-            CLight(200, Color.White, G.Content.Load<Texture2D>("branches/branch1/l_roundUp"), new Vector2(1185, 277 - 60));
+            CLight (91, Color.White, G.Content.Load<Texture2D> ("branches/branch1/l_roundUp"), new Vector2 (3646, 276 + 10));
+            CLight (91, Color.White, G.Content.Load<Texture2D> ("branches/branch1/l_roundUp"), new Vector2 (3483, 276 + 10));
+            CLight (91, Color.White, G.Content.Load<Texture2D> ("branches/branch1/l_roundUp"), new Vector2 (2781, 281 - 60));
+            CLight (91, Color.White, G.Content.Load<Texture2D> ("branches/branch1/l_roundUp"), new Vector2 (2625, 274 - 60));
+            CLight (91, Color.White, G.Content.Load<Texture2D> ("branches/branch1/l_roundUp"), new Vector2 (1342, 277 - 10));
+            CLight (91, Color.White, G.Content.Load<Texture2D> ("branches/branch1/l_roundUp"), new Vector2 (1185, 277 - 10));
             // Party Lights (Down)
-            var light = CLight(100, Color.White, G.Content.Load<Texture2D>("branches/branch1/l_dir"), new Vector2(1848, 83 + 200));
-            CLight(100, Color.White, G.Content.Load<Texture2D>("branches/branch1/l_dir"), new Vector2(1957, 83 + 200));
-            CLight(100, Color.White, G.Content.Load<Texture2D>("branches/branch1/l_dir"), new Vector2(2058, 83));
-            CLight(100, Color.White, G.Content.Load<Texture2D>("branches/branch1/l_dir"), new Vector2(2111, 83));
+            CLight (200, Color.Orange, G.Content.Load<Texture2D> ("branches/branch1/l_dir"), new Vector2 (1848, 83 + 200));
+            CLight (200, Color.Red, G.Content.Load<Texture2D> ("branches/branch1/l_dir"), new Vector2 (1957, 83 + 200));
+            CLight (200, Color.Red, G.Content.Load<Texture2D> ("branches/branch1/l_dir"), new Vector2 (2058, 83 + 200));
+            CLight (200, Color.Orange, G.Content.Load<Texture2D> ("branches/branch1/l_dir"), new Vector2 (2111, 83 + 200));
             // Party Lights (Forward)
-            CLight(100, Color.White, G.Content.Load<Texture2D>("branches/branch1/l_roundDown"), new Vector2(1906, 83));
-            CLight(100, Color.White, G.Content.Load<Texture2D>("branches/branch1/l_roundDown"), new Vector2(2005, 83));
+            CLight (50, Color.Red, G.Content.Load<Texture2D> ("branches/branch1/l_roundDown"), new Vector2 (1906, 83));
+            CLight (50, Color.Orange, G.Content.Load<Texture2D> ("branches/branch1/l_roundDown"), new Vector2 (2005, 83));
         
             elevatorTrigger = CTrigger(true, false, new Polygon(new Vector2[]
             {

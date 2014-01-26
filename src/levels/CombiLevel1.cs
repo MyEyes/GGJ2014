@@ -19,7 +19,14 @@ namespace Vest.levels
             l.Position = new Vector2(1848, 83 + 200);
             Blending.AddLight(l);
 
-            Trigger trig = Good.CTrigger(true, false, new Polygon(new Vector2[] { new Vector2(1898, 83), new Vector2(1848, 83), new Vector2(1848, 383), new Vector2(1898, 383) }));
+            Trigger trig = Good.CTrigger(true, false, new Polygon(new Vector2[] {
+                new Vector2(1423, 183),
+                new Vector2(1536, 41),
+                new Vector2(2480, 47),
+                new Vector2(2559, 308),
+                new Vector2(2565, 441),
+                new Vector2(1416, 440)
+            }));
             trig.Entered += delegate(GameObject obj) { SetTargetInsanity(1); };
             trig.Exited += delegate(GameObject obj) { SetTargetInsanity(0); };
         }

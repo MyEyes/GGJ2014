@@ -5,6 +5,7 @@ using System.Text;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Vest.graphics;
+using Vest.utilities;
 
 namespace Vest.levels
 {
@@ -27,7 +28,8 @@ namespace Vest.levels
         public float t;
         public float insanity;
         public float targetInsanity;
-        const float insanityChange = 0.2f / 1000f;
+
+        const float insanityChange = 1f / 1000f;
 
         public CombiLevel(ManualCamera2D cam, VestLevel Good, VestLevel Bad)
         {
@@ -86,7 +88,7 @@ namespace Vest.levels
             fs.Close();
         }
 
-        public void Draw(OSpriteBatch batch, ManualCamera2D cam, Player player)
+        public void Draw (OSpriteBatch batch, ManualCamera2D cam, Player player)
         {
             Blending.SetCam(cam);
 
@@ -95,7 +97,7 @@ namespace Vest.levels
             G.Gfx.Clear(Color.Black);
             batch.Begin(SpriteSortMode.FrontToBack, BlendState.AlphaBlend, cam.Transformation);
             Good.Draw(batch);
-            player.Draw(batch);
+            if (player != null) player.Draw(batch);
             batch.End();
             Good.Lights.Apply(batch);
             G.Gfx.SetRenderTarget(null);
@@ -105,7 +107,7 @@ namespace Vest.levels
             G.Gfx.Clear(Color.Black);
             batch.Begin(SpriteSortMode.FrontToBack, BlendState.AlphaBlend, cam.Transformation);
             Bad.Draw(batch);
-            player.Draw(batch);
+            if (player != null) player.Draw (batch);
             batch.End();
             Bad.Lights.Apply(batch);
             G.Gfx.SetRenderTarget(null);
@@ -121,6 +123,20 @@ namespace Vest.levels
             internalBatch.Begin(SpriteSortMode.Immediate, BlendState.Opaque, null, null, null, BlendEffect, Matrix.Identity);
             internalBatch.Draw(GoodTarget, Vector2.Zero, Color.White);
             internalBatch.End();
+        }
+
+        public void DrawDebug(OSpriteBatch batch, ManualCamera2D cam, DrawHelper helper)
+        {
+            helper.DrawPolys (Good.Collision, cam.Transformation, Color.Red);
+            helper.DrawPolys (Bad.Collision, cam.Transformation, Color.Red);
+
+            foreach (var t in Good.Triggers.Concat (Bad.Triggers))
+            {
+                helper.DrawPolys (
+                    t.collisionPolys,
+                    cam.Transformation,
+                    Color.Green);    
+            }
         }
     }
 }
