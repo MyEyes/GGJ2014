@@ -167,6 +167,7 @@
     <Compile Include="utilities\UriHelpers.cs" />
     <Compile Include="utilities\VarTracker.cs" />
     <Compile Include="utilities\XnaHelpers.cs" />
+    <Compile Include="VarTracker.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Game.ico" />

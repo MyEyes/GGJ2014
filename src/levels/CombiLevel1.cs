@@ -22,7 +22,7 @@ namespace Vest.levels
             l.Position = new Vector2(3320, 180);
             Blending.AddLight(l);
             Level1Good l1g = Good as Level1Good;
-            //Blending.AmbientColor = Color.White;
+            Blending.AmbientColor = Color.White;
 
             SetTransition(TransitionType.ThresholdRead);
 

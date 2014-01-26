@@ -87,10 +87,16 @@ namespace Vest.state
 
                 var padState = GamePad.GetState(PlayerIndex.One);
                 if (padState.DPad.Up == ButtonState.Pressed)
-                    level.targetInsanity = 1;
+                {
+                    level.SetTargetInsanity (2f);
+                    level.SetState (LevelState.Evil);
+                }
 
                 if (padState.DPad.Down == ButtonState.Pressed)
-                    level.targetInsanity = 0;
+                {
+                    level.SetTargetInsanity (0);
+                    level.SetState (LevelState.Good);
+                }
 
                 prevMouse = currMouse;
             }
@@ -122,7 +128,7 @@ namespace Vest.state
 
             private void FlushPolyBuffer()
             {
-                if (polyBuffer == null)
+                if (polyBuffer == null || bufferedPoly == null)
                     return;
 
                 Console.WriteLine ("\n============");

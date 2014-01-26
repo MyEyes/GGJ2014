@@ -1,8 +1,11 @@
-﻿using System;
+﻿﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Vest.graphics;
+﻿using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework.Graphics;
+﻿using spine_csharp_xna.src;
+﻿using Vest.graphics;
 using Vest.levels;
 using Vest.State;
 using Vest.utilities;
@@ -10,91 +13,91 @@ using Microsoft.Xna.Framework.Input;
 
 namespace Vest.state
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Timers;
-    using Microsoft.Xna.Framework;
-    using Microsoft.Xna.Framework.Graphics;
-    using Otherworld.Utilities;
-
-    namespace Vest.state
+    public class FlipGameState
+        : BaseGameState
     {
-        public class FlipGameState
-            : BaseGameState
+        private const bool DRAW_DEBUG = true;
+
+        OSpriteBatch batch;
+        SpriteBatch uiBatch;
+        DrawHelper helper;
+        VarTracker tracker;
+        SpriteFont font;
+        ManualCamera2D cam;
+        Vector2 camPos;
+
+        CombiLevel currentLevel;
+        int transitionLight = 255;
+
+        Player player;
+        PlayerController playerController;
+
+        public FlipGameState()
+            : base (false, true)
         {
-            OSpriteBatch batch;
-            DrawHelper helper;
-            ManualCamera2D cam;
-            Vector2 camPos;
+        }
 
-            Player player;
-            PlayerController playerController;
+        public override void Load()
+        {
+            batch = new OSpriteBatch (G.Gfx);
+            uiBatch = new SpriteBatch (G.Gfx);
+            helper = new DrawHelper (G.Gfx);
+            font = G.Content.Load<SpriteFont> ("font");
 
-            CombiLevel currentLevel;
-            int transitionLight = 255;
-            //VestLevel currentLevel;
+            cam = new ManualCamera2D (G.SCREEN_WIDTH, G.SCREEN_HEIGHT, G.Gfx);
 
-            public FlipGameState()
-                : base (false, true)
+            currentLevel = new CombiLevel1(cam);
+
+            player = new Player (Vector2.Zero, new Polygon[0]);
+            player.SetLevel (currentLevel);
+            player.position = new Vector2(1048, 400);
+            playerController = new PlayerController (player);
+
+            tracker = new VarTracker();
+            tracker.Track ("Anim", () => player.AnimState.GetTrackPlayingString (0));
+
+            cam.Zoom = 1f;
+            cam.CenterOnPoint (camPos = player.position);
+        }
+
+        public override void Update(float dt)
+        {
+            currentLevel.Update(dt);
+            currentLevel.Update (player);
+            playerController.Update ();
+            player.Update (dt);
+
+            KeyboardState state = Keyboard.GetState();
+            GamePadState padState = GamePad.GetState (PlayerIndex.One);
+
+            if (state.IsKeyDown(Keys.W))
+                transitionLight++;
+            if (state.IsKeyDown(Keys.S))
+                transitionLight--;
+            if (padState.DPad.Up == ButtonState.Pressed)
             {
+                currentLevel.SetState (LevelState.Evil);
+                currentLevel.SetTargetInsanity (1.1f);
             }
 
-            public override void Load()
+            (currentLevel as CombiLevel1).l.Color = new Color(transitionLight, transitionLight, transitionLight);
+
+            var targetPos = player.position - new Vector2 (0, 200);
+            camPos = Vector2.Lerp (camPos, targetPos, 0.2f);
+            cam.CenterOnPoint (camPos);
+        }
+
+        public override void Draw()
+        {
+            G.Gfx.Clear (Color.Black);
+            currentLevel.Draw (batch, cam, player);
+
+            if (DRAW_DEBUG)
             {
-                batch = new OSpriteBatch (G.Gfx);
-                helper = new DrawHelper (G.Gfx);
-
-                cam = new ManualCamera2D (G.SCREEN_WIDTH, G.SCREEN_HEIGHT, G.Gfx);
-
-                currentLevel = new CombiLevel1(cam);
-
-                player = new Player (Vector2.Zero, new Polygon[] {new Polygon (new Vector2[] {
-                    new Vector2(20, 0),
-                    new Vector2 (-20, 0),
-                    new Vector2 (-20, -140),
-                    new Vector2(20, -140)
-                })});
-
-                player.SetLevel (currentLevel);
-                player.position = new Vector2(4090, 400);
-                playerController = new PlayerController (player);
-
-                cam.Zoom = 1f;
-                cam.CenterOnPoint (camPos = player.position);
-            }
-
-            public override void Activate()
-            {
-            }
-
-            public override void Update(float dt)
-            {
-                currentLevel.Update(dt);
-                currentLevel.Update (player);
-                playerController.Update ();
-                player.Update (dt);
-                
-
-                KeyboardState state = Keyboard.GetState();
-                if (state.IsKeyDown(Keys.W))
-                    transitionLight++;
-                if (state.IsKeyDown(Keys.S))
-                    transitionLight--;
-
-                (currentLevel as CombiLevel1).l.Color = new Color(transitionLight, transitionLight, transitionLight);
-
-                var targetPos = player.position - new Vector2 (0, 200);
-                camPos = Vector2.Lerp (camPos, targetPos, 0.2f);
-                cam.CenterOnPoint (camPos);
-            }
-
-            public override void Draw()
-            {
-                G.Gfx.Clear (Color.Black);
-                currentLevel.Draw (batch, cam, player);
+                currentLevel.DrawDebug (batch, cam, helper);
+                helper.DrawPolys (player.collisionPolys, cam.Transformation, Color.Pink);
+                tracker.Draw (uiBatch, font);
             }
         }
     }
-
 }
