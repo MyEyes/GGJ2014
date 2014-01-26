@@ -87,7 +87,7 @@ namespace Vest.state
             public override void Draw()
             {
                 G.Gfx.Clear (Color.Black);
-                currentLevel.Draw (batch, cam);
+                currentLevel.Draw (batch, cam, player);
             }
         }
     }
