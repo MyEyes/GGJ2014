@@ -17,7 +17,7 @@ namespace Vest.state
     public class FlipGameState
         : BaseGameState
     {
-        private const bool DRAW_DEBUG = true;
+        private const bool DRAW_DEBUG = false;
 
         OSpriteBatch batch;
         SpriteBatch uiBatch;

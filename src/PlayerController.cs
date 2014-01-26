@@ -230,16 +230,18 @@ namespace Vest
             bool useCrawl = false;
             bool useStand = false;
 
-            currPadState = GamePad.GetState (PlayerIndex.One);
+            currPadState = GamePad.GetState(PlayerIndex.One);
 
-            
-            
-            if (isButtonDown(currPadState.DPad.Left)) moveDir.X = -1;
-            if (isButtonDown(currPadState.DPad.Right)) moveDir.X = 1;
-            if (isButtonDown(currPadState.DPad.Down)) useCrawl = true;
-            if (isButtonDown(currPadState.DPad.Up)) useStand = true;
-            if (isButtonDown(currPadState.Buttons.A)) useJump = true;
-            if (isButtonDown(currPadState.Buttons.X)) useInteract = true;
+
+            if (player.DisableInput == 0)
+            {
+                if (isButtonDown(currPadState.DPad.Left)) moveDir.X = -1;
+                if (isButtonDown(currPadState.DPad.Right)) moveDir.X = 1;
+                if (isButtonDown(currPadState.DPad.Down)) useCrawl = true;
+                if (isButtonDown(currPadState.DPad.Up)) useStand = true;
+                if (isButtonDown(currPadState.Buttons.A)) useJump = true;
+                if (isButtonDown(currPadState.Buttons.X)) useInteract = true;
+            }
 
             IsInteracting = useInteract;
             IsJumping = useJump && player.OnGround;
@@ -252,12 +254,9 @@ namespace Vest
                 Look = moveDir.X < 0 ? LookDir.Left : LookDir.Right;
 
             prevPadState = currPadState;
-            
 
-            if (player.DisableInput == 0)
-            {
-                UpdateCurrentState();
-            }
+            UpdateCurrentState();
+
         }
 
         private void UpdateCurrentState()

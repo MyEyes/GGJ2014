@@ -53,6 +53,22 @@ namespace Vest.levels
             l5.Position = new Vector2(2160, 320);
             Blending.AddLight(l5);
 
+            Light l6 = new Light();
+            l6.Radius = 800;
+            l6.Mask = G.Content.Load<Texture2D>("pillmask_green");
+            l6.Color = Color.White;
+            l6.Enabled = false;
+            l6.Position = new Vector2(2160, 320);
+            Blending.AddLight(l6);
+
+            Light l7 = new Light();
+            l7.Radius = 800;
+            l7.Mask = G.Content.Load<Texture2D>("pillmask");
+            l7.Color = Color.White;
+            l7.Enabled = false;
+            l7.Position = new Vector2(3560, 320);
+            Blending.AddLight(l7);
+
             Level1Good l1g = Good as Level1Good;
 
             //Blending.AmbientColor = Color.White;
@@ -75,10 +91,13 @@ namespace Vest.levels
             trig.Entered += delegate(GameObject obj) { SetTransition(TransitionType.RepeatRead); insanityChange = 0.4f / 1000f; SetTargetInsanity(1.1f); l2.Enabled = true; };
 
             trig = Good.CTrigger(true, true, new Polygon(new Vector2[] { new Vector2(135, 342), new Vector2(192, 342), new Vector2(183, 433), new Vector2(142, 433) }));
-            trig.Entered += delegate(GameObject obj) { player.DisableInput++; insanity = 0; l2.Enabled = false; SetTransition(TransitionType.ThresholdRead); SetTargetInsanity(0); TaskHelper.SetDelay(2000, delegate { player.DisableInput--; SetState(LevelState.Evil); insanityChange = 0.4f / 1000f; SetTargetInsanity(1.1f); l3.Enabled = true; l4.Enabled = true; }); };
+            trig.Entered += delegate(GameObject obj) { player.DisableInput++; insanity = 0; insanityChange = 0.3f / 1000f; l2.Enabled = false; SetTransition(TransitionType.ThresholdRead); SetTargetInsanity(0); TaskHelper.SetDelay(2000, delegate { player.DisableInput--; SetState(LevelState.Evil); insanityChange = 0.4f / 1000f; SetTargetInsanity(1.1f); l3.Enabled = true; l4.Enabled = true; }); };
 
-            trig = Good.CTrigger(true, true, new Polygon(new Vector2[] { new Vector2(1235, 432), new Vector2(1237, 338), new Vector2(1320, 343), new Vector2(1310, 431) }));
-            trig.Entered += delegate(GameObject obj) { insanity = 0; l3.Enabled = false; l4.Enabled = true; l5.Enabled = true; SetTargetInsanity(1.1f); };
+            trig = Bad.CTrigger(true, true, new Polygon(new Vector2[] { new Vector2(1235, 432), new Vector2(1237, 338), new Vector2(1320, 343), new Vector2(1310, 431) }));
+            trig.Entered += delegate(GameObject obj) { insanity = 0.001f; l3.Enabled = false; l4.Enabled = true; l5.Enabled = true; SetTargetInsanity(1.1f); };
+
+            trig = Bad.CTrigger(true, true, new Polygon(new Vector2[] { new Vector2(2813, 301), new Vector2(2867, 301), new Vector2(2868, 350), new Vector2(2826, 351) }));
+            trig.Entered += delegate(GameObject obj) { insanity = 0.001f; l5.Enabled = false; l6.Enabled = true; l7.Enabled = true; SetTargetInsanity(1.1f); };
             
         }
     }
