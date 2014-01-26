@@ -14,6 +14,14 @@ namespace Vest.levels
         Evil
     }
 
+    public enum TransitionType
+    {
+        Smooth,
+        Threshold,
+        ThresholdRead,
+        Thresholdsmooth
+    }
+
     public class CombiLevel
     {
         public VestLevel Good;
@@ -27,7 +35,7 @@ namespace Vest.levels
         public float t;
         public float insanity;
         public float targetInsanity;
-        const float insanityChange = 0.2f / 1000f;
+        const float insanityChange = 0.4f / 1000f;
 
         public CombiLevel(ManualCamera2D cam, VestLevel Good, VestLevel Bad)
         {
@@ -40,9 +48,20 @@ namespace Vest.levels
             BadTarget = new RenderTarget2D(G.Gfx, G.Gfx.Viewport.Width, G.Gfx.Viewport.Height, false, SurfaceFormat.Rgba1010102, DepthFormat.Depth16);
             Blending = new LightOverlay(G.Gfx);
             BlendEffect = G.Content.Load<Effect>("Blend");
-            BlendEffect.CurrentTechnique = BlendEffect.Techniques["Blend"];
+            SetTransition(TransitionType.Smooth);
             internalBatch = new SpriteBatch(G.Gfx);
             Blending.SetBlendMode();
+        }
+
+        public void SetTransition(TransitionType t)
+        {
+            switch (t)
+            {
+                case TransitionType.Smooth: BlendEffect.CurrentTechnique = BlendEffect.Techniques["SmoothBlend"]; break;
+                case TransitionType.Threshold: BlendEffect.CurrentTechnique = BlendEffect.Techniques["ActivateBlend"]; break;
+                case TransitionType.ThresholdRead: BlendEffect.CurrentTechnique = BlendEffect.Techniques["ActivateReadBlend"]; break;
+                case TransitionType.Thresholdsmooth: BlendEffect.CurrentTechnique = BlendEffect.Techniques["SmoothActivateBlend"]; break;
+            }
         }
 
         public void SetState(LevelState state)

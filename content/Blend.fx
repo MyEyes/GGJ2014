@@ -92,12 +92,45 @@ float4 PixelShaderFunction4(VertexShaderOutput input) : COLOR0
     return color;
 }
 
-float4 BlendPixelShader(VertexShaderOutput input) : COLOR0
+float4 SmoothBlendPixelShader(VertexShaderOutput input) : COLOR0
 {
-	//return float4(1,1,1,1);
 	float4 factors = tex2D(maskTex, input.TexCoord);
 	factors.r*=strength;
 	float modulator = sin(input.TexCoord.x*3.14f)+sin(input.TexCoord.y*2*3.14f);
+	
+	float4 color = (1-factors.r)*tex2D(darkTex, input.TexCoord) + factors.r*tex2D(lightTex, input.TexCoord);
+    return color;
+}
+
+float4 ActivateBlendPixelShader(VertexShaderOutput input) : COLOR0
+{
+	float4 factors = tex2D(maskTex, input.TexCoord);
+	if(strength<=factors.r || factors.r==0)
+		factors.r=0;
+	else
+		factors.r=1;
+	
+	float4 color = (1-factors.r)*tex2D(darkTex, input.TexCoord) + factors.r*tex2D(lightTex, input.TexCoord);
+    return color;
+}
+
+float4 ActivateBlendReadPixelShader(VertexShaderOutput input) : COLOR0
+{
+	float4 factors = tex2D(maskTex, input.TexCoord);
+	if(strength<=factors.r || factors.r==0)
+		factors.r=0;
+	else
+		factors.r=factors.g;
+	
+	float4 color = (1-factors.r)*tex2D(darkTex, input.TexCoord) + factors.r*tex2D(lightTex, input.TexCoord);
+    return color;
+}
+
+float4 SmoothActivateBlendPixelShader(VertexShaderOutput input) : COLOR0
+{
+	float4 factors = tex2D(maskTex, input.TexCoord);
+	if(strength<factors.r)
+		factors.r=0;
 	
 	float4 color = (1-factors.r)*tex2D(darkTex, input.TexCoord) + factors.r*tex2D(lightTex, input.TexCoord);
     return color;
@@ -136,10 +169,34 @@ technique Technique4
 	}
 }
 
-technique Blend
+technique SmoothBlend
 {
 	pass Pass1
 	{
-		PixelShader = compile ps_2_0 BlendPixelShader();
+		PixelShader = compile ps_2_0 SmoothBlendPixelShader();
+	}
+}
+
+technique SmoothActivateBlend
+{
+	pass Pass1
+	{
+		PixelShader = compile ps_2_0 SmoothActivateBlendPixelShader();
+	}
+}
+
+technique ActivateBlend
+{
+	pass Pass1
+	{
+		PixelShader = compile ps_2_0 ActivateBlendPixelShader();
+	}
+}
+
+technique ActivateReadBlend
+{
+	pass Pass1
+	{
+		PixelShader = compile ps_2_0 ActivateBlendReadPixelShader();
 	}
 }
