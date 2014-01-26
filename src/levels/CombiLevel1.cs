@@ -83,30 +83,36 @@ namespace Vest.levels
 
             SetTransition(TransitionType.ThresholdRead);
 
-            Trigger trig = Good.CTrigger(true, false, new Polygon(new Vector2[] {new Vector2(3170, 433),new Vector2(3176, 350),new Vector2(3271, 353),new Vector2(3259, 431)}));
-            trig.Entered += delegate(GameObject obj) { insanityChange = 0.25f / 1000f; SetTargetInsanity(1.1f); TaskHelper.SetDelay(5000, delegate { insanityChange = 0.8f / 1000f; SetTargetInsanity(-0.1f); }); TaskHelper.SetDelay(8000, delegate { l.Enabled = false; l8.Enabled = false; }); };
+            //Armchair room transition
+            Trigger trig = Good.CTrigger(true, true, new Polygon(new Vector2[] {new Vector2(3170, 433),new Vector2(3176, 350),new Vector2(3271, 353),new Vector2(3259, 431)}));
+            trig.Entered += delegate(GameObject obj) { SavePosition(); insanityChange = 0.25f / 1000f; SetTargetInsanity(1.1f); TaskHelper.SetDelay(5000, delegate { insanityChange = 0.8f / 1000f; SetTargetInsanity(-0.1f); }); TaskHelper.SetDelay(8000, delegate { l.Enabled = false; l8.Enabled = false; }); };
 
+            //Lights flickering
             trig = Good.CTrigger(true, true, new Polygon(new Vector2[] { new Vector2(1447, 437), new Vector2(1367, 435), new Vector2(1365, 343), new Vector2(1443, 346) }));
-            trig.Entered += delegate(GameObject obj) { TaskHelper.SetDelay(100, delegate { l1g.light1.Enabled = false; l1g.light2.Enabled = false; }); TaskHelper.SetDelay(200, delegate { l1g.light1.Enabled = true; l1g.light2.Enabled = true; });
+            trig.Entered += delegate(GameObject obj)
+            {
+            SavePosition(); TaskHelper.SetDelay(100, delegate { l1g.light1.Enabled = false; l1g.light2.Enabled = false; }); TaskHelper.SetDelay(200, delegate { l1g.light1.Enabled = true; l1g.light2.Enabled = true; });
             TaskHelper.SetDelay(330, delegate { l1g.light1.Enabled = false; l1g.light2.Enabled = false; }); TaskHelper.SetDelay(470, delegate { l1g.light1.Enabled = true; l1g.light2.Enabled = true; });
             TaskHelper.SetDelay(800, delegate { l1g.light1.Enabled = false; l1g.light2.Enabled = false; }); TaskHelper.SetDelay(950, delegate { l1g.light1.Enabled = true; l1g.light2.Enabled = true; });
             };
-
+            //Lights turning off
             trig = Good.CTrigger(true, true, new Polygon(new Vector2[] { new Vector2(1053, 346), new Vector2(1122, 343), new Vector2(1123, 430), new Vector2(1064, 430) }));
-            trig.Entered += delegate(GameObject obj) { l1g.light1.Enabled = false; l1g.light2.Enabled = false; };
-
+            trig.Entered += delegate(GameObject obj) { SavePosition(); l1g.light1.Enabled = false; l1g.light2.Enabled = false; };
+            //Show up stuff around pill
             trig = Good.CTrigger(true, true, new Polygon(new Vector2[] { new Vector2(653, 379), new Vector2(739, 381), new Vector2(738, 435), new Vector2(662, 433) }));
-            trig.Entered += delegate(GameObject obj) { SetTransition(TransitionType.RepeatRead); insanityChange = 0.4f / 1000f; SetTargetInsanity(1.1f); l2.Enabled = true; };
-
+            trig.Entered += delegate(GameObject obj) { SavePosition(); SetTransition(TransitionType.RepeatRead); insanityChange = 0.4f / 1000f; SetTargetInsanity(1.1f); l2.Enabled = true; };
+            //Collect pill
             trig = Good.CTrigger(true, true, new Polygon(new Vector2[] { new Vector2(135, 342), new Vector2(192, 342), new Vector2(183, 433), new Vector2(142, 433) }));
-            trig.Entered += delegate(GameObject obj) { player.DisableInput++; insanity = 0; insanityChange = 0.3f / 1000f; l2.Enabled = false; SetTransition(TransitionType.ThresholdRead); SetTargetInsanity(0); TaskHelper.SetDelay(2000, delegate { player.DisableInput--; SetState(LevelState.Evil); insanityChange = 0.4f / 1000f; SetTargetInsanity(1.1f); l3.Enabled = true; l4.Enabled = true; }); };
-
+            trig.Entered += delegate(GameObject obj) { SavePosition(); player.DisableInput++; insanity = 0; insanityChange = 0.3f / 1000f; l2.Enabled = false; SetTransition(TransitionType.ThresholdRead); SetTargetInsanity(0); TaskHelper.SetDelay(2000, delegate { player.DisableInput--; SetState(LevelState.Evil); insanityChange = 0.4f / 1000f; SetTargetInsanity(1.1f); l3.Enabled = true; l4.Enabled = true; }); };
+            //Expand dark 1
             trig = Bad.CTrigger(true, true, new Polygon(new Vector2[] { new Vector2(1235, 432), new Vector2(1237, 338), new Vector2(1320, 343), new Vector2(1310, 431) }));
-            trig.Entered += delegate(GameObject obj) { insanity = 0.001f; l3.Enabled = false; l4.Enabled = true; l5.Enabled = true; SetTargetInsanity(1.1f); };
-
+            trig.Entered += delegate(GameObject obj) { SavePosition(); insanity = 0.001f; l3.Enabled = false; l4.Enabled = true; l5.Enabled = true; SetTargetInsanity(1.1f); };
+            //Expand Dark 2
             trig = Bad.CTrigger(true, true, new Polygon(new Vector2[] { new Vector2(2813, 301), new Vector2(2867, 301), new Vector2(2868, 350), new Vector2(2826, 351) }));
             trig.Entered += delegate(GameObject obj) { insanity = 0.001f; l5.Enabled = false; l6.Enabled = true; l7.Enabled = true; SetTargetInsanity(1.1f); };
-            
+            //Spike Kill trigger
+            trig = Bad.CTrigger(true, false, new Polygon(new Vector2[] { new Vector2(1899, 600), new Vector2(2226, 600), new Vector2(2232, 651), new Vector2(1891, 638) }));
+            trig.Entered += delegate(GameObject obj) { RestorePosition(); };
         }
     }
 }

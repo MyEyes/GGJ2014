@@ -42,9 +42,14 @@ namespace Vest.levels
         public float repeatPeriod = 2 * 3.14f;
         public Player player;
 
+        public Vector2 lastPosition;
+        public bool crouching;
+
         public CombiLevel (Player player, ManualCamera2D cam, VestLevel Good, VestLevel Bad)
         {
             this.player = player;
+            if (player != null)
+                lastPosition = player.position;
             this.Good = Good;
             Good.Load(cam);
             this.Bad = Bad;
@@ -69,6 +74,17 @@ namespace Vest.levels
                 case TransitionType.Thresholdsmooth: BlendEffect.CurrentTechnique = BlendEffect.Techniques["SmoothActivateBlend"]; break;
                 case TransitionType.RepeatRead: BlendEffect.CurrentTechnique = BlendEffect.Techniques["RepeatReadBlend"]; break;
             }
+        }
+
+        public void SavePosition()
+        {
+            lastPosition = player.position;
+        }
+
+        public void RestorePosition()
+        {
+            player.Move(lastPosition - player.position);
+            
         }
 
         public void SetState(LevelState state)
