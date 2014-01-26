@@ -73,7 +73,9 @@ namespace Vest
                 {PlayerState.CrawlWalk,     new Tuple<Action, Action> (null, CrawlWalkUpdate)},
                 {PlayerState.Interact,      new Tuple<Action, Action> (InteractStart, null)},
                 {PlayerState.Jump,          new Tuple<Action, Action> (JumpStart, JumpUpdate)},
-                {PlayerState.Back,          new Tuple<Action, Action> (BackStart, null)}
+                {PlayerState.Back,          new Tuple<Action, Action> (BackStart, null)},
+                {PlayerState.Swallow,       new Tuple<Action, Action> (SwallowStart, null)},
+                {PlayerState.Freakout,      new Tuple<Action, Action> (FreakoutStart, null)}
             };
 
             ChangeState (PlayerState.Idle);
@@ -87,13 +89,18 @@ namespace Vest
         private void InteractStart()
         {
             Elevator elevator = player.level.GetObjects<Elevator>().FirstOrDefault((e) => e.Enabled && player.Collides(e));
-            if (elevator == null)
+            if (elevator != null)
             {
-                ChangeState(PlayerState.Idle);
+                elevator.Interact(player);
                 return;
             }
 
-            elevator.Interact(player);
+            Pill pill = player.level.GetObjects<Pill>().FirstOrDefault((e) => true);
+            if (pill != null && pill.Collides(player))
+            {
+                pill.Activate(player);
+                return;
+            }
             ChangeState(PlayerState.Idle);
         }
 
@@ -108,6 +115,18 @@ namespace Vest
         {
             idleTimer.Stop();
             player.SetAnim("back", Look, false);
+        }
+
+        private void SwallowStart()
+        {
+            idleTimer.Stop();
+            player.SetAnim("swallow", Look, false);
+        }
+
+        private void FreakoutStart()
+        {
+            idleTimer.Stop();
+            player.SetAnim("freakout", Look, false);
         }
 
         private void JumpUpdate()
@@ -427,6 +446,8 @@ namespace Vest
         CrawlEnd,
         CrawlIdle,
         CrawlWalk,
-        Back
+        Back,
+        Swallow,
+        Freakout
     }
 }

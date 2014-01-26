@@ -18,7 +18,10 @@ namespace Vest.levels
         public Light light2;
         public Table table;
         public Elevator elevator;
+        public Pill pill;
         public Player player;
+        public Cue ElevatorCue;
+        public Cue PillCue;
 
         public override void Load(Player player, ManualCamera2D cam, CombiLevel parent)
         {
@@ -94,6 +97,9 @@ namespace Vest.levels
             CLight (91, Color.White, G.Content.Load<Texture2D> ("branches/branch1/l_roundUp"), new Vector2 (4146, 262-68));
 
             GameObjects.Add(elevator = new Elevator(player,new Vector2(3995, -100), new Vector2(3995, 436), new Polygon[] { new Polygon(new Vector2[] { new Vector2(-50, -100), new Vector2(-50, 200), new Vector2(50, 200), new Vector2(50, -100) }) }));
+            GameObjects.Add(pill = new Pill(new Vector2(160, 373)));
+            GameObjects.Add(ElevatorCue = new Cue(new Vector2(3850, 350)));
+            GameObjects.Add(PillCue = new Cue(new Vector2(160, 356)));
         }
 
         public override void Update(GameObject player)

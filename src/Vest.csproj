@@ -114,6 +114,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assert.cs" />
+    <Compile Include="Cue.cs" />
     <Compile Include="DecalAttachmentLoader.cs" />
     <Compile Include="Edge.cs" />
     <Compile Include="EditorViewController.cs" />
@@ -135,6 +136,7 @@
     <Compile Include="ManualCamera2D.cs" />
     <Compile Include="Monster.cs" />
     <Compile Include="PhysicsSpineGameObject.cs" />
+    <Compile Include="Pill.cs" />
     <Compile Include="Player.cs" />
     <Compile Include="PlayerController.cs" />
     <Compile Include="Polygon.cs" />

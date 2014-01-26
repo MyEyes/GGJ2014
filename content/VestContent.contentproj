@@ -586,6 +586,11 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
+    <Compile Include="objects\pill.png">
+      <Name>pill</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
     <Content Include="player\vest.json">
       <Name>vest</Name>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -674,6 +679,11 @@
       <Name>light_flick</Name>
       <Importer>Mp3Importer</Importer>
       <Processor>SoundEffectProcessor</Processor>
+    </Compile>
+    <Compile Include="X.png">
+      <Name>X</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
     </Compile>
   </ItemGroup>
   <ItemGroup>

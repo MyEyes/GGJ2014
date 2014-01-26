@@ -112,8 +112,19 @@ namespace Vest.levels
             trig = Good.CTrigger (true, true, new Polygon (new Vector2[] { new Vector2 (653 + 300, 379), new Vector2 (739 + 300, 381), new Vector2 (738 + 300, 435), new Vector2 (662 + 300, 433) }));
             trig.Entered += delegate(GameObject obj) { SavePosition(); SetTransition(TransitionType.RepeatRead); insanityChange = 0.4f / 1000f; SetTargetInsanity(1.1f); l2.Enabled = true; };
             //Collect pill
-            trig = Good.CTrigger(true, true, new Polygon(new Vector2[] { new Vector2(135, 342), new Vector2(192, 342), new Vector2(183, 433), new Vector2(142, 433) }));
-            trig.Entered += delegate(GameObject obj) { SoundHelper.SetMusicVolume1(0.7f); SoundHelper.SetMusicChannel2("sounds/Parano_parano", 0.7f); SavePosition(); player.DisableInput++; insanity = 0; insanityChange = 0.3f / 1000f; l2.Enabled = false; SetTransition(TransitionType.ThresholdRead); SetTargetInsanity(0); TaskHelper.SetDelay(2000, delegate { player.DisableInput--; SetState(LevelState.Evil); insanityChange = 0.4f / 1000f; SetTargetInsanity(1.1f); l3.Enabled = true; l4.Enabled = true; }); };
+            l1g.pill.Interact += delegate(Player obj) { SoundHelper.SetMusicVolume1(0.7f); SoundHelper.SetMusicChannel2("sounds/Parano_parano", 0.7f); SavePosition(); player.DisableInput++; insanity = 0;
+            insanityChange = 0.3f / 1000f; l2.Enabled = false; SetTransition(TransitionType.ThresholdRead); SetTargetInsanity(0); player.Controller.ChangeState(PlayerState.Swallow);
+            TaskHelper.SetDelay(2000, delegate { player.Controller.ChangeState(PlayerState.Freakout);  SetState(LevelState.Evil); insanityChange = 0.4f / 1000f; SetTargetInsanity(1.1f); l3.Enabled = true; l4.Enabled = true; });
+            TaskHelper.SetDelay(4000, delegate { player.DisableInput--; player.Controller.ChangeState(PlayerState.Idle); });
+            };
+
+            trig = Good.CTrigger(true, false, new Polygon(new Vector2[] { new Vector2(135, 342), new Vector2(192, 342), new Vector2(183, 433), new Vector2(142, 433) }));
+            trig.Entered += delegate(GameObject obj) { l1g.PillCue.visible = true; };
+            trig.Exited += delegate(GameObject obj) { l1g.PillCue.visible = false; };
+
+            trig = Bad.CTrigger(true, false, new Polygon(new Vector2[] { new Vector2(3943, 434), new Vector2(3944, 304), new Vector2(4044, 306), new Vector2(4043, 433) }));
+            trig.Entered += delegate(GameObject obj) { l1g.ElevatorCue.visible = true; };
+            trig.Entered += delegate(GameObject obj) { l1g.ElevatorCue.visible = false; };
             //Expand dark 1
             trig = Bad.CTrigger(true, true, new Polygon(new Vector2[] { new Vector2(1235, 432), new Vector2(1237, 338), new Vector2(1320, 343), new Vector2(1310, 431) }));
             trig.Entered += delegate(GameObject obj) { SavePosition(); insanity = 0.001f; l3.Enabled = false; l4.Enabled = true; l5.Enabled = true; SetTargetInsanity(1.1f); };
