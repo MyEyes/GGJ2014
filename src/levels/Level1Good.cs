@@ -48,14 +48,14 @@ namespace Vest.levels
             // Party Lights (Forward)
             CLight(100, Color.White, G.Content.Load<Texture2D>("branches/branch1/l_roundDown"), new Vector2(1906, 83));
             CLight(100, Color.White, G.Content.Load<Texture2D>("branches/branch1/l_roundDown"), new Vector2(2005, 83));
-
+        
             elevatorTrigger = CTrigger(true, false, new Polygon(new Vector2[]
-                {
-                    new Vector2 (3921, 421),
-                    new Vector2 (3919, 236),
-                    new Vector2 (4071, 236),
-                    new Vector2 (4070, 418)
-                }));
+            {
+                new Vector2 (3921, 421),
+                new Vector2 (3919, 236),
+                new Vector2 (4071, 236),
+                new Vector2 (4070, 418)
+            }));
 
             var elevator = new Elevator(new Vector2(3922, 236), new Polygon[0]);
         }

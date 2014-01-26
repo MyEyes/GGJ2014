@@ -58,9 +58,7 @@ namespace Vest
 
         public void DrawLights() 
         {
-            var enabledLights = Lights
-                .Where (l => l.Enabled)
-                .ToList();
+            var enabledLights = Lights;
 
 
             G.Gfx.SetRenderTarget(Target);
@@ -87,22 +85,25 @@ namespace Vest
             }
             int count=0;
             int start=0;
-            Texture2D lastTex=enabledLights[0].Mask;
-            for(int x=0; x<enabledLights.Count; x++)
+            Texture2D lastTex = enabledLights[0].Mask;
+
+            for(int x=0; x < enabledLights.Count; x++)
             {
-                if (lastTex != enabledLights[x].Mask)
+                if (enabledLights[x].Mask != lastTex)
                 {
-                    _lightEffect.Parameters["Texture"].SetValue(lastTex == null ? defaultTex : lastTex);
+                    _lightEffect.Parameters["Texture"].SetValue (lastTex ?? defaultTex);
                     _lightEffect.CurrentTechnique.Passes[0].Apply();
-                    G.Gfx.DrawUserPrimitives<VertexPositionColorTexture>(PrimitiveType.TriangleList, vertices, start, count);
+                    G.Gfx.DrawUserPrimitives<VertexPositionColorTexture> (PrimitiveType.TriangleList, vertices, start, count);
                     start = 6 * x;
                     count = 0;
                     lastTex = enabledLights[x].Mask;
                 }
+                
                 count += 2;
+
                 if (x == enabledLights.Count - 1)
                 {
-                    _lightEffect.Parameters["Texture"].SetValue(enabledLights[x].Mask == null ? defaultTex : enabledLights[x].Mask);
+                    _lightEffect.Parameters["Texture"].SetValue(enabledLights[x].Mask ?? defaultTex);
                     _lightEffect.CurrentTechnique.Passes[0].Apply();
                     G.Gfx.DrawUserPrimitives<VertexPositionColorTexture>(PrimitiveType.TriangleList, vertices, start, count);
                 }
