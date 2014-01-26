@@ -12,9 +12,10 @@ namespace Vest.levels
     {
         ManualCamera2D cam;
 
-        public override void Load (ManualCamera2D cam)
+        public override void Load (ManualCamera2D cam, CombiLevel parent)
         {
             this.cam = cam;
+            this.parent = parent;
 
             Texture2D lightMask = G.Content.Load<Texture2D> ("lamp_light");
 

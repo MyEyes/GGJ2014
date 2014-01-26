@@ -84,7 +84,7 @@ namespace Vest
 
         private void JumpStart()
         {
-            idleTimer.Stop ();
+            idleTimer.Stop();
             player.Jump();
             player.SetAnim ("jump", Look, false);
         }
@@ -136,6 +136,7 @@ namespace Vest
             idleTimer.Stop();
             player.SetAnim ("crawl_up", Look, false);
             player.Depth = Player.PLAYER_DEPTH;
+            UpdateIsHiding();
 
             player.DisableInput++;
             TaskHelper.SetDelay (300, () =>
@@ -323,9 +324,13 @@ namespace Vest
                 .OrderBy (t => Vector2.Distance (player.position, t.position))
                 .FirstOrDefault ();
 
-            IsHiding = table != null
-                ? table.IsCovering (player)
-                : false;
+            bool isBeingCovered = table != null && table.IsCovering (player);
+
+            bool isCrawling = State == PlayerState.CrawlStart
+                || State == PlayerState.CrawlIdle
+                || State == PlayerState.CrawlWalk;
+
+            player.IsHiding = IsHiding = isBeingCovered && isCrawling;
         }
 
         private void LoadPlayerAnim()
@@ -381,17 +386,19 @@ namespace Vest
         }
     }
 
+    [Flags]
     public enum PlayerState
     {
-        None,
-        Idle,
-        Jump,
-        Walk,
-        Run,
-        Interact,
-        CrawlStart,
-        CrawlEnd,
-        CrawlIdle,
-        CrawlWalk,
+        None = 0,
+        Idle = 2,
+        Jump = 4,
+        Walk = 8,
+        Run = 16,
+        Interact = 32,
+        CrawlStart = 64,
+        CrawlEnd = 128,
+        CrawlIdle = 256,
+        CrawlWalk = 512,
+        Crawling = CrawlStart & CrawlEnd & CrawlIdle & CrawlWalk
     }
 }

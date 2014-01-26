@@ -19,9 +19,10 @@ namespace Vest.levels
         public Light light2;
         public Table table;
 
-        public override void Load(ManualCamera2D cam)
+        public override void Load(ManualCamera2D cam, CombiLevel parent)
         {
             this.cam = cam;
+            this.parent = parent;
 
             normalBG1 = G.Content.Load<Texture2D>("branches/branch1/normalBG1");
             normalBG2 = G.Content.Load<Texture2D>("branches/branch1/normalBG2");
@@ -110,6 +111,7 @@ namespace Vest.levels
         public override void Update(float dt)
         {
             Lights.SetCam(cam);
+            base.Update (dt);
         }
 
         public override void Draw(OSpriteBatch batch)

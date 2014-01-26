@@ -51,9 +51,9 @@ namespace Vest.levels
             if (player != null)
                 lastPosition = player.position;
             this.Good = Good;
-            Good.Load(cam);
+            Good.Load(cam, this);
             this.Bad = Bad;
-            Bad.Load(cam);
+            Bad.Load(cam, this);
             State = LevelState.Good;
             GoodTarget = new RenderTarget2D(G.Gfx, G.Gfx.Viewport.Width, G.Gfx.Viewport.Height, false, SurfaceFormat.Rgba1010102, DepthFormat.Depth16);
             BadTarget = new RenderTarget2D(G.Gfx, G.Gfx.Viewport.Width, G.Gfx.Viewport.Height, false, SurfaceFormat.Rgba1010102, DepthFormat.Depth16);
@@ -102,6 +102,9 @@ namespace Vest.levels
 
         public bool IsColliding(GameObject o)
         {
+            if (o is Monster)
+                return Bad.IsColliding(o);
+            
             return State == LevelState.Good
                 ? Good.IsColliding(o)
                 : Bad.IsColliding(o);

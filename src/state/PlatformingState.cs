@@ -40,7 +40,7 @@ namespace Vest.state
             cam = new ManualCamera2D (G.SCREEN_WIDTH, G.SCREEN_HEIGHT, G.Gfx);
 
             level = new TestLevel ();
-            level.Load (cam);
+            level.Load (cam, null);
 
             player = new Player (Vector2.Zero, new Polygon[] {new Polygon (new Vector2[] {
                 new Vector2(20, 0),

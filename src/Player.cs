@@ -14,6 +14,7 @@ namespace Vest
         public const float PLAYER_DEPTH = 0.9f;
 
         public int DisableInput = 0;
+        public bool IsHiding = false;
         public LookDir LookDir = LookDir.Right;
 
         public Player (Vector2 position, Polygon[] polygons)
