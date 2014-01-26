@@ -15,20 +15,22 @@ namespace Vest.state
     public class PlatformingState
         : BaseGameState
     {
-        public PlatformingState()
-            : base (false, true)
-        {
-        }
+        const bool DRAW_DEBUG = false;
 
         OSpriteBatch batch;
         DrawHelper helper;
         ManualCamera2D cam;
 
-        PhysicsSpineGameObject player;
+        Player player;
         PlayerController playerController;
         
         VestLevel level;
         Light playerLight;
+
+        public PlatformingState()
+            : base (false, true)
+        {
+        }
         
         public override void Load()
         {
@@ -40,7 +42,7 @@ namespace Vest.state
             level = new TestLevel ();
             level.Load (cam);
 
-            player = new PhysicsSpineGameObject (Vector2.Zero, new Polygon[] {new Polygon (new Vector2[] {
+            player = new Player (Vector2.Zero, new Polygon[] {new Polygon (new Vector2[] {
                 new Vector2(20, 0),
                 new Vector2 (-20, 0),
                 new Vector2 (-20, -140),
@@ -80,11 +82,14 @@ namespace Vest.state
 
             level.Lights.Apply (batch);
 
-            helper.DrawPolys(player.collisionPolys, cam.Transformation, Color.Green);
-            helper.DrawPolys (level.Collision, cam.Transformation, Color.Red);
-            level.Triggers.ForEach (t => {
-                helper.DrawPolys (t.collisionPolys, cam.Transformation, Color.Blue);
-            });
+            if (DRAW_DEBUG)
+            {
+                helper.DrawPolys (player.collisionPolys, cam.Transformation, Color.Green);
+                helper.DrawPolys (level.Collision, cam.Transformation, Color.Red);
+                level.Triggers.ForEach (t => {
+                    helper.DrawPolys (t.collisionPolys, cam.Transformation, Color.Blue);
+                });
+            }
         }
     }
 }

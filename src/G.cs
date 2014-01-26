@@ -50,7 +50,8 @@ namespace Vest
                 {"test", new TestState()},
                 {"jason", new JasonState()},
                 {"platform", new PlatformingState()},
-                {"edit", new EditState()}
+                {"edit", new EditState()},
+                {"game", new GameState()}
             };
 
             G.State = new StateManager (states);
@@ -62,7 +63,7 @@ namespace Vest
             Spine.Bone.yDown = true;
 
             State.Load ();
-            State.Set ("platform");
+            State.Set ("game");
         }
 
         protected override void UnloadContent()

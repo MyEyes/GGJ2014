@@ -5,6 +5,7 @@ using System.Text;
 using Microsoft.Xna.Framework.Input;
 using Vest.graphics;
 using Vest.levels;
+using Vest.levels.Vest.levels;
 using Vest.State;
 using Vest.utilities;
 
@@ -47,6 +48,8 @@ namespace Vest.state
 
             public override void Load()
             {
+                VestLevel LEVEL_TO_EDIT = new Branch1();
+
                 batch = new OSpriteBatch (G.Gfx);
                 uiBatch = new SpriteBatch (G.Gfx);
                 helper = new DrawHelper (G.Gfx);
@@ -55,7 +58,7 @@ namespace Vest.state
                 view.SetSize (G.SCREEN_WIDTH, G.SCREEN_HEIGHT);
                 cam = new ManualCamera2D (G.SCREEN_WIDTH, G.SCREEN_HEIGHT, G.Gfx);
 
-                level = new TestLevel ();
+                level = LEVEL_TO_EDIT;
                 level.Load (cam);
 
                 font = G.Content.Load<SpriteFont> ("font");
@@ -90,6 +93,7 @@ namespace Vest.state
             {
                 G.Gfx.Clear (Color.CornflowerBlue);
                 batch.Begin (SpriteSortMode.Immediate, BlendState.AlphaBlend, cam.Transformation);
+                level.DrawGood (batch);
                 batch.End ();
 
                 helper.DrawPolys (level.Collision, cam.Transformation, Color.Red);

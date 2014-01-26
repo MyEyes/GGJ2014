@@ -17,7 +17,7 @@ namespace Vest.state
         }
 
         ManualCamera2D cam;
-        SpineGameObject player;
+        Player player;
         PlayerController playerController;
         OSpriteBatch batch;
         
@@ -26,7 +26,7 @@ namespace Vest.state
             batch = new OSpriteBatch (G.Gfx);
 
             cam = new ManualCamera2D (G.SCREEN_WIDTH, G.SCREEN_HEIGHT, G.Gfx);
-            player = new SpineGameObject (Vector2.Zero, new Polygon[0]);
+            player = new Player (Vector2.Zero, new Polygon[0]);
             playerController = new PlayerController (player);
 
             cam.Zoom = 2f;

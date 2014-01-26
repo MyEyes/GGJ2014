@@ -51,7 +51,7 @@ namespace Vest
             Lights.Add(light);
         }
 
-        public void DrawLights()
+        public void DrawLights() 
         {
             var enabledLights = Lights
                 .Where (l => l.Enabled)

@@ -8,7 +8,7 @@ using Vest.state;
 
 namespace Vest
 {
-    class PhysicsSpineGameObject
+    public class PhysicsSpineGameObject
         : SpineGameObject
     {
         const float GRAVITY = 300f;
