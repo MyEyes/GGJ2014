@@ -12,7 +12,7 @@ namespace Vest.levels
     {
         ManualCamera2D cam;
 
-        public override void Load (ManualCamera2D cam, CombiLevel parent)
+        public override void Load (Player player, ManualCamera2D cam, CombiLevel parent)
         {
             this.cam = cam;
             this.parent = parent;

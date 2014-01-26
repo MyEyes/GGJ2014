@@ -40,14 +40,13 @@ namespace Vest.state
             cam = new ManualCamera2D (G.SCREEN_WIDTH, G.SCREEN_HEIGHT, G.Gfx);
 
             level = new TestLevel ();
-            level.Load (cam, null);
-
             player = new Player (Vector2.Zero, new Polygon[] {new Polygon (new Vector2[] {
                 new Vector2(20, 0),
                 new Vector2 (-20, 0),
                 new Vector2 (-20, -140),
                 new Vector2(20, -140)
             })});
+            level.Load (player, cam, null);
 
             //Workaround before switch to combined level system
             CombiLevel cLevel = new CombiLevel(player, cam, level, level);

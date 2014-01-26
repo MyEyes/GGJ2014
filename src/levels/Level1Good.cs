@@ -14,12 +14,13 @@ namespace Vest.levels
         ManualCamera2D cam;
         Texture2D normalBG1;
         Texture2D normalBG2;
-        Trigger elevatorTrigger;
         public Light light1;
         public Light light2;
         public Table table;
+        public Elevator elevator;
+        public Player player;
 
-        public override void Load(ManualCamera2D cam, CombiLevel parent)
+        public override void Load(Player player, ManualCamera2D cam, CombiLevel parent)
         {
             this.cam = cam;
             this.parent = parent;
@@ -91,16 +92,8 @@ namespace Vest.levels
             // Elevator Lights
             CLight (91, Color.White, G.Content.Load<Texture2D> ("branches/branch1/l_roundUp"), new Vector2(3845, 262-68));
             CLight (91, Color.White, G.Content.Load<Texture2D> ("branches/branch1/l_roundUp"), new Vector2 (4146, 262-68));
-        
-            elevatorTrigger = CTrigger(true, false, new Polygon(new Vector2[]
-            {
-                new Vector2 (3921, 421),
-                new Vector2 (3919, 236),
-                new Vector2 (4071, 236),
-                new Vector2 (4070, 418)
-            }));
 
-            var elevator = new Elevator(new Vector2(3922, 236), new Polygon[0]);
+            GameObjects.Add(elevator = new Elevator(player,new Vector2(3995, -100), new Vector2(3995, 436), new Polygon[] { new Polygon(new Vector2[] { new Vector2(-50, -100), new Vector2(-50, 200), new Vector2(50, 200), new Vector2(50, -100) }) }));
         }
 
         public override void Update(GameObject player)

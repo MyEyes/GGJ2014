@@ -30,7 +30,7 @@ namespace Vest.levels
             return light;
         }
 
-        public abstract void Load (ManualCamera2D cam, CombiLevel level);
+        public abstract void Load (Player player, ManualCamera2D cam, CombiLevel level);
         
         public virtual void Draw (OSpriteBatch batch)
         {
@@ -50,7 +50,7 @@ namespace Vest.levels
                 g.Update (dt);
         }
 
-        public virtual void Update (GameObject player)
+        public virtual void Update(GameObject player)
         {
             foreach (var t in Triggers)
                 t.TryTrigger (player);

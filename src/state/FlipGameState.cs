@@ -48,10 +48,10 @@ namespace Vest.state
             cam = new ManualCamera2D (G.SCREEN_WIDTH, G.SCREEN_HEIGHT, G.Gfx);
 
             player = new Player (Vector2.Zero, new Polygon[0]);
+            player.position = new Vector2(4000, 400);
+            playerController = new PlayerController(player);
             currentLevel = new CombiLevel1(cam, player);
             player.SetLevel (currentLevel);
-            player.position = new Vector2 (4000, 400);
-            playerController = new PlayerController (player);
 
             tracker = new VarTracker();
             tracker.Track ("Anim", () => player.AnimState.GetTrackPlayingString (0));

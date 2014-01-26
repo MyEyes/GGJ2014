@@ -20,7 +20,7 @@ namespace Vest
         private readonly Player player;
         private readonly Timer idleTimer;
         
-        public PlayerState State { get; private set; }
+        public PlayerState State { get; set; }
         public PlayerState LastState { get; private set; }
         private readonly Dictionary<PlayerState, Tuple<Action, Action>> states;
 
@@ -37,9 +37,12 @@ namespace Vest
         public bool IsStanding;
         public bool IsHiding;
 
+        public Vector2 MoveToX;
+        public bool Script = false;
         public PlayerController (Player player)
         {
             this.player = player;
+            player.Controller = this;
             LoadPlayerAnim();
 
             idleTimer = new Timer (new Random ().Next (3000, 8000));
@@ -69,7 +72,8 @@ namespace Vest
                 {PlayerState.CrawlIdle,     new Tuple<Action, Action> (CrawlIdleStart, CrawlIdleUpdate)},
                 {PlayerState.CrawlWalk,     new Tuple<Action, Action> (null, CrawlWalkUpdate)},
                 {PlayerState.Interact,      new Tuple<Action, Action> (InteractStart, null)},
-                {PlayerState.Jump,          new Tuple<Action, Action> (JumpStart, JumpUpdate)}
+                {PlayerState.Jump,          new Tuple<Action, Action> (JumpStart, JumpUpdate)},
+                {PlayerState.Back,          new Tuple<Action, Action> (BackStart, null)}
             };
 
             ChangeState (PlayerState.Idle);
@@ -79,7 +83,15 @@ namespace Vest
 
         private void InteractStart()
         {
-            
+            Elevator elevator = player.level.GetObjects<Elevator>().FirstOrDefault((e) => e.Enabled && player.Collides(e));
+            if (elevator == null)
+            {
+                ChangeState(PlayerState.Idle);
+                return;
+            }
+
+            elevator.Interact(player);
+            ChangeState(PlayerState.Idle);
         }
 
         private void JumpStart()
@@ -87,6 +99,12 @@ namespace Vest
             idleTimer.Stop();
             player.Jump();
             player.SetAnim ("jump", Look, false);
+        }
+
+        private void BackStart()
+        {
+            idleTimer.Stop();
+            player.SetAnim("back", Look, false);
         }
 
         private void JumpUpdate()
@@ -260,13 +278,15 @@ namespace Vest
         private void IdleUpdate()
         {
             if (IsCrawling)
-                ChangeState (PlayerState.CrawlStart);
+                ChangeState(PlayerState.CrawlStart);
             else if (IsWalking)
-                ChangeState (PlayerState.Walk);
+                ChangeState(PlayerState.Walk);
             else if (IsRunning)
-                ChangeState (PlayerState.Run);
+                ChangeState(PlayerState.Run);
             else if (IsJumping)
-                ChangeState (PlayerState.Jump);
+                ChangeState(PlayerState.Jump);
+            else if (IsInteracting)
+                ChangeState(PlayerState.Interact);
         }
 
         public void Update()
@@ -289,7 +309,12 @@ namespace Vest
                 if (isButtonDown(currPadState.DPad.Up)) useStand = true;
                 if (isButtonDown(currPadState.Buttons.A)) useJump = true;
                 if (isButtonDown(currPadState.Buttons.X)) useInteract = true;
-                if (isButtonDown (currPadState.Buttons.Y)) useRun = true;
+                if (isButtonDown(currPadState.Buttons.Y)) useRun = true;
+            }
+            else if(Script)
+            {
+                moveDir.X = Math.Sign(MoveToX.X - player.position.X);
+                moveDir.Y = 0;
             }
 
             IsInteracting = useInteract;
@@ -359,7 +384,7 @@ namespace Vest
             player.AnimData.SetMix ("crawl_up", "idle", 0.5f);
         }
 
-        protected void ChangeState(PlayerState newState)
+        public void ChangeState(PlayerState newState)
         {
             Tuple<Action, Action> stateFuncs;
 
@@ -389,16 +414,16 @@ namespace Vest
     [Flags]
     public enum PlayerState
     {
-        None = 0,
-        Idle = 2,
-        Jump = 4,
-        Walk = 8,
-        Run = 16,
-        Interact = 32,
-        CrawlStart = 64,
-        CrawlEnd = 128,
-        CrawlIdle = 256,
-        CrawlWalk = 512,
-        Crawling = CrawlStart & CrawlEnd & CrawlIdle & CrawlWalk
+        None,
+        Idle,
+        Jump,
+        Walk,
+        Run,
+        Interact,
+        CrawlStart,
+        CrawlEnd,
+        CrawlIdle,
+        CrawlWalk,
+        Back
     }
 }

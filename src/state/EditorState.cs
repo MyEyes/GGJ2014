@@ -58,8 +58,9 @@ namespace Vest.state
                 view.Zoom = 0.8f;
 
                 cam = new ManualCamera2D (G.SCREEN_WIDTH, G.SCREEN_HEIGHT, G.Gfx);
+                Player player = new Player(Vector2.Zero, new Polygon[0]);
 
-                level = new CombiLevel1 (cam, null);
+                level = new CombiLevel1 (cam, player);
                 font = G.Content.Load<SpriteFont> ("font");
             }
 

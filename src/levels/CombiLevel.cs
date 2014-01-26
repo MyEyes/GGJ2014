@@ -51,9 +51,9 @@ namespace Vest.levels
             if (player != null)
                 lastPosition = player.position;
             this.Good = Good;
-            Good.Load(cam, this);
+            Good.Load(player,cam, this);
             this.Bad = Bad;
-            Bad.Load(cam, this);
+            Bad.Load(player, cam, this);
             State = LevelState.Good;
             GoodTarget = new RenderTarget2D(G.Gfx, G.Gfx.Viewport.Width, G.Gfx.Viewport.Height, false, SurfaceFormat.Rgba1010102, DepthFormat.Depth16);
             BadTarget = new RenderTarget2D(G.Gfx, G.Gfx.Viewport.Width, G.Gfx.Viewport.Height, false, SurfaceFormat.Rgba1010102, DepthFormat.Depth16);
@@ -138,6 +138,9 @@ namespace Vest.levels
         public IEnumerable<T> GetObjects<T>()
             where T : GameObject
         {
+            //HACK to make elevator work
+            if(typeof(T) == typeof(Elevator))
+                return Good.GetObjects<T>();
             switch (State)
             {
                 case LevelState.Good:   return Good.GetObjects<T>();
